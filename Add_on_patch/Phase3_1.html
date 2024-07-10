@@ -52,6 +52,18 @@
             text-align: center;
             cursor: pointer;
         }
+        #imgL {
+            position: relative;
+            left: 5%;
+            top: 35%;
+            border: 2px solid purple
+        }
+        #imgR {
+            position: relative;
+            left: 77%;
+            top: 35%;
+            border: 2px solid purple
+        }
         
     </style>
 </head>
@@ -72,10 +84,18 @@
             <img id="drag11" src="FlightsImages/WestPalmBeach.png" alt="WestPalmBeach" width="100" height="100" draggable="true" ondragstart="drag(event)">
             <img id="drag12" src="FlightsImages/Yukon.png" alt="Yukon" width="100" height="100" draggable="true" ondragstart="drag(event)">
         </div>
-        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <img id="imgL" src="FlightsImages/Boulder.png" width="100" height="100">
+            <img id="imgR" src="FlightsImages/Racine.png" width="100" height="100">
+        </div>
     </div>
 
     <script>
+        var images = []
+        for (let i = 1; i <= 12; i++) {
+            images[i-1] = document.getElementById(`drag${i}`);
+        }
+
         // Make the IMG element draggable only if it's inside div1
         function dragElement(elmnt) {
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
