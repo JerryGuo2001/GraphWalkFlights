@@ -84,21 +84,20 @@
     <div id="Phase3Body">
         <br>
         <div id="div2">
-            <img id="drag1" src="FlightsImages/Aliance.png" alt="Aliance" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag2" src="FlightsImages/Boulder.png" alt="Boulder" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag3" src="FlightsImages/Cornwall.png" alt="Cornwall" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag4" src="FlightsImages/Custer.png" alt="Custer" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag5" src="FlightsImages/DelawareCity.png" alt="DelawareCity" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag6" src="FlightsImages/Medora.png" alt="Medora" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag7" src="FlightsImages/Newport.png" alt="Newport" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag8" src="FlightsImages/ParkCity.png" alt="ParkCity" width="100" height="100" draggable="true" ondragstart="drag(event)">
-            <img id="drag9" src="FlightsImages/Racine.png" alt="Racine" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag01" src="FlightsImages/Aliance.png" alt="Aliance" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag02" src="FlightsImages/Boulder.png" alt="Boulder" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag03" src="FlightsImages/Cornwall.png" alt="Cornwall" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag04" src="FlightsImages/Custer.png" alt="Custer" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag05" src="FlightsImages/DelawareCity.png" alt="DelawareCity" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag06" src="FlightsImages/Medora.png" alt="Medora" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag07" src="FlightsImages/Newport.png" alt="Newport" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag08" src="FlightsImages/ParkCity.png" alt="ParkCity" width="100" height="100" draggable="true" ondragstart="drag(event)">
+            <img id="drag09" src="FlightsImages/Racine.png" alt="Racine" width="100" height="100" draggable="true" ondragstart="drag(event)">
             <img id="drag10" src="FlightsImages/Sitka.png" alt="Sitka" width="100" height="100" draggable="true" ondragstart="drag(event)">
             <img id="drag11" src="FlightsImages/WestPalmBeach.png" alt="WestPalmBeach" width="100" height="100" draggable="true" ondragstart="drag(event)">
             <img id="drag12" src="FlightsImages/Yukon.png" alt="Yukon" width="100" height="100" draggable="true" ondragstart="drag(event)">
         </div>
         <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <canvas id="lineCanvas"></canvas>
             <img id="imgL" src="FlightsImages/Boulder.png" width="100" height="100">
             <img id="imgR" src="FlightsImages/Racine.png" width="100" height="100">
             <img id="return" src="FlightsImages/return.png" width="50" height="50">
@@ -110,21 +109,31 @@
         var attention=0
         var selected=1
         for (let i = 1; i <= 12; i++) {
-            images[i-1] = document.getElementById(`drag${i}`);
+            if (i<10){
+                images[i-1] = document.getElementById(`drag0${i}`);
+            }else{
+                images[i-1] = document.getElementById(`drag${i}`)
+            }
         }
-
-
-        // draw the line
-        // Set canvas size
-        var canvas = document.getElementById('lineCanvas');
-        var ctx = canvas.getContext('2d');
+        // Select the parent element where the canvas will be added
         var container = document.getElementById('div1');
+        var specificline={}; 
+        var specificlinenew={};// Variable to hold the specific line
+        var canvas=[]
+        var linecounter=0
 
-        function drawLine(img1,img2) {
+        function drawLine(img1,img2,canvas) {
+            // Create a new canvas element
+            var canvas = document.createElement('canvas');
+            // Set the ID attribute for the canvas
+            canvas.id = `${img1.id}`+`${img2.id}`;
+            // Append the canvas to the parent container
+            container.appendChild(canvas);
+            var ctx = canvas.getContext('2d');
             // Set canvas size to match the container
             canvas.width = container.offsetWidth;
             canvas.height = container.offsetHeight;
-
+            canvasname=canvas.id
             // Get image positions and dimensions
             var rect1 = img1.getBoundingClientRect();
             var rect2 = img2.getBoundingClientRect();
@@ -137,14 +146,32 @@
             var y2 = rect2.top - containerRect.top + rect2.height / 2;
 
             // Draw line
-            ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear the canvas
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.strokeStyle = 'black';  // Set the line color
             ctx.lineWidth = 2;  // Set the line width
             ctx.stroke();
+            // Save the line information]
+            specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1.id+img2.id]}})
+            specificline=mergeObjects(specificline,specificlinenew)
+            linecounter=linecounter+1
         }
+
+        function mergeObjects(target, source) {
+            return { ...target, ...source };
+        }
+        function clearCanvas(canvasId) {
+            var canvas = document.getElementById(canvasId);
+            if (canvas) {
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.remove(); // This will remove the canvas element from the DOM
+            } else {
+                console.error('Canvas with ID ' + canvasId + ' not found.');
+            }
+        }
+
         // draw the line end
 
 
@@ -174,7 +201,6 @@
                 pos2 = pos4 - e.clientY;
                 pos3 = e.clientX;
                 pos4 = e.clientY;
-
                 // Calculate new position
                 var newTop = elmnt.offsetTop - pos2;
                 var newLeft = elmnt.offsetLeft - pos1;
@@ -204,6 +230,20 @@
                         selected=1
                         attention=0
                     }else if(attention==1 &&selected!=elmnt && elmnt.style.border == "2px solid green"){
+                        var optionone=elmnt.id+selected.id
+                        var optiontwo=selected.id+elmnt.id
+                        for (i=0;i<=linecounter;i++){
+                            if (specificline[i]){
+                                if (specificline[i].name==optionone){
+                                clearCanvas(optionone)
+                                console.log('type1')
+                                removeObjectByKey(specificline,i)
+                                }else if(specificline[i].name==optiontwo){
+                                clearCanvas(optiontwo)
+                                removeObjectByKey(specificline,i)
+                                }
+                            }
+                        }
                         elmnt.style.border = null
                         selected.style.border = null
                         selected=1
@@ -296,10 +336,19 @@
                 }
             }
         }
+        function removeObjectByKey(obj, key) {
+            if (obj.hasOwnProperty(key)) {
+                delete obj[key];
+            }
+        }
 //do not need to copy things below there
     for (let i = 1; i <= 12; i++) {
+        if (i<10){
+            dragElement(document.getElementById(`drag0${i}`));
+        }else{
             dragElement(document.getElementById(`drag${i}`));
         }
+    }
     returndrag(document.getElementById('return'))
 </script>
 </body>
