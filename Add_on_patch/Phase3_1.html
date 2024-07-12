@@ -122,7 +122,7 @@
         var canvas=[]
         var linecounter=0
 
-        function drawLine(img1,img2,canvas) {
+        function drawLine(img1,img2) {
             // Create a new canvas element
             var canvas = document.createElement('canvas');
             // Set the ID attribute for the canvas
@@ -156,6 +156,48 @@
             specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1.id+img2.id]}})
             specificline=mergeObjects(specificline,specificlinenew)
             linecounter=linecounter+1
+        }
+
+        function dragLine(img1) {
+            // Create a new canvas element
+            for (i=0;i<=linecounter;i++){
+                if (specificline[i]){
+                    var strings = specificline[i].name
+                    var substring =img1.id
+                    if (strings[0].includes(substring)) {
+                        var canvas = document.getElementById(`${strings[0]}`);
+                        var remainingPart = strings[0].replace(substring, '') //this is finding the img2
+                        var img2=document.getElementById(`${remainingPart}`)
+                        // Append the canvas to the parent container
+                        container.appendChild(canvas);
+                        var ctx = canvas.getContext('2d');
+                        // Set canvas size to match the container
+                        canvas.width = container.offsetWidth;
+                        canvas.height = container.offsetHeight;
+                        canvasname=canvas.id
+                        // Get image positions and dimensions
+                        var rect1 = img1.getBoundingClientRect();
+                        var rect2 = img2.getBoundingClientRect();
+                        var containerRect = container.getBoundingClientRect();
+
+                        // Adjust positions relative to the container
+                        var x1 = rect1.left - containerRect.left + rect1.width / 2;
+                        var y1 = rect1.top - containerRect.top + rect1.height / 2;
+                        var x2 = rect2.left - containerRect.left + rect2.width / 2;
+                        var y2 = rect2.top - containerRect.top + rect2.height / 2;
+
+                        // Draw line
+                        ctx.beginPath();
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
+                        ctx.strokeStyle = 'black';  // Set the line color
+                        ctx.lineWidth = 2;  // Set the line width
+                        ctx.stroke();
+                        // Save the line information]
+                        specificlinenew=Object.assign({[i]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 }}})
+                    }
+                }
+            }
         }
 
         function mergeObjects(target, source) {
@@ -218,6 +260,7 @@
                 // Set the element's new position
                 elmnt.style.top = newTop + "px";
                 elmnt.style.left = newLeft + "px";
+                dragLine(elmnt)
             }
 
             function closeDragElement() {
@@ -236,7 +279,6 @@
                             if (specificline[i]){
                                 if (specificline[i].name==optionone){
                                 clearCanvas(optionone)
-                                console.log('type1')
                                 removeObjectByKey(specificline,i)
                                 }else if(specificline[i].name==optiontwo){
                                 clearCanvas(optiontwo)
@@ -341,6 +383,9 @@
                 delete obj[key];
             }
         }
+
+
+
 //do not need to copy things below there
     for (let i = 1; i <= 12; i++) {
         if (i<10){
