@@ -29,6 +29,10 @@ function wassup(){
     linecounter=0
 }
 
+function makeVisible() {
+    document.getElementById("spiderman").style.display = "block";
+}
+
 function initiatep3(){
     makeVisible()
     container = document.getElementById('div1');
