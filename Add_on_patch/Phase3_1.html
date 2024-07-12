@@ -408,17 +408,23 @@
             // Append the element to the drop area
             container.appendChild(element);
 
-            // Calculate the center position
+            // Calculate the drop position
             var containerRect = container.getBoundingClientRect();
-            var elementRect = element.getBoundingClientRect();
-            var centerX = (containerRect.width - elementRect.width) / 2;
-            var centerY = (containerRect.height - elementRect.height) / 2;
+            var dropX = ev.clientX - containerRect.left - (element.offsetWidth / 2);
+            var dropY = ev.clientY - containerRect.top - (element.offsetHeight / 2);
 
-            // Set the element's position to the center
+            // Ensure the element stays within the container
+            if (dropX < 0) dropX = 0;
+            if (dropY < 0) dropY = 0;
+            if (dropX + element.offsetWidth > containerRect.width) dropX = containerRect.width - element.offsetWidth;
+            if (dropY + element.offsetHeight > containerRect.height) dropY = containerRect.height - element.offsetHeight;
+
+            // Set the element's position to where the mouse dropped it
             element.style.position = "absolute";
-            element.style.left = centerX + "px";
-            element.style.top = centerY + "px";
+            element.style.left = dropX + "px";
+            element.style.top = dropY + "px";
         }
+
 
         function drag(ev) {
             ev.dataTransfer.setData("text", ev.target.id);
