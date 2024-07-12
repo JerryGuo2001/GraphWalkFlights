@@ -129,8 +129,6 @@
         for (let i = 1; i <= 12; i++) {
             if (images[i-1].src == LeftSRC || images[i-1].src == RightSRC){
                 images[i-1].style="display: none;" // Make them disappear in the top box
-                console.log(i-1)
-
             }
         }   
 
@@ -228,8 +226,6 @@
                 var ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvas.remove(); // This will remove the canvas element from the DOM
-            } else {
-                console.error('Canvas with ID ' + canvasId + ' not found.');
             }
         }
 
@@ -445,13 +441,24 @@
                 initialY = elmnt.offsetTop;
                 document.onmouseup = closeDragElement;
             }
-
+            function returnclear(img1){
+                var substring =img1.id
+                for (i=0;i<=linecounter;i++){
+                    if (specificline[i]){
+                        var strings = specificline[i].name
+                        if (strings[0].includes(substring)) {
+                            clearCanvas(strings)
+                        }
+                    }
+                }
+            }
             function closeDragElement() {
                 document.onmouseup = null;
                 // Check if the position has changed
                 if (selected.id !== 'imgL' && selected.id !== 'imgR'){ // Make sure it is not the side images
                     if (elmnt.offsetLeft === initialX && elmnt.offsetTop === initialY) {
                         if (selected!=1 &&attention==1){
+                            returnclear(selected)
                             // If the position hasn't changed, move the element back to div2
                             var originalContainer = document.getElementById("div2");
                             originalContainer.appendChild(selected);
