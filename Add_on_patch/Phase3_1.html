@@ -287,28 +287,28 @@
                         selected.style.border = null
                         selected=1
                         attention=0
-                    }else if(attention==1 &&selected!=elmnt && elmnt.style.border == "2px solid green"){
+                    }else if(attention==1 &&selected!=elmnt){
                         var optionone=elmnt.id+selected.id
                         var optiontwo=selected.id+elmnt.id
+                        var checkline=0
                         for (i=0;i<=linecounter;i++){
                             if (specificline[i]){
                                 if (specificline[i].name==optionone){
                                 clearCanvas(optionone)
+                                checkline=1
                                 removeObjectByKey(specificline,i)
                                 }else if(specificline[i].name==optiontwo){
                                 clearCanvas(optiontwo)
+                                checkline=1
                                 removeObjectByKey(specificline,i)
                                 }
                             }
                         }
+                        if (checkline==0){
+                            drawLine(selected,elmnt)
+                        }
                         elmnt.style.border = null
                         selected.style.border = null
-                        selected=1
-                        attention=0
-                    }else if(attention==1 &&selected!=elmnt){
-                        drawLine(selected,elmnt)
-                        elmnt.style.border = "2px solid green"
-                        selected.style.border = "2px solid green"
                         selected=1
                         attention=0
                     }else{
@@ -354,28 +354,28 @@
                         selected.style.border = null
                         selected=1
                         attention=0
-                    }else if(attention==1 &&selected!=elmnt && elmnt.style.border == "2px solid green"){
+                    }else if(attention==1 &&selected!=elmnt){
                         var optionone=elmnt.id+selected.id
                         var optiontwo=selected.id+elmnt.id
+                        var checkline=0
                         for (i=0;i<=linecounter;i++){
                             if (specificline[i]){
                                 if (specificline[i].name==optionone){
                                 clearCanvas(optionone)
+                                checkline=1
                                 removeObjectByKey(specificline,i)
                                 }else if(specificline[i].name==optiontwo){
                                 clearCanvas(optiontwo)
+                                checkline=1
                                 removeObjectByKey(specificline,i)
                                 }
                             }
                         }
+                        if (checkline==0){
+                            drawLine(selected,elmnt)
+                        }
                         elmnt.style.border = null
                         selected.style.border = null
-                        selected=1
-                        attention=0
-                    }else if(attention==1 &&selected!=elmnt){
-                        drawLine(selected,elmnt)
-                        elmnt.style.border = "2px solid green"
-                        selected.style.border = "2px solid green"
                         selected=1
                         attention=0
                     }else{
