@@ -1,4 +1,4 @@
-var phasethreeroom=["<button id='batman', onclick='initiatep3()'>Start Experiment</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag1' src='../static/images/Aliance.png' alt='Aliance' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag2' src='../static/images/Boulder.png' alt='Boulder' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag3' src='../static/images/Cornwall.png' alt='Cornwall' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag4' src='../static/images/Custer.png' alt='Custer' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag5' src='../static/images/DelawareCity.png' alt='DelawareCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag6' src='../static/images/Medora.png' alt='Medora' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag7' src='../static/images/Newport.png' alt='Newport' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag8' src='../static/images/ParkCity.png' alt='ParkCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag9' src='../static/images/Racine.png' alt='Racine' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/Sitka.png' alt='Sitka' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/WestPalmBeach.png' alt='WestPalmBeach' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/Yukon.png' alt='Yukon' width='100' height='100' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><img id='imgL' style='position:relative;right:450px;top:35%;border:2px solid blue' width='100' height='100'><img id='imgR' style='position:relative;left:450px;top:35%;border:2px solid blue' width='100' height='100'></div><img id='return' src='../static/images/return.png' style='position: relative;left: 75%;top: 70%;border: 2px solid black' width='50'height='50'></div></div>"]
+var phasethreeroom=["<button id='batman', onclick='initiatep3()'>Start Experiment</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='../static/images/Aliance.png' alt='Aliance' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag02' src='../static/images/Boulder.png' alt='Boulder' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag03' src='../static/images/Cornwall.png' alt='Cornwall' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag04' src='../static/images/Custer.png' alt='Custer' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag05' src='../static/images/DelawareCity.png' alt='DelawareCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag06' src='../static/images/Medora.png' alt='Medora' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag07' src='../static/images/Newport.png' alt='Newport' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag08' src='../static/images/ParkCity.png' alt='ParkCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag09' src='../static/images/Racine.png' alt='Racine' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/Sitka.png' alt='Sitka' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/WestPalmBeach.png' alt='WestPalmBeach' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/Yukon.png' alt='Yukon' width='100' height='100' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><img id='imgL' style='position:relative;right:450px;top:35%;border:2px solid blue' width='100' height='100'><img id='imgR' style='position:relative;left:450px;top:35%;border:2px solid blue' width='100' height='100'></div><img id='return' src='../static/images/return.png' style='position: relative;left: 75%;top: 70%;border: 2px solid black' width='50'height='50'></div></div>"]
 
 //PART THAT NEED TO BE RUN UNDER BUTTON
 var images = []
@@ -35,11 +35,27 @@ function makeVisible() {
 
 function initiatep3(){
     makeVisible()
-    container = document.getElementById('div1');
+    for (let i = 1; i <= 12; i++) {
+        if (i<10){
+            images[i-1] = document.getElementById(`drag0${i}`);
+        }else{
+            images[i-1] = document.getElementById(`drag${i}`)
+        }
+    }
     LeftSRC = images[Math.floor(Math.random()* images.length)].src
     RightSRC = images[Math.floor(Math.random()* images.length)].src
+    while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
+        var RightSRC = images[Math.floor(Math.random()* images.length)].src
+    }
+    container = document.getElementById('div1');
     document.getElementById('imgL').src = LeftSRC
     document.getElementById('imgR').src = RightSRC
+    for (let i = 1; i <= 12; i++) {
+        if (images[i-1].src == LeftSRC || images[i-1].src == RightSRC){
+            images[i-1].style="display: none;" // Make them disappear in the top box
+        }
+    }   
+    document.getElementById("batman").style.display = "none"
     //do not need to copy things below there
     for (let i = 1; i <= 12; i++) {
         if (i<10){
@@ -49,27 +65,9 @@ function initiatep3(){
         }
         }
     returndrag(document.getElementById('return'))
-
     sideElement(document.getElementById('imgL'))
     sideElement(document.getElementById('imgR'))
-    for (let i = 1; i <= 12; i++) {
-        if (i<10){
-            images[i-1] = document.getElementById(`drag0${i}`);
-        }else{
-            images[i-1] = document.getElementById(`drag${i}`)
-        }
-    }
 
-    while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
-        var RightSRC = images[Math.floor(Math.random()* images.length)].src
-    }
-
-    for (let i = 1; i <= 12; i++) {
-        if (images[i-1].src == LeftSRC || images[i-1].src == RightSRC){
-            images[i-1].style="display: none;" // Make them disappear in the top box
-        }
-    }   
-    document.getElementById("batman").style.display = "none"
 } 
 //PART THAT NEED TO BE RUN UNDER BUTTON END
 

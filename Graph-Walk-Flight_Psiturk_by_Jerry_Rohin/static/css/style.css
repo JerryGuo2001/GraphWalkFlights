@@ -103,3 +103,9 @@ background-color: lightgray
   margin: 10px; /* Optional: space between images */
   max-height: 100px; /* Optional: limit the height of the images */
 }
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
