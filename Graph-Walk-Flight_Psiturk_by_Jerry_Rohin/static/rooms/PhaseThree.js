@@ -1,4 +1,5 @@
-var phasethreeroom=["<button id='batman', onclick='initiatep3()'>Start Experiment</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='../static/images/Aliance.png' alt='Aliance' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag02' src='../static/images/Boulder.png' alt='Boulder' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag03' src='../static/images/Cornwall.png' alt='Cornwall' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag04' src='../static/images/Custer.png' alt='Custer' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag05' src='../static/images/DelawareCity.png' alt='DelawareCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag06' src='../static/images/Medora.png' alt='Medora' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag07' src='../static/images/Newport.png' alt='Newport' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag08' src='../static/images/ParkCity.png' alt='ParkCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag09' src='../static/images/Racine.png' alt='Racine' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/Sitka.png' alt='Sitka' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/WestPalmBeach.png' alt='WestPalmBeach' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/Yukon.png' alt='Yukon' width='100' height='100' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><img id='imgL' style='position:relative;right:450px;top:35%;border:2px solid blue' width='100' height='100'><img id='imgR' style='position:relative;left:450px;top:35%;border:2px solid blue' width='100' height='100'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;top: 75% ;border: 2px solid black' width='50'height='50'></div></div></div>"]
+var phasethreeroom=["<button id='batman', onclick='initiatep3()'>Start Experiment</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='../static/images/Aliance.png' alt='Aliance' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag02' src='../static/images/Boulder.png' alt='Boulder' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag03' src='../static/images/Cornwall.png' alt='Cornwall' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag04' src='../static/images/Custer.png' alt='Custer' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag05' src='../static/images/DelawareCity.png' alt='DelawareCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag06' src='../static/images/Medora.png' alt='Medora' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag07' src='../static/images/Newport.png' alt='Newport' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag08' src='../static/images/ParkCity.png' alt='ParkCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag09' src='../static/images/Racine.png' alt='Racine' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/Sitka.png' alt='Sitka' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/WestPalmBeach.png' alt='WestPalmBeach' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/Yukon.png' alt='Yukon' width='100' height='100' draggable='true' ondragstart='drag(event)'></div>"
+                    +"<div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='100'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='100'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>"]
 
 //PART THAT NEED TO BE RUN UNDER BUTTON
 var images = []
@@ -67,26 +68,26 @@ function initiatep3(){
     returndrag(document.getElementById('return'))
     sideElement(document.getElementById('imgL'))
     sideElement(document.getElementById('imgR'))
-
 } 
 //PART THAT NEED TO BE RUN UNDER BUTTON END
 
 function drawLine(img1,img2) {
     // Create a new canvas element
-    var canvas = document.createElement('canvas');
+    canvas = document.createElement('canvas');
     // Set the ID attribute for the canvas
     canvas.id = `${img1.id}`+`${img2.id}`;
     // Append the canvas to the parent container
-    container.appendChild(canvas);
+    var containerdl = document.getElementById('div3');
+    containerdl.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     // Set canvas size to match the container
-    canvas.width = container.offsetWidth;
-    canvas.height = container.offsetHeight;
+    canvas.width = containerdl.offsetWidth;
+    canvas.height = containerdl.offsetHeight;
     canvasname=canvas.id
     // Get image positions and dimensions
     var rect1 = img1.getBoundingClientRect();
     var rect2 = img2.getBoundingClientRect();
-    var containerRect = container.getBoundingClientRect();
+    var containerRect = containerdl.getBoundingClientRect();
 
     // Adjust positions relative to the container
     var x1 = rect1.left - containerRect.left + rect1.width / 2;
@@ -118,16 +119,17 @@ function dragLine(img1) {
                 var remainingPart = strings[0].replace(substring, '') //this is finding the img2
                 var img2=document.getElementById(`${remainingPart}`)
                 // Append the canvas to the parent container
-                container.appendChild(canvas);
+                var containerdl = document.getElementById('div3');
+                containerdl.appendChild(canvas);
                 var ctx = canvas.getContext('2d');
                 // Set canvas size to match the container
-                canvas.width = container.offsetWidth;
-                canvas.height = container.offsetHeight;
+                canvas.width = containerdl.offsetWidth;
+                canvas.height = containerdl.offsetHeight;
                 canvasname=canvas.id
                 // Get image positions and dimensions
                 var rect1 = img1.getBoundingClientRect();
                 var rect2 = img2.getBoundingClientRect();
-                var containerRect = container.getBoundingClientRect();
+                var containerRect = containerdl.getBoundingClientRect();
 
                 // Adjust positions relative to the container
                 var x1 = rect1.left - containerRect.left + rect1.width / 2;
@@ -239,7 +241,6 @@ function dragElement(elmnt) {
                 if (checkline==0){
                     drawLine(selected,elmnt)
                 }
-                elmnt.style.border = null
                 selected.style.border = null
                 selected=1
                 attention=0
@@ -283,7 +284,7 @@ function sideElement(elmnt) {
         // Check if the position has changed
         if (elmnt.offsetLeft === initialX && elmnt.offsetTop === initialY) {
             if (attention==1&&selected==elmnt){
-                selected.style.border = null
+                selected.style.border = "2px solid blue";
                 selected=1
                 attention=0
             }else if(attention==1 &&selected!=elmnt){
@@ -312,8 +313,7 @@ function sideElement(elmnt) {
                 attention=0
             }else{
                 if(selected!=1){
-                    selected.style.border = null; // Add black stroke
-                    elmnt.style.border = null;
+                    elmnt.style.border = "2px solid blue";
                     attention=0
                     selected= 1
                 }else if(selected==1){
@@ -386,6 +386,7 @@ function returndrag(elmnt){
                 var strings = specificline[i].name
                 if (strings[0].includes(substring)) {
                     clearCanvas(strings)
+                    removeObjectByKey(specificline,i)
                 }
             }
         }
