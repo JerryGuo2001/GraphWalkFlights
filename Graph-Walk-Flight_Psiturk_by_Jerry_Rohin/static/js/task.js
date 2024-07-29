@@ -49,7 +49,7 @@ var welcome = {
 //welcome page end
 
 //Goal directed planning
-function createPhase3(numberoftrial=2,){
+function createPhase3(numberoftrial){
   let phase3 = {}
   for (let i = 0; i < numberoftrial; i++){
     if (i==numberoftrial-1){
@@ -58,7 +58,8 @@ function createPhase3(numberoftrial=2,){
         choices: ['space'],
         stimulus: phasethreeroom[0],
         on_finish: function (data) {
-          data.trial_type = 'intro_1';
+          data.trial_type = specificline;
+          wassup(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [thank_you],
           }, jsPsych.resumeExperiment)
@@ -70,7 +71,8 @@ function createPhase3(numberoftrial=2,){
         choices: ['space'],
         stimulus: phasethreeroom[0],
         on_finish: function (data) {
-          data.trial_type = 'intro_1';
+          data.trial_type = specificline;
+          wassup(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
           }, jsPsych.resumeExperiment)
@@ -81,7 +83,9 @@ function createPhase3(numberoftrial=2,){
   return phase3
 }
 
-phase3=createPhase3()
+
+
+phase3=createPhase3(numberoftrial)
 //Goal directed planning end
 
 // final thank you
