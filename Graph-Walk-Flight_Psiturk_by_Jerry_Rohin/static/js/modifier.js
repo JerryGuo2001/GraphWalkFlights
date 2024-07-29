@@ -4,10 +4,10 @@
 
 
 //Text for instruction
-instruct_1="<div style='margin-left:300px ;margin-right: 300px ;text-justify: auto'><p><b>Welcome!</b></p><p>You're rummaging through a house to find photographs to sell. You look for photographs in six rooms.</p><p> In each room, you find a stack of photographs which have a center image and a background scene. The background scene represents where the photograph was taken. Each image was photographed in its own unique location, so please use the scenes as a guide when learning about each image. Later, you will be asked to choose beteween two images. Make sure to pay attention to the images and where they were photographed. Each image is photographed in a unique location. As you're going through the stack, you're told the resale value for each photograph.</p><p>[press the spacebar to continue]</p>",
-instruct_2="",
-instruct_3="",
-instruct_4="",
+instruct_1="<div style='margin-left:300px ;margin-right: 300px ;text-justify: auto'><p><b>Welcome!</b></p><p>There is a new airline, AerBorn Airlines, that is offering flights to various destinations. You are a travel agent who is trying to help your clients make various travel arrangements. Your job is to try and learn as many direct flights offered by AerBorn Airlines as possible so you could advise your clients to make their travel plans as efficiently as possible. To do this, your supervisor has asked you to study the daily flight paths taken by AerBorn Airlines. </p><p>[press the spacebar to continue]</p>",
+instruct_2="<div style='margin-left:300px ;margin-right: 300px ;text-justify: auto'><p><b>Welcome!</b></p><img src= '../images/instruction2.png'><img><p>[press the spacebar to continue]</p>",
+instruct_3="<div style='margin-left:300px ;margin-right: 300px ;text-justify: auto'><p><b>Welcome!</b></p><p>You will see a series of these city-pairs and will try to learn as many of them as possible to best advise your future clients for travel. After studying the information, you will be asked to help your clients book travel to various destinations via AerBorn Airlines.</p><p>First, you will see a series of practice images before moving on to the next task</p><p>[press the spacebar to continue]</p>",
+instruct_4="<div style='margin-left:300px ;margin-right: 300px ;text-justify: auto'><p><b>Welcome!</b></p><p>Great! We will move on to the main task now, remember to memorize the city-pairings to the best of your ability.</p><p>[press the spacebar to continue]</p>",
 
 
 
