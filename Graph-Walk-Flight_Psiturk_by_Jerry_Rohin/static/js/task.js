@@ -48,6 +48,43 @@ var welcome = {
 }
 //welcome page end
 
+//Instruction page
+
+var intro_1 = {
+  type: 'html-keyboard-response',
+  choices: ['space'],
+  stimulus: instruct_1,
+  on_finish: function (data) {
+    data.trial_type = 'intro_1';
+  }
+}
+
+var intro_2 = {
+  type: 'html-keyboard-response',
+  choices: ['space'],
+  stimulus: instruct_2,
+  on_finish: function (data) {
+    data.trial_type = 'intro_2';
+  }
+}
+var intro_3 = {
+  type: 'html-keyboard-response',
+  choices: ['space'],
+  stimulus: instruct_3,
+  on_finish: function (data) {
+    data.trial_type = 'intro_3';
+  }
+}
+var intro_4 = {
+  type: 'html-keyboard-response',
+  choices: ['space'],
+  stimulus: instruct_4,
+  on_finish: function (data) {
+    data.trial_type = 'intro_4';
+  }
+}
+//Instruction page end
+
 //Goal directed planning
 function createPhase3(numberoftrial){
   let phase3 = {}
