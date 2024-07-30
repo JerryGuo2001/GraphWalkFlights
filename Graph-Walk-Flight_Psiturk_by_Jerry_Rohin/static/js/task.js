@@ -49,40 +49,23 @@ var welcome = {
 //welcome page end
 
 //Instruction page
-
-var intro_1 = {
-  type: 'html-keyboard-response',
-  choices: ['space'],
-  stimulus: instruct_1,
-  on_finish: function (data) {
-    data.trial_type = 'intro_1';
+function createinstruct(instruct_1,number){
+  var intro={
+    type: 'html-keyboard-response',
+    choices: ['space'],
+    stimulus: instruct_1,
+    on_finish: function (data) {
+      data.trial_type = 'intro_'+number;
+    }
   }
+  return intro
+}
+intro={}
+for (let i = 0; i < instructnames.length; i++) {
+  instructname=instructnames[i]
+  intro[i] = createinstruct(instruct[instructname],i)
 }
 
-var intro_2 = {
-  type: 'html-keyboard-response',
-  choices: ['space'],
-  stimulus: instruct_2,
-  on_finish: function (data) {
-    data.trial_type = 'intro_2';
-  }
-}
-var intro_3 = {
-  type: 'html-keyboard-response',
-  choices: ['space'],
-  stimulus: instruct_3,
-  on_finish: function (data) {
-    data.trial_type = 'intro_3';
-  }
-}
-var intro_4 = {
-  type: 'html-keyboard-response',
-  choices: ['space'],
-  stimulus: instruct_4,
-  on_finish: function (data) {
-    data.trial_type = 'intro_4';
-  }
-}
 //Instruction page end
 
 //Goal directed planning
@@ -136,7 +119,12 @@ var thank_you = {
     save_data(true)
   }
 }
+
+//time line here
 timeline.push(welcome)
+for (let i = 0; i < instructnames.length; i++){
+  timeline.push(intro[i])
+}
 timeline.push(phase3[0])
 
 jsPsych.init({
