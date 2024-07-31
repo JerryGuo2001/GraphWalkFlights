@@ -20,6 +20,11 @@ instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_5
 instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6,instruct_7,instruct_8,instruct_9,instruct_10} // IF you want to add or decrease number of page for instruct, just delete or add var here.
 
 
+//learning phse
+n_learning_trial=3 //This determine the number of learning trial you want in total
+learn_left=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
+learn_right=['DelawareCity.png','Custer.png','Custer.png','DelawareCity.png']
+
 //Goal Directed Navigation:
 numberoftrial=2 // This determine the number of trial you want
 

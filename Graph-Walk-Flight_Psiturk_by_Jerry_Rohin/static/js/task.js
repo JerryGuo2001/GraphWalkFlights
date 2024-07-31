@@ -68,6 +68,74 @@ for (let i = 0; i < instructnames.length; i++) {
 
 //Instruction page end
 
+
+// learning phase
+var warning_page={
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  trial_duration:3000,
+  stimulus:'<h1>Please make sure to respond to the questions.</h1><br><h1>Continued failure to respond will</h1><br><h1> result in the task ending early</h1><br><h1>The experiment will resume in 3 seconds</h1>',
+  on_finish: function(data) {
+    data.trial_type='warning_page'
+    warning=warning+1
+  }
+}
+
+var thecrossant= {
+  type: 'image-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 500,
+  trial_duration: 500,
+  response_ends_trial: false,
+  stimulus:create_memory_ten(),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+}
+
+function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds){
+  if(sfa && curr_blue_trial<n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [thecrossant,learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [thecrossant,phase3[0]],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,phase3[0]],
+    }, jsPsych.resumeExperiment)
+  }else if(warning>2){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,phase3[0]],
+    }, jsPsych.resumeExperiment)
+  }
+}
+var curr_learning_trial=0
+var learn_phase = {
+  type: 'html-keyboard-responsefl',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_choice_trial(learn_left,learn_right,curr_learning_trial),
+  stimulus_duration:3000,
+  trial_duration:3000,
+  on_finish: function(data) {
+    data.trial_type = 'blue_learn_choice';
+    sfa=1,
+    curr_learning_trial=curr_learning_trial+1,
+    learn_phase.stimulus=create_choice_trial(learn_left,learn_right,curr_learning_trial)
+    attentioncheck(learn_phase,sfa,curr_learning_trial,n_learning_trial)
+  }
+}
+// learning phase end
+
+
 //Goal directed planning
 function createPhase3(numberoftrial){
   let phase3 = {}
@@ -125,7 +193,7 @@ timeline.push(welcome)
 for (let i = 0; i < instructnames.length; i++){
   timeline.push(intro[i])
 }
-timeline.push(phase3[0])
+timeline.push(learn_phase)
 
 jsPsych.init({
   timeline: timeline,
