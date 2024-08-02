@@ -35,11 +35,11 @@ learn_right=['DelawareCity.png','Custer.png','Custer.png','DelawareCity.png']
 
 
 //Direct Memory phase
-n_direct_trial=3
+n_direct_trial=2
 room_direct_up=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
-room_direct_left=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
-room_direct_mid=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
-room_direct_right=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
+room_direct_left=['DelawareCity.png','Racine.png','Medora.png','Racine.png']
+room_direct_mid=['Medora.png','Custer.png','Medora.png','Racine.png']
+room_direct_right=['Racine.png','Medora.png','Medora.png','Racine.png']
 
 
 //Goal Directed Navigation:
