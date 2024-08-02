@@ -6,9 +6,15 @@ function parse(str) {
 
 
 //Learning phase
-function create_choice_trial(room_choiceStims_left,room_choiceStims_right,trial_num) {
+function create_learning_trial(room_choiceStims_left,room_choiceStims_right,trial_num) {
   return parse("<img style='position:absolute;top: 50%;right: 75%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'> <img style='position:absolute;top: 50%;right: 25%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'><br><style>body {background-color: #ffff;}</style>"
   ,room_choiceStims_left[trial_num],room_choiceStims_right[trial_num])
+}
+
+//Direct Memory phase
+function create_direct_trial(room_choice_up,room_choiceStims_left,room_choice_mid,room_choiceStims_right,trial_num) {
+  return parse("<img style='position:absolute;top: 30%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'><img style='position:absolute;top: 80%;right: 75%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'><img style='position:absolute;top: 80%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'> <img style='position:absolute;top: 80%;right: 25%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'><br><style>body {background-color: #ffff;}</style>"
+  ,room_choice_up[trial_num],room_choiceStims_left[trial_num],room_choice_mid[trial_num],room_choiceStims_right[trial_num])
 }
 
 //plus sign
@@ -34,4 +40,49 @@ function add_room(room,room_timeline) {
     room_timeline.push(room[i])
 } return room_timeline
 
+}
+
+//function for attentioncheck
+function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
+  if(sfa && curr_blue_trial<n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [thecrossant,learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [thecrossant,thebreak],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,thebreak],
+    }, jsPsych.resumeExperiment)
+  }else if(warning>2){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page],
+    }, jsPsych.resumeExperiment)
+  }
+}
+
+//function to push the instruct
+function timelinepushintro(intro,instructnames){
+  for (let i = 0; i < instructnames.length; i++){
+    timeline.push(intro[i],)
+  }
+}
+
+function timelinepresent(intro, instructnames,directmemory_phase) {
+  let timelinetemp = [];
+  
+  for (let i = 0; i < instructnames.length; i++) {
+    timelinetemp.push(intro[i]);
+  }
+  timelinetemp.push(directmemory_phase);
+  
+  console.log(timelinetemp)
+  
+  jsPsych.addNodeToEndOfTimeline({ timeline: timelinetemp }, jsPsych.resumeExperiment);
 }

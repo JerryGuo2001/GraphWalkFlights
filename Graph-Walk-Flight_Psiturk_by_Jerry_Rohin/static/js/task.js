@@ -60,11 +60,19 @@ function createinstruct(instruct_1,number){
   }
   return intro
 }
-intro={}
+
+function createfulintro(instruct,instructnames){
+  intro={}
 for (let i = 0; i < instructnames.length; i++) {
   instructname=instructnames[i]
   intro[i] = createinstruct(instruct[instructname],i)
+}return intro
 }
+
+
+intro_learn=createfulintro(instruct,instructnames)
+intro_mem=createfulintro(mem_instruct,mem_instructnames)
+intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
 //Instruction page end
 
@@ -94,47 +102,57 @@ var thecrossant= {
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
 }
 
-function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds){
-  if(sfa && curr_blue_trial<n_blue_rounds) {
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [thecrossant,learn_phase],
-    }, jsPsych.resumeExperiment)
-  }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [thecrossant,phase3[0]],
-    }, jsPsych.resumeExperiment)
-  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,learn_phase],
-    }, jsPsych.resumeExperiment)
-  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,phase3[0]],
-    }, jsPsych.resumeExperiment)
-  }else if(warning>2){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,phase3[0]],
-    }, jsPsych.resumeExperiment)
+function createbreak(intro_dir,instructnames,directmemory_phase){
+  let thebreak= {
+    type: 'html-keyboard-response',
+    choices:jsPsych.NO_KEYS,
+    trial_duration: 100,
+    stimulus:'<p></p>',
+    on_finish: function(data) {
+      data.trial_type='thebreak'
+      timelinepresent(intro_dir,instructnames,directmemory_phase)
+    }
   }
+  return thebreak
 }
+
+
 var curr_learning_trial=0
 var learn_phase = {
   type: 'html-keyboard-responsefl',
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
-  stimulus:create_choice_trial(learn_left,learn_right,curr_learning_trial),
+  stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
   stimulus_duration:3000,
   trial_duration:3000,
   on_finish: function(data) {
-    data.trial_type = 'blue_learn_choice';
+    data.trial_type = 'learn_phase';
     sfa=1,
     curr_learning_trial=curr_learning_trial+1,
-    learn_phase.stimulus=create_choice_trial(learn_left,learn_right,curr_learning_trial)
-    attentioncheck(learn_phase,sfa,curr_learning_trial,n_learning_trial)
+    learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
+    attentioncheck(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break)
   }
 }
 // learning phase end
 
+//Direct Memory test
+var curr_direct_trial=0
+var directmemory_phase = {
+  type: 'html-keyboard-responsefl',
+  choices: ['1','2','3'],
+  response_ends_trial: false,
+  stimulus:create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial),
+  stimulus_duration:3000,
+  trial_duration:3000,
+  on_finish: function(data) {
+    data.trial_type = 'learn_phase';
+    sfa=data.key_press,
+    curr_direct_trial=curr_direct_trial+1,
+    learn_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
+    attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,dir_break)
+  }
+}
+//Direct Memory test end
 
 //Goal directed planning
 function createPhase3(numberoftrial){
@@ -174,6 +192,8 @@ function createPhase3(numberoftrial){
 
 
 phase3=createPhase3(numberoftrial)
+learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
+dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
 
 // final thank you
@@ -188,11 +208,10 @@ var thank_you = {
   }
 }
 
+
 //time line here
 timeline.push(welcome)
-for (let i = 0; i < instructnames.length; i++){
-  timeline.push(intro[i])
-}
+timelinepushintro(intro_learn,instructnames)
 timeline.push(learn_phase)
 
 jsPsych.init({
