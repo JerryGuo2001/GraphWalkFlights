@@ -3,6 +3,7 @@
 
 //warningpage
 warning=0 //this is to start the counter of total warning
+
 checkfail=1 //this is to start the attentioncheck
 
 //Text for instruction
