@@ -103,10 +103,16 @@ var thecrossant= {
   on_finish: function(data) {
     data.trial_type = 'learn_phase'
     kp=data.key_press
-    if(kp=='49') {
-
-    }else if(kp=='50'){
-
+    if(kp!=pluscheck[curr_learning_trial]) {
+      checkfail=checkfail+1
+      if(checkfail>=2){
+        timeline=[]
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [warning_page,learn_phase],
+        }, jsPsych.resumeExperiment)
+      }
+    }else{
+      checkfail=0
     }
   }
 }
