@@ -73,6 +73,7 @@ for (let i = 0; i < instructnames.length; i++) {
 intro_learn=createfulintro(instruct,instructnames)
 intro_mem=createfulintro(mem_instruct,mem_instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
+intro_short=createfulintro(short_instruct,short_instructnames)
 
 //Instruction page end
 
@@ -161,14 +162,34 @@ var directmemory_phase = {
   stimulus_duration:3000,
   trial_duration:3000,
   on_finish: function(data) {
-    data.trial_type = 'learn_phase';
+    data.trial_type = 'directmemory_phase';
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
-    learn_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
-    attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,dir_break)
+    directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
+    attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
   }
 }
 //Direct Memory test end
+
+
+//Shortest Path memory test
+var curr_shortest_trial=0
+var shortestpath_phase = {
+  type: 'html-keyboard-responsefl',
+  choices: ['1','2'],
+  response_ends_trial: false,
+  stimulus:create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial),
+  stimulus_duration:3000,
+  trial_duration:3000,
+  on_finish: function(data) {
+    data.trial_type = 'shortestpath_phase';
+    sfa=data.key_press,
+    curr_shortest_trial=curr_shortest_trial+1,
+    shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
+    attentioncheck(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial,dir_break)
+  }
+}
+//Shortest Path memory end
 
 //Goal directed planning
 function createPhase3(numberoftrial){
@@ -209,6 +230,7 @@ function createPhase3(numberoftrial){
 
 phase3=createPhase3(numberoftrial)
 learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
+short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
 
