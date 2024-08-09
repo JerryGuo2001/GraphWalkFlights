@@ -98,12 +98,12 @@ var thecrossant= {
   stimulus_duration: 1000,
   trial_duration: 1000,
   response_ends_trial: false,
-  stimulus:create_memory_ten(pluscolor[curr_learning_trial]),
+  stimulus:create_memory_ten(pluscolor[curr_learning_trial-1]),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
     data.trial_type = 'learn_phase'
     kp=data.key_press
-    if(kp!=pluscheck[curr_learning_trial]) {
+    if(kp!=pluscheck[curr_learning_trial-1]) {
       if(checkfail>=checkthreshold){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
