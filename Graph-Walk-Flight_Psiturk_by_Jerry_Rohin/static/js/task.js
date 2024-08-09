@@ -114,7 +114,7 @@ var thecrossant= {
     }else{
       checkfail=0
     }
-    thecrossant.stimulus=create_memory_ten(pluscolor[curr_learning_trial-1])
+    thecrossant.stimulus=create_memory_ten(pluscolor[curr_learning_trial])
   }
 }
 
