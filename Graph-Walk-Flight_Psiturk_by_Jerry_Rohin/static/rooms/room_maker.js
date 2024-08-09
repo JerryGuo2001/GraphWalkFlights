@@ -40,7 +40,7 @@ function add_room(room,room_timeline) {
 }
 
 //function for attentioncheck
-function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
+function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
   if(sfa && curr_blue_trial<n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
       timeline: [thecrossant,learn_phase],
@@ -48,6 +48,30 @@ function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
   }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
       timeline: [thecrossant,thebreak],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,thebreak],
+    }, jsPsych.resumeExperiment)
+  }else if(warning>2){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page],
+    }, jsPsych.resumeExperiment)
+  }
+}
+
+function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
+  if(sfa && curr_blue_trial<n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [thebreak],
     }, jsPsych.resumeExperiment)
   }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
     jsPsych.addNodeToEndOfTimeline({
@@ -93,9 +117,9 @@ for (let i=0 ; i<n_learning_trial;i++){
   plusdeter = randomIntFromInterval(1, 2)
   if (plusdeter==1){
     pluscolor.push(atcheckcolor[0])
-    pluscheck.push('49')
+    pluscheck.push(49)
   }else if(plusdeter==2){
     pluscolor.push(atcheckcolor[1])
-    pluscheck.push('50')
+    pluscheck.push(50)
   }
 }

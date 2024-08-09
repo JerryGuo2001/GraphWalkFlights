@@ -83,7 +83,7 @@ var warning_page={
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   trial_duration:3000,
-  stimulus:'<h1>Please make sure to respond to the questions.</h1><br><h1>Continued failure to respond will</h1><br><h1> result in the task ending early</h1><br><h1>The experiment will resume in 3 seconds</h1>',
+  stimulus: '<h1 style="color: red;">Please make sure to respond to the questions.</h1><br><h1 style="color: red;">Continued failure to respond will</h1><br><h1 style="color: red;">result in the task ending early</h1><br><h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
   on_finish: function(data) {
     data.trial_type='warning_page'
     warning=warning+1
@@ -114,6 +114,7 @@ var thecrossant= {
     }else{
       checkfail=0
     }
+    thecrossant.stimulus=create_memory_ten(pluscolor[curr_learning_trial-1])
   }
 }
 
@@ -145,7 +146,7 @@ var learn_phase = {
     sfa=1,
     curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    attentioncheck(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break)
+    attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break)
   }
 }
 // learning phase end
