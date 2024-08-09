@@ -4,6 +4,7 @@
 //warningpage
 warning=0 //this is to start the counter of total warning
 
+warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:2;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you seee a black cross and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>",
 checkfail=1 //this is to start the attentioncheck
 
 //Text for instruction
