@@ -18,13 +18,10 @@ function create_direct_trial(room_choice_up,room_choiceStims_left,room_choice_mi
 }
 
 //plus sign
-function create_memory_ten() {
-  return parse("../static/images/isi.png")
+function create_memory_ten(a) {
+  return parse("<p style='font-size: 100px;color: %s;'>\u002B</p>",a)
 }
 
-function create_memory_redx() {
-  return parse("../static/images/redx.jpg")
-}
 
 function create_memory_phase(blue_val,room_color,n_memory) {
   room_timeline = []
@@ -81,8 +78,24 @@ function timelinepresent(intro, instructnames,directmemory_phase) {
     timelinetemp.push(intro[i]);
   }
   timelinetemp.push(directmemory_phase);
-  
+
   console.log(timelinetemp)
   
   jsPsych.addNodeToEndOfTimeline({ timeline: timelinetemp }, jsPsych.resumeExperiment);
+}
+
+//function to generate the attention check of the plus sign
+//random number
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+var pluscolor=[]
+for (let i=0 ; i<n_learning_trial;i++){
+  plusdeter = randomIntFromInterval(1, 2)
+  if (plusdeter==1){
+    pluscolor.push(atcheckcolor[0])
+  }else if(plusdeter==2){
+    pluscolor.push(atcheckcolor[1])
+  }
 }

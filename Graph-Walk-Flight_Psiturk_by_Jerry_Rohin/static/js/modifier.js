@@ -47,3 +47,6 @@ room_direct_right=['Racine.png','Medora.png','Medora.png','Racine.png']
 //Goal Directed Navigation:
 numberoftrial=2 // This determine the number of trial you want
 
+
+//Color for the plus sign
+atcheckcolor=['black','green']

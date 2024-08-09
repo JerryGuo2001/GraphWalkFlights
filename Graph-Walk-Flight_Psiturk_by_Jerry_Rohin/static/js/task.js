@@ -91,15 +91,24 @@ var warning_page={
 }
 
 var thecrossant= {
-  type: 'image-keyboard-response',
-  choices: jsPsych.NO_KEYS,
+  type: 'html-keyboard-response',
+  choices: ['1','2'],
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 500,
-  trial_duration: 500,
+  stimulus_duration: 1000,
+  trial_duration: 1000,
   response_ends_trial: false,
-  stimulus:create_memory_ten(),
+  stimulus:create_memory_ten(pluscolor[curr_learning_trial]),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type = 'learn_phase'
+    kp=data.key_press
+    if(kp=='49') {
+
+    }else if(kp=='50'){
+
+    }
+  }
 }
 
 function createbreak(intro_dir,instructnames,directmemory_phase){
