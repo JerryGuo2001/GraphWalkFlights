@@ -104,13 +104,13 @@ var thecrossant= {
     data.trial_type = 'learn_phase'
     kp=data.key_press
     if(kp!=pluscheck[curr_learning_trial]) {
-      checkfail=checkfail+1
-      if(checkfail>=2){
-        timeline=[]
+      if(checkfail>=checkthreshold){
+        jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
           timeline: [warning_page,learn_phase],
         }, jsPsych.resumeExperiment)
       }
+      checkfail=checkfail+1
     }else{
       checkfail=0
     }

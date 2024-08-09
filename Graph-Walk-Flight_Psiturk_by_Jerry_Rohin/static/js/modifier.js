@@ -3,9 +3,9 @@
 
 //warningpage
 warning=0 //this is to start the counter of total warning
-
 warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:2;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you seee a black cross and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>",
 checkfail=1 //this is to start the attentioncheck
+checkthreshold=2 //this is to add the threshold for attentioncheck
 
 //Text for instruction
 instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 35px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 30px;line-height:2'>There is a new airline, AerBorn Airlines, that is offering flights to various destinations. You are a travel agent who is trying to help your clients make various travel arrangements. Your job is to try and learn as many direct flights offered by AerBorn Airlines as possible so you could advise your clients to make their travel plans as efficiently as possible. To do this, your supervisor has asked you to study the daily flight paths taken by AerBorn Airlines. </p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
@@ -50,3 +50,5 @@ room_direct_right=['Racine.png','Medora.png','Medora.png','Racine.png']
 //Goal Directed Navigation:
 numberoftrial=2 // This determine the number of trial you want
 
+//color for the plus sign
+atcheckcolor=['black','green']
