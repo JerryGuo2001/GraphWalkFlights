@@ -38,7 +38,7 @@ short_instructnames = ["instruct_short_1","instruct_short_2","instruct_short_3",
 short_instruct={instruct_short_1,instruct_short_2,instruct_short_3,instruct_short_4} 
 
 //learning phse
-n_learning_trial=16 //This determine the number of learning trial you want in total
+n_learning_trial=3 //This determine the number of learning trial you want in total
 imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
 
 imageIndex= [[0,1], [1,3], [4,3], [11,3], [1,2], [2,3], [2,10], [11,10], [2,5], [5,6], [5,8], [10,8], [6,7], [8,7], [8,9], [7,9]]
@@ -64,4 +64,4 @@ room_shortest_right=['Racine.png','Medora.png','Medora.png','Racine.png']
 numberoftrial=2 // This determine the number of trial you want
 
 //color for the plus sign
-atcheckcolor=['black','green']
+atcheckcolor=['blue','green']
