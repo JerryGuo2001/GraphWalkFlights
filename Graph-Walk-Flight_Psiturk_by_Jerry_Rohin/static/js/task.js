@@ -195,6 +195,14 @@ var directmemory_phase = {
   stimulus:create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial),
   stimulus_duration:3000,
   trial_duration:3000,
+  on_load: function() {
+    // Reveal other rooms after 500 ms
+    setTimeout(function() {
+      for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
+        document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
+      }
+    }, randomDelay);
+  },
   on_finish: function(data) {
     data.trial_type = 'directmemory_phase';
     sfa=data.key_press,
@@ -215,6 +223,14 @@ var shortestpath_phase = {
   stimulus:create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial),
   stimulus_duration:3000,
   trial_duration:3000,
+  on_load: function() {
+    // Reveal other rooms after 500 ms
+    setTimeout(function() {
+      for(let i = 0;i<document.getElementsByClassName('bottomshortest').length;i++){
+        document.getElementsByClassName('bottomshortest')[i].style.visibility = 'visible';
+      }
+    }, randomDelay);
+  },
   on_finish: function(data) {
     data.trial_type = 'shortestpath_phase';
     sfa=data.key_press,

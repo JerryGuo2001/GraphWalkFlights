@@ -68,5 +68,8 @@ numberoftrial=2 // This determine the number of trial you want
 //color for the plus sign
 atcheckcolor=['blue','green']
 
-//determinants of time for the cross to turn color
+//determinant for the time for the flash color
 colordetretime=300
+
+//randomDelay for Direct Memory Test and Shortest Path Judgement
+var randomDelay = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
