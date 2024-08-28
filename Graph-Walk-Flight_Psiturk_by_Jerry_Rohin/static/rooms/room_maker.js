@@ -5,9 +5,15 @@ function parse(str) {
 }
 
 
-//Learning phase
+//Learning phase with color cross in the middle
+function create_learningcolor_trial(room_choiceStims_left,room_choiceStims_right,trial_num,color) {
+  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: %s;'>\u002B</p><img style='position:absolute;top: 50%;right: 70%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'> <img style='position:absolute;top: 50%;right: 30%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'><br><style>body {background-color: #ffff;}</style>"
+  ,color,room_choiceStims_left[trial_num],room_choiceStims_right[trial_num])
+}
+
+//learning phase
 function create_learning_trial(room_choiceStims_left,room_choiceStims_right,trial_num) {
-  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: black;'>\u002B</p><p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color:black;'>\u002B</p><img style='position:absolute;top: 50%;right: 70%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'> <img style='position:absolute;top: 50%;right: 30%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'><br><style>body {background-color: #ffff;}</style>"
+  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color:black;'>\u002B</p><img style='position:absolute;top: 50%;right: 70%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'> <img style='position:absolute;top: 50%;right: 30%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'><br><style>body {background-color: #ffff;}</style>"
   ,room_choiceStims_left[trial_num],room_choiceStims_right[trial_num])
 }
 
@@ -24,8 +30,8 @@ function create_shortestpath_trial(room_choice_up,room_choiceStims_left,room_cho
 }
 
 //plus sign
-function create_memory_ten(a) {
-  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: %s;'>\u002B</p>",a)
+function create_memory_ten() {
+  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: black;'>\u002B</p>")
 }
 
 
@@ -49,23 +55,11 @@ function add_room(room,room_timeline) {
 function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
   if(sfa && curr_blue_trial<n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [thecrossant,learn_phase],
+      timeline: [learn_phase_color,learn_phase_black,thecrossant,learn_phase],
     }, jsPsych.resumeExperiment)
   }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [thecrossant,thebreak],
-    }, jsPsych.resumeExperiment)
-  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,learn_phase],
-    }, jsPsych.resumeExperiment)
-  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,thebreak],
-    }, jsPsych.resumeExperiment)
-  }else if(warning>2){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page],
+      timeline: [learn_phase_color,learn_phase_black,thecrossant,thebreak],
     }, jsPsych.resumeExperiment)
   }
 }

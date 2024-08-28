@@ -140,14 +140,48 @@ var learn_phase = {
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
-  stimulus_duration:3000,
-  trial_duration:3000,
+  stimulus_duration:1500+colordetretime,
+  trial_duration:1500+colordetretime,
   on_finish: function(data) {
     data.trial_type = 'learn_phase';
     sfa=1,
     curr_learning_trial=curr_learning_trial+1,
+    learn_phase.stimulus_duration=1500
+    learn_phase.trial_duration=1500
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
     attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break)
+  }
+}
+
+var learn_phase_color = {
+  type: 'html-keyboard-responsefl',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
+  stimulus_duration:colordetretime,
+  trial_duration:colordetretime,
+  on_finish: function(data) {
+    data.trial_type = 'learn_phase';
+    sfa=1,
+    learn_phase_color.stimulus_duration=colordetretime
+    learn_phase_color.trial_duration=colordetretime
+    learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
+  }
+}
+
+var learn_phase_black = {
+  type: 'html-keyboard-responsefl',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
+  stimulus_duration:1500-colordetretime,
+  trial_duration:1500-colordetretime,
+  on_finish: function(data) {
+    data.trial_type = 'learn_phase';
+    sfa=1,
+    learn_phase_black.stimulus_duration=1500-colordetretime
+    learn_phase_black.trial_duration=1500-colordetretime
+    learn_phase_black.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
   }
 }
 // learning phase end

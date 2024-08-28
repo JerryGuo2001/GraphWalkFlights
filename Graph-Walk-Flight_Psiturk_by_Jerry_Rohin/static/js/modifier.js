@@ -67,3 +67,6 @@ numberoftrial=2 // This determine the number of trial you want
 
 //color for the plus sign
 atcheckcolor=['blue','green']
+
+//determinants of time for the cross to turn color
+colordetretime=300
