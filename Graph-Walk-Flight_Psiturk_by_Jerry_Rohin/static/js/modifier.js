@@ -69,7 +69,17 @@ numberoftrial=2 // This determine the number of trial you want
 atcheckcolor=['blue','green']
 
 //determinant for the time for the flash color
-colordetretime=300
+function colorStart(){
+    colordetretime= Math.floor(Math.random() * (1000 - 300 + 1)) + 300;
+    return colordetretime
+}
+
+//time for the duration of the color being present
+function colorStop(){
+    removecolor= 1500-colordetretime;
+    return removecolor
+}
+
 
 //randomDelay for Direct Memory Test and Shortest Path Judgement
 var randomDelay = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
