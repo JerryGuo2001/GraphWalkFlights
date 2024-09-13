@@ -128,27 +128,37 @@ var thecrossant_black={
     op=data.key_press
     if (kp){
     if(kp!=pluscheck[curr_learning_trial-1]) {
-      if(checkfail>=checkthreshold){
+      checkfail=checkfail+1
+      if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
           timeline: [warning_page,learn_phase],
         }, jsPsych.resumeExperiment)
+      }else if(checkfail>4){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+        timeline:[TaskFailed],},jsPsych.resumeExperiment)
+        //end experiment
       }
-      checkfail=checkfail+1
     }else{
-      checkfail=0
+      checkfail=1
     }
   }else if(op){
     if(op!=pluscheck[curr_learning_trial-1]) {
-      if(checkfail>=checkthreshold){
+      checkfail=checkfail+1
+      if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
           timeline: [warning_page,learn_phase],
         }, jsPsych.resumeExperiment)
+      }else if(checkfail>4){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+        timeline:[TaskFailed],},jsPsych.resumeExperiment)
+        //end experiment
       }
-      checkfail=checkfail+1
     }else{
-      checkfail=0
+      checkfail=1
     }
   }else{
     jsPsych.endCurrentTimeline(),
@@ -158,6 +168,17 @@ var thecrossant_black={
   }
   }
 }
+
+var TaskFailed = {
+  type: 'html-keyboard-response',
+  stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
+            '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
+  choices: ['Escape'],
+  on_finish: function(data){
+    window.close();
+  }
+};
+
 var thecrossant_break={
   type: 'html-keyboard-response',
   choices: jsPsych.NO_KEYS,
