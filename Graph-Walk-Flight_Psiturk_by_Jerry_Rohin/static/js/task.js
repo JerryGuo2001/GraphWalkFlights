@@ -79,6 +79,10 @@ intro_short=createfulintro(short_instruct,short_instructnames)
 
 
 // learning phase
+var curr_learning_trial=0
+var colordetretime=colorStart()
+var removecolor=colorStop(colordetretime)
+
 var warning_page={
   type: 'html-keyboard-response',
   choices: jsPsych.NO_KEYS,
@@ -91,19 +95,38 @@ var warning_page={
   }
 }
 
+
 var thecrossant= {
   type: 'html-keyboard-response',
   choices: ['1','2'],
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 1500,
-  trial_duration: 1500,
+  stimulus_duration: removecolor,
+  trial_duration: removecolor,
   response_ends_trial: false,
-  stimulus:create_memory_ten(pluscolor[curr_learning_trial-1]),
+  stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
-    data.trial_type = 'learn_phase'
+    console.log(colordetretime)
     kp=data.key_press
+    thecrossant.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
+  }
+}
+
+var thecrossant_black={
+  type: 'html-keyboard-response',
+  choices: ['1','2'],
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 1000-removecolor,
+  trial_duration: 1000-removecolor,
+  response_ends_trial: false,
+  stimulus:create_memory_ten('black'),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type ='thecrossant_black'
+    op=data.key_press
+    if (kp){
     if(kp!=pluscheck[curr_learning_trial-1]) {
       if(checkfail>=checkthreshold){
         jsPsych.endCurrentTimeline(),
@@ -115,7 +138,44 @@ var thecrossant= {
     }else{
       checkfail=0
     }
-    thecrossant.stimulus=create_memory_ten(pluscolor[curr_learning_trial])
+  }else if(op){
+    if(op!=pluscheck[curr_learning_trial-1]) {
+      if(checkfail>=checkthreshold){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [warning_page,learn_phase],
+        }, jsPsych.resumeExperiment)
+      }
+      checkfail=checkfail+1
+    }else{
+      checkfail=0
+    }
+  }else{
+    jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [warning_page,learn_phase],
+        }, jsPsych.resumeExperiment)
+  }
+  }
+}
+var thecrossant_break={
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 1000+removecolor,
+  trial_duration: 1000+removecolor,
+  response_ends_trial: false,
+  stimulus:create_memory_ten('black'),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    removecolor=colorStop(colordetretime)
+    thecrossant.stimulus_duration= removecolor
+    thecrossant.trial_duration=removecolor
+    thecrossant_black.stimulus_duration= 1000-removecolor
+    thecrossant_black.trial_duration=1000-removecolor
+    thecrossant_break.stimulus_duration= 1000+removecolor
+    thecrossant_break.trial_duration=1000+removecolor
   }
 }
 
@@ -133,23 +193,22 @@ function createbreak(intro_dir,instructnames,directmemory_phase){
   return thebreak
 }
 
-
-var curr_learning_trial=0
 var learn_phase = {
   type: 'html-keyboard-responsefl',
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
-  stimulus_duration:colorStart(),
-  trial_duration:colorStart(),
+  stimulus_duration:colordetretime,
+  trial_duration:colordetretime,
   on_finish: function(data) {
     data.trial_type = 'learn_phase';
     sfa=1,
+    colordetretime=colorStart(),
     curr_learning_trial=curr_learning_trial+1,
-    learn_phase.stimulus_duration=colorStart()
-    learn_phase.trial_duration=colorStart()
+    learn_phase.stimulus_duration=colordetretime
+    learn_phase.trial_duration=colordetretime
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break)
+    attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
   }
 }
 
@@ -158,32 +217,15 @@ var learn_phase_color = {
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
-  stimulus_duration:colorStop(),
-  trial_duration:colorStop(),
-  on_finish: function(data) {
-    data.trial_type = 'learn_phase';
-    sfa=1,
-    learn_phase_color.stimulus_duration=colorStop()
-    learn_phase_color.trial_duration=colorStop()
-    learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
-  }
-}
-
-var learn_phase_black = {
-  type: 'html-keyboard-responsefl',
-  choices: jsPsych.NO_KEYS,
-  response_ends_trial: false,
-  stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
   stimulus_duration:100,
   trial_duration:100,
   on_finish: function(data) {
     data.trial_type = 'learn_phase';
     sfa=1,
-    learn_phase_black.stimulus_duration=100
-    learn_phase_black.trial_duration=100
-    learn_phase_black.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
+    learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
   }
 }
+
 // learning phase end
 
 //Direct Memory test

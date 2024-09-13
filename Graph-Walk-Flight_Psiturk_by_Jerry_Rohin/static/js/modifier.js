@@ -75,8 +75,8 @@ function colorStart(){
 }
 
 //time for the duration of the color being present
-function colorStop(){
-    removecolor= 1500-colordetretime;
+function colorStop(colordetretime){
+    removecolor= 1500-colordetretime-100;
     return removecolor
 }
 

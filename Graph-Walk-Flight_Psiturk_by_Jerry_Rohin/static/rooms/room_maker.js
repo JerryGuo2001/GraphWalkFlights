@@ -52,14 +52,14 @@ function add_room(room,room_timeline) {
 }
 
 //function for attentioncheck
-function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
+function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak,thecrossant,thecrossant_black,thecrossant_break){
   if(sfa && curr_blue_trial<n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [learn_phase_color,learn_phase_black,thecrossant,learn_phase],
+      timeline: [learn_phase_color,thecrossant,thecrossant_black,thecrossant_break,learn_phase],
     }, jsPsych.resumeExperiment)
   }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [learn_phase_color,learn_phase_black,thecrossant,thebreak],
+      timeline: [learn_phase_color,thecrossant,thecrossant_black,thecrossant_break,thebreak],
     }, jsPsych.resumeExperiment)
   }
 }
