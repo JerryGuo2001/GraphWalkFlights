@@ -4,7 +4,7 @@
 //warningpage
 warning=0 //this is to start the counter of total warning
 warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you seee a blue cross and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>",
-checkfail=1 //this is to start the attentioncheck
+checkfail=0 //this is to start the attentioncheck
 checkthreshold=2 //this is to add the threshold for attentioncheck
 
 //Text for instruction
@@ -42,7 +42,7 @@ short_instruct={instruct_short_1,instruct_short_2,instruct_short_3,instruct_shor
 
 //learning phse
 
-n_learning_trial=3 //This determine the number of learning trial you want in total
+n_learning_trial=5 //This determine the number of learning trial you want in total
 
 imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
 

@@ -141,7 +141,7 @@ var thecrossant_black={
         //end experiment
       }
     }else{
-      checkfail=1
+      checkfail=0
     }
   }else if(op){
     if(op!=pluscheck[curr_learning_trial-1]) {
@@ -158,22 +158,30 @@ var thecrossant_black={
         //end experiment
       }
     }else{
-      checkfail=1
+      checkfail=0
     }
   }else{
-    jsPsych.endCurrentTimeline(),
-        jsPsych.addNodeToEndOfTimeline({
-          timeline: [warning_page,learn_phase],
-        }, jsPsych.resumeExperiment)
+    checkfail=checkfail+1
+    if(checkfail>=checkthreshold&&checkfail<4){
+      jsPsych.endCurrentTimeline(),
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [warning_page,learn_phase],
+          }, jsPsych.resumeExperiment)
+      }else if(checkfail>4){
+      jsPsych.endCurrentTimeline(),
+      jsPsych.addNodeToEndOfTimeline({
+      timeline:[TaskFailed],},jsPsych.resumeExperiment)
+      //end experiment
+    }
   }
-  }
+}
 }
 
 var TaskFailed = {
   type: 'html-keyboard-response',
   stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
             '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
-  choices: ['Escape'],
+  choices: ['Esc'],
   on_finish: function(data){
     window.close();
   }
