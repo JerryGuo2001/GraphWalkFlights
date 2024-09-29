@@ -238,76 +238,90 @@ class Graph {
     if (!this.adjacencyList[vertex2]) this.addVertex(vertex2);
 
     this.adjacencyList[vertex1].push(vertex2);
-    this.adjacencyList[vertex2].push(vertex1); // If it's an undirected graph
+    this.adjacencyList[vertex2].push(vertex1); // For undirected graph
   }
 
   displayGraph() {
     console.log(this.adjacencyList);
   }
 
-  // Direct pairs
-  getPairsKEdgesApart(k) {
-    const pairs = new Set();
+  // Helper function to perform BFS and find all nodes k edges apart from the starting node
+  findNodesKEdgesApart(start, k) {
+    const queue = [[start, 0]];  // [vertex, distance]
+    const visited = new Set();
+    visited.add(start);
+    const result = new Set();
 
-    // Helper function to perform BFS and find vertices k edges apart
-    const bfs = (start) => {
-      const queue = [[start, 0]];  // [vertex, distance]
-      const visited = new Set();
-      visited.add(start);
+    while (queue.length > 0) {
+      const [vertex, distance] = queue.shift();
 
-      while (queue.length) {
-        const [vertex, distance] = queue.shift();
+      // If we've reached the distance k, add this vertex
+      if (distance === k) {
+        result.add(vertex);
+      }
 
-        // If we've reached the distance k, add the pair to the set
-        if (distance === k) {
-          const pair = [Math.min(start, vertex), Math.max(start, vertex)];
-          pairs.add(pair.toString());
-          continue;
-        }
-
-        // If not at distance k, explore neighbors
-        this.adjacencyList[vertex].forEach((neighbor) => {
+      // If we haven't reached k edges yet, continue exploring neighbors
+      if (distance < k) {
+        this.adjacencyList[vertex].forEach(neighbor => {
           if (!visited.has(neighbor)) {
             visited.add(neighbor);
             queue.push([neighbor, distance + 1]);
           }
         });
       }
-    };
-
-    // Perform BFS from each vertex
-    for (const vertex in this.adjacencyList) {
-      bfs(parseInt(vertex));
     }
 
-    // Convert the set back into an array of pairs
-    return Array.from(pairs).map(pair => pair.split(',').map(Number));
+    return Array.from(result); // Return the nodes that are k edges apart from the start
+  }
+
+  // Function to find triplets where one node is leftK edges away and another node is rightK edges away from the center node
+  getCustomTriplets(leftK, rightK) {
+    const triplets = [];
+
+    for (const centerNode in this.adjacencyList) {
+      const nodesLeftKEdgesApart = this.findNodesKEdgesApart(parseInt(centerNode), leftK);
+      const nodesRightKEdgesApart = this.findNodesKEdgesApart(parseInt(centerNode), rightK);
+
+      // Create triplets [nodeLeftK, centerNode, nodeRightK]
+      nodesLeftKEdgesApart.forEach((nodeLeft) => {
+        nodesRightKEdgesApart.forEach((nodeRight) => {
+          triplets.push([nodeLeft, parseInt(centerNode), nodeRight]);
+        });
+      });
+    }
+
+    return triplets;
   }
 }
 
+// Initialize the graph
 const graph = new Graph();
-for (let i = 1;i<13;i++){
+for (let i = 1; i < 13; i++) {
   graph.addVertex(i);
 }
-graph.addEdge(1,2)
-graph.addEdge(2,3)
-graph.addEdge(2,4)
-graph.addEdge(3,4)
-graph.addEdge(3,11)
-graph.addEdge(3,6)
-graph.addEdge(4,5)
-graph.addEdge(4,12)
-graph.addEdge(6,7)
-graph.addEdge(6,9)
-graph.addEdge(7,8)
-graph.addEdge(8,9)
-graph.addEdge(8,10)
-graph.addEdge(9,10)
-graph.addEdge(9,11)
-graph.addEdge(11,12)
 
+graph.addEdge(1, 2);
+graph.addEdge(2, 3);
+graph.addEdge(2, 4);
+graph.addEdge(3, 4);
+graph.addEdge(3, 11);
+graph.addEdge(3, 6);
+graph.addEdge(4, 5);
+graph.addEdge(4, 12);
+graph.addEdge(6, 7);
+graph.addEdge(6, 9);
+graph.addEdge(7, 8);
+graph.addEdge(8, 9);
+graph.addEdge(8, 10);
+graph.addEdge(9, 10);
+graph.addEdge(9, 11);
+graph.addEdge(11, 12);
 
 graph.displayGraph();
+
+onediff = graph.getCustomTriplets(2,3).concat(graph.getCustomTriplets(3,4),graph.getCustomTriplets(4,5))
+twodiff = graph.getCustomTriplets(2,4).concat(graph.getCustomTriplets(3,5))
+threediff = graph.getCustomTriplets(2,5)
 
 //Direct Memory phase
 n_direct_trial=2
