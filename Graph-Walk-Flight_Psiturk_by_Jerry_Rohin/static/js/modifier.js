@@ -76,6 +76,7 @@ for (var i = 0; i < randomizedArray.length; i++){
     learn_right.push(list_right[randomizedArray[i]])
 }
 
+
 // Direct Image Pairings
 
 // 2 edge pairing (20)
@@ -221,6 +222,92 @@ for (var i = 0; i < randomizedArray.length; i++){
 // Tot: 342, 140, 40
 
 
+class Graph {
+  constructor() {
+    this.adjacencyList = {};
+  }
+
+  addVertex(vertex) {
+    if (!this.adjacencyList[vertex]) {
+      this.adjacencyList[vertex] = [];
+    }
+  }
+
+  addEdge(vertex1, vertex2) {
+    if (!this.adjacencyList[vertex1]) this.addVertex(vertex1);
+    if (!this.adjacencyList[vertex2]) this.addVertex(vertex2);
+
+    this.adjacencyList[vertex1].push(vertex2);
+    this.adjacencyList[vertex2].push(vertex1); // If it's an undirected graph
+  }
+
+  displayGraph() {
+    console.log(this.adjacencyList);
+  }
+
+  // Direct pairs
+  getPairsKEdgesApart(k) {
+    const pairs = new Set();
+
+    // Helper function to perform BFS and find vertices k edges apart
+    const bfs = (start) => {
+      const queue = [[start, 0]];  // [vertex, distance]
+      const visited = new Set();
+      visited.add(start);
+
+      while (queue.length) {
+        const [vertex, distance] = queue.shift();
+
+        // If we've reached the distance k, add the pair to the set
+        if (distance === k) {
+          const pair = [Math.min(start, vertex), Math.max(start, vertex)];
+          pairs.add(pair.toString());
+          continue;
+        }
+
+        // If not at distance k, explore neighbors
+        this.adjacencyList[vertex].forEach((neighbor) => {
+          if (!visited.has(neighbor)) {
+            visited.add(neighbor);
+            queue.push([neighbor, distance + 1]);
+          }
+        });
+      }
+    };
+
+    // Perform BFS from each vertex
+    for (const vertex in this.adjacencyList) {
+      bfs(parseInt(vertex));
+    }
+
+    // Convert the set back into an array of pairs
+    return Array.from(pairs).map(pair => pair.split(',').map(Number));
+  }
+}
+
+const graph = new Graph();
+for (let i = 1;i<13;i++){
+  graph.addVertex(i);
+}
+graph.addEdge(1,2)
+graph.addEdge(2,3)
+graph.addEdge(2,4)
+graph.addEdge(3,4)
+graph.addEdge(3,11)
+graph.addEdge(3,6)
+graph.addEdge(4,5)
+graph.addEdge(4,12)
+graph.addEdge(6,7)
+graph.addEdge(6,9)
+graph.addEdge(7,8)
+graph.addEdge(8,9)
+graph.addEdge(8,10)
+graph.addEdge(9,10)
+graph.addEdge(9,11)
+graph.addEdge(11,12)
+
+
+graph.displayGraph();
 
 //Direct Memory phase
 n_direct_trial=2
