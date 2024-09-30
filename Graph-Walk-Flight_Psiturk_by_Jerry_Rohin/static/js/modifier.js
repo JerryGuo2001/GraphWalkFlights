@@ -245,6 +245,54 @@ class Graph {
     console.log(this.adjacencyList);
   }
 
+    // Function to find nodes that are directly connected to the center node (1 edge apart)
+  getDirectNeighbors(centerNode) {
+    return this.adjacencyList[centerNode] || [];
+  }
+
+  // Function to find all nodes that are not directly connected to the center node
+  getNonDirectNeighbors(centerNode) {
+    const directNeighbors = new Set(this.getDirectNeighbors(centerNode));
+    const allNodes = Object.keys(this.adjacencyList).map(Number);
+
+    // Non-direct neighbors are all nodes that are not direct neighbors and not the centerNode itself
+    const nonDirectNeighbors = allNodes.filter(node => !directNeighbors.has(node) && node !== centerNode);
+    
+    return nonDirectNeighbors;
+  }
+
+  // Function to generate a triplet [directNeighbor, centerNode, randomNonDirectNeighbor]
+  getTriplet(centerNode) {
+    const directNeighbors = this.getDirectNeighbors(centerNode);
+    const nonDirectNeighbors = this.getNonDirectNeighbors(centerNode);
+
+    if (directNeighbors.length === 0 || nonDirectNeighbors.length === 0) {
+      return null; // Return null if no valid triplet can be found
+    }
+
+    // Select a random direct neighbor (1 edge apart)
+    const leftNode = directNeighbors[Math.floor(Math.random() * directNeighbors.length)];
+
+    // Select a random non-direct neighbor (not directly connected)
+    const rightNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)];
+
+    let loop = 0;
+    while(loop == 0){
+      var midNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)]
+      if (midNode != rightNode){
+        loop = 1
+      }
+    }
+    
+
+    if(Math.floor(Math.random() * 3 + 1) == 1) {
+      return [leftNode, centerNode, midNode, rightNode]
+    }else if (Math.floor(Math.random() * 3 + 1) == 2){
+      return [rightNode, centerNode, midNode, leftNode];
+    } else {
+      return [midNode, centerNode, leftNode, rightNode]}
+  }
+
   // Helper function to perform BFS and find all nodes k edges apart from the starting node
   findNodesKEdgesApart(start, k) {
     const queue = [[start, 0]];  // [vertex, distance]
@@ -285,7 +333,9 @@ class Graph {
       // Create triplets [nodeLeftK, centerNode, nodeRightK]
       nodesLeftKEdgesApart.forEach((nodeLeft) => {
         nodesRightKEdgesApart.forEach((nodeRight) => {
+          if (Math.floor(Math.random() * 2 + 1) == 1){
           triplets.push([nodeLeft, parseInt(centerNode), nodeRight]);
+          } else {triplets.push([nodeRight, parseInt(centerNode), nodeLeft])}
         });
       });
     }
@@ -319,22 +369,104 @@ graph.addEdge(11, 12);
 
 graph.displayGraph();
 
-onediff = graph.getCustomTriplets(2,3).concat(graph.getCustomTriplets(3,4),graph.getCustomTriplets(4,5))
-twodiff = graph.getCustomTriplets(2,4).concat(graph.getCustomTriplets(3,5))
-threediff = graph.getCustomTriplets(2,5)
+let onediff = graph.getCustomTriplets(2,3).concat(graph.getCustomTriplets(3,4),graph.getCustomTriplets(4,5))
+let twodiff = graph.getCustomTriplets(2,4).concat(graph.getCustomTriplets(3,5))
+let threediff = graph.getCustomTriplets(2,5)
+
 
 //Direct Memory phase
-n_direct_trial=2
-room_direct_up=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
-room_direct_left=['DelawareCity.png','Racine.png','Medora.png','Racine.png']
-room_direct_mid=['Medora.png','Custer.png','Medora.png','Racine.png']
-room_direct_right=['Racine.png','Medora.png','Medora.png','Racine.png']
+n_direct_trial=12
+
+let directRight = []
+let directMid = []
+let directLeft = []
+let directUp = []
+for(let i = 1;i<13;i++){
+  directLeft.push(graph.getTriplet(i)[0])
+  directUp.push(graph.getTriplet(i)[1])
+  directMid.push(graph.getTriplet(i)[2])
+  directRight.push(graph.getTriplet(i)[3])
+}
+
+let directarr = [];
+  for (let i = 0; i < directLeft.length; i++) {
+    directarr.push(i);
+  }
+
+let room_direct_left=[]
+let room_direct_mid=[]
+let room_direct_right=[]
+let room_direct_up=[]
+
+
+for(let i = 0;i<12;i++){
+  room_direct_up.push(directUp[directarr[i]])
+  room_direct_left.push(directLeft[directarr[i]])
+  room_direct_right.push(directRight[directarr[i]])
+  room_direct_mid.push(directMid[directarr[i]])
+}
+
 
 //Shoretst Path judge phase
-n_shortest_trial=2
-room_shortest_up=['Custer.png','DelawareCity.png','Medora.png','Racine.png']
-room_shortest_left=['DelawareCity.png','Racine.png','Medora.png','Racine.png']
-room_shortest_right=['Racine.png','Medora.png','Medora.png','Racine.png']
+
+let onediffarr = [];
+  for (let i = 0; i < onediff.length; i++) {
+    onediffarr.push(i);
+  }
+let twodiffarr = [];
+for (let i = 0; i < twodiff.length; i++) {
+  twodiffarr.push(i);
+}
+let threediffarr = [];
+for (let i = 0; i < threediff.length; i++) {
+  threediffarr.push(i);
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; 
+  }
+  return array;
+}
+
+shuffle(onediffarr);
+shuffle(twodiffarr);
+shuffle(threediffarr);
+
+let upList = []
+let leftList = []
+let rightList = []
+for (let i = 0;i<10;i++){
+  upList.push(onediff[onediffarr[i]][1])
+  leftList.push(onediff[onediffarr[i]][0])
+  rightList.push(onediff[onediffarr[i]][2])
+  upList.push(twodiff[twodiffarr[i]][1])
+  leftList.push(twodiff[twodiffarr[i]][0])
+  rightList.push(twodiff[twodiffarr[i]][2])
+  upList.push(threediff[threediffarr[i]][1])
+  leftList.push(threediff[threediffarr[i]][0])
+  rightList.push(threediff[threediffarr[i]][2])
+}
+
+let shortestpatharray = [];
+for (let i = 0; i < 30; i++) {
+  shortestpatharray.push(i);
+}
+shuffle(shortestpatharray)
+shortUp = []
+shortLeft = []
+shortRight = []
+for (let i = 0;i<30;i++){
+  shortUp.push(upList[shortestpatharray[i]])
+  shortLeft.push(leftList[shortestpatharray[i]])
+  shortRight.push(rightList[shortestpatharray[i]])
+}
+
+n_shortest_trial=30
+room_shortest_up=shortUp
+room_shortest_left=shortLeft
+room_shortest_right=shortRight
 
 //Goal Directed Navigation:
 numberoftrial=2 // This determine the number of trial you want
