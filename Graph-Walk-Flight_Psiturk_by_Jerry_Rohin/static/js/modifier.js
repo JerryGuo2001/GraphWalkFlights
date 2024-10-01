@@ -338,6 +338,44 @@ class Graph {
 
     return triplets;
   }
+
+  getPairsKEdgesApart(k) {
+    const pairs = new Set();
+
+    // Helper function to perform BFS and find vertices k edges apart
+    const bfs = (start) => {
+      const queue = [[start, 0]];  // [vertex, distance]
+      const visited = new Set();
+      visited.add(start);
+
+      while (queue.length) {
+        const [vertex, distance] = queue.shift();
+
+        // If we've reached the distance k, add the pair to the set
+        if (distance === k) {
+          const pair = [Math.min(start, vertex), Math.max(start, vertex)];
+          pairs.add(pair.toString());
+          continue;
+        }
+
+        // If not at distance k, explore neighbors
+        this.adjacencyList[vertex].forEach((neighbor) => {
+          if (!visited.has(neighbor)) {
+            visited.add(neighbor);
+            queue.push([neighbor, distance + 1]);
+          }
+        });
+      }
+    };
+
+    // Perform BFS from each vertex
+    for (const vertex in this.adjacencyList) {
+      bfs(parseInt(vertex));
+    }
+
+    // Convert the set back into an array of pairs
+    return Array.from(pairs).map(pair => pair.split(',').map(Number));
+  }
 }
 
 // Initialize the graph
@@ -468,7 +506,28 @@ for (let i = 0;i<n_shortest_trial;i++){
 
 
 //Goal Directed Navigation:
-numberoftrial=2 // This determine the number of trial you want
+numberoftrial=4 // This determine the number of trial you want
+var room_goaldir_left = []
+var room_goaldir_right = []
+
+let goaldirList = graph.getPairsKEdgesApart(3).concat(graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5))
+goaldirIndex = []
+for (let i = 0; i < goaldirList.length; i++) {
+  goaldirIndex.push(i);
+}
+goaldirIndex = shuffle(goaldirIndex)
+
+for (let i = 0; i<goaldirList.length; i++){
+  if(Math.floor(Math.random() * 2 + 1) == 1){
+    room_goaldir_left.push(goaldirList[goaldirIndex[i]][0])
+    room_goaldir_right.push(goaldirList[goaldirIndex[i]][1])
+  }else {
+    room_goaldir_left.push(goaldirList[goaldirIndex[i]][1])
+    room_goaldir_right.push(goaldirList[goaldirIndex[i]][0])
+  }
+
+}
+
 
 //color for the plus sign
 atcheckcolor=['blue','green']

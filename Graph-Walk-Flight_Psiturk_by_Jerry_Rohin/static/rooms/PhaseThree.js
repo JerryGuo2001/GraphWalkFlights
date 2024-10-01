@@ -33,7 +33,7 @@ function wassup(){
 function makeVisible() {
     document.getElementById("spiderman").style.display = "block";
 }
-
+goalIndex = 0
 function initiatep3(){
     makeVisible()
     for (let i = 1; i <= 12; i++) {
@@ -43,16 +43,16 @@ function initiatep3(){
             images[i-1] = document.getElementById(`drag${i}`)
         }
     }
-    LeftSRC = images[Math.floor(Math.random()* images.length)].src
-    RightSRC = images[Math.floor(Math.random()* images.length)].src
-    while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
-        var RightSRC = images[Math.floor(Math.random()* images.length)].src
-    }
+    // LeftSRC = images[Math.floor(Math.random()* images.length)].src
+    // RightSRC = images[Math.floor(Math.random()* images.length)].src
+    // while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
+    //     var RightSRC = images[Math.floor(Math.random()* images.length)].src
+    // }
     container = document.getElementById('div1');
-    document.getElementById('imgL').src = LeftSRC
-    document.getElementById('imgR').src = RightSRC
+    document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
+    document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
     for (let i = 1; i <= 12; i++) {
-        if (images[i-1].src == LeftSRC || images[i-1].src == RightSRC){
+        if (images[i-1].src == images[room_goaldir_left[goalIndex]-1] || images[i-1].src == images[room_goaldir_right[goalIndex]-1]){
             images[i-1].style="display: none;" // Make them disappear in the top box
         }
     }   
@@ -68,6 +68,7 @@ function initiatep3(){
     returndrag(document.getElementById('return'))
     sideElement(document.getElementById('imgL'))
     sideElement(document.getElementById('imgR'))
+    goalIndex++
 } 
 //PART THAT NEED TO BE RUN UNDER BUTTON END
 
