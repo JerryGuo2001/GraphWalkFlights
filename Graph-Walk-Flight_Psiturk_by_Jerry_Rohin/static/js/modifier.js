@@ -1,5 +1,14 @@
-
-
+//debug moode on/off
+debugmode= true
+if (debugmode==true){
+  n_learning_trial=3 //This determine the number of learning trial you want in total
+  n_direct_trial=2 //how many direct trial you want
+  n_shortest_trial=3 //how many shortest path you want
+}else{
+  n_learning_trial=3 //This determine the number of learning trial you want in total
+  n_direct_trial=2 //how many direct trial you want
+  n_shortest_trial=3 //how many shortest path you want
+}
 
 //warningpage
 warning=0 //this is to start the counter of total warning
@@ -41,8 +50,6 @@ short_instructnames = ["instruct_short_1","instruct_short_2","instruct_short_3",
 short_instruct={instruct_short_1,instruct_short_2,instruct_short_3,instruct_short_4} 
 
 //learning phse
-
-n_learning_trial=5 //This determine the number of learning trial you want in total
 
 imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
 
@@ -429,8 +436,6 @@ let directarr = [];
     directarr.push(i);
   }
 directarr = shuffle(directarr)
-
-n_direct_trial=2
 let room_direct_left=[]
 let room_direct_mid=[]
 let room_direct_right=[]
@@ -497,7 +502,6 @@ for (let i = 0;i<30;i++){
 var room_shortest_right = []
 var room_shortest_left = []
 var room_shortest_up = []
-n_shortest_trial=3
 for (let i = 0;i<n_shortest_trial;i++){
   room_shortest_up.push(imageList[shortUp[i]-1])
   room_shortest_left.push(imageList[shortLeft[i]-1])
