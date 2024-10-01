@@ -275,22 +275,18 @@ class Graph {
 
     // Select a random non-direct neighbor (not directly connected)
     const rightNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)];
-
-    let loop = 0;
-    while(loop == 0){
-      var midNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)]
-      if (midNode != rightNode){
-        loop = 1
-      }
+    let midNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)]
+    while(midNode == rightNode){
+      midNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)]
     }
     
-
+   
     if(Math.floor(Math.random() * 3 + 1) == 1) {
-      return [leftNode, centerNode, midNode, rightNode]
+      directNodes = [leftNode, centerNode, midNode, rightNode]
     }else if (Math.floor(Math.random() * 3 + 1) == 2){
-      return [rightNode, centerNode, midNode, leftNode];
+      directNodes = [rightNode, centerNode, midNode, leftNode];
     } else {
-      return [midNode, centerNode, leftNode, rightNode]}
+      directNodes = [midNode, centerNode, leftNode, rightNode]}
   }
 
   // Helper function to perform BFS and find all nodes k edges apart from the starting node
@@ -375,24 +371,28 @@ let threediff = graph.getCustomTriplets(2,5)
 
 
 //Direct Memory phase
-n_direct_trial=12
 
 let directRight = []
 let directMid = []
 let directLeft = []
 let directUp = []
+var directNodes = 0
+
 for(let i = 1;i<13;i++){
-  directLeft.push(graph.getTriplet(i)[0])
-  directUp.push(graph.getTriplet(i)[1])
-  directMid.push(graph.getTriplet(i)[2])
-  directRight.push(graph.getTriplet(i)[3])
+  graph.getTriplet(i)
+  directLeft.push(directNodes[0])
+  directUp.push(directNodes[1])
+  directMid.push(directNodes[2])
+  directRight.push(directNodes[3])
 }
 
 let directarr = [];
   for (let i = 0; i < directLeft.length; i++) {
     directarr.push(i);
   }
+directarr = shuffle(directarr)
 
+n_direct_trial=2
 let room_direct_left=[]
 let room_direct_mid=[]
 let room_direct_right=[]
@@ -400,10 +400,10 @@ let room_direct_up=[]
 
 
 for(let i = 0;i<12;i++){
-  room_direct_up.push(directUp[directarr[i]])
-  room_direct_left.push(directLeft[directarr[i]])
-  room_direct_right.push(directRight[directarr[i]])
-  room_direct_mid.push(directMid[directarr[i]])
+  room_direct_up.push(imageList[directUp[directarr[i]]-1])
+  room_direct_left.push(imageList[directLeft[directarr[i]]-1])
+  room_direct_right.push(imageList[directRight[directarr[i]]-1])
+  room_direct_mid.push(imageList[directMid[directarr[i]]-1])
 }
 
 
@@ -422,17 +422,11 @@ for (let i = 0; i < threediff.length; i++) {
   threediffarr.push(i);
 }
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; 
-  }
-  return array;
-}
 
-shuffle(onediffarr);
-shuffle(twodiffarr);
-shuffle(threediffarr);
+
+onediffarr = shuffle(onediffarr);
+twodiffarr = shuffle(twodiffarr);
+threediffarr = shuffle(threediffarr);
 
 let upList = []
 let leftList = []
@@ -453,7 +447,7 @@ let shortestpatharray = [];
 for (let i = 0; i < 30; i++) {
   shortestpatharray.push(i);
 }
-shuffle(shortestpatharray)
+shortestpatharray = shuffle(shortestpatharray)
 shortUp = []
 shortLeft = []
 shortRight = []
@@ -462,11 +456,16 @@ for (let i = 0;i<30;i++){
   shortLeft.push(leftList[shortestpatharray[i]])
   shortRight.push(rightList[shortestpatharray[i]])
 }
+var room_shortest_right = []
+var room_shortest_left = []
+var room_shortest_up = []
+n_shortest_trial=3
+for (let i = 0;i<n_shortest_trial;i++){
+  room_shortest_up.push(imageList[shortUp[i]-1])
+  room_shortest_left.push(imageList[shortLeft[i]-1])
+  room_shortest_right.push(imageList[shortRight[i]-1])
+}
 
-n_shortest_trial=30
-room_shortest_up=shortUp
-room_shortest_left=shortLeft
-room_shortest_right=shortRight
 
 //Goal Directed Navigation:
 numberoftrial=2 // This determine the number of trial you want
