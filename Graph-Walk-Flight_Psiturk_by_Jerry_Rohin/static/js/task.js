@@ -93,6 +93,7 @@ var warning_page={
   stimulus: '<h1 style="color: red;">Please make sure to respond to the questions.</h1><br><h1 style="color: red;">Continued failure to respond will</h1><br><h1 style="color: red;">result in the task ending early</h1><br><h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
   on_finish: function(data) {
     data.trial_type='warning_page'
+    data.stimulus='warning'
     warning=warning+1
   }
 }
@@ -109,10 +110,12 @@ var thecrossant= {
   stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
+    data.stimulus=pluscolor[curr_learning_trial]
+    data.stimulus_left=learn_left[curr_learning_trial]
+    data.stimulus_right=learn_right[curr_learning_trial]
     data.trial_type='rt_plussign_withcolor'
     console.log(colordetretime)
     kp=data.key_press
-    thecrossant.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
   }
 }
 
@@ -128,15 +131,16 @@ var thecrossant_black={
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
     data.trial_type ='rt_thecrossant_black'
+    data.stimulus='black_plus_sign'
     op=data.key_press
     if (kp){
       data.rt=null
-    if(kp!=pluscheck[curr_learning_trial-1]) {
+    if(kp!=pluscheck[curr_learning_trial]) {
       checkfail=checkfail+1
       if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
-          timeline: [warning_page,learn_phase],
+          timeline: [warning_page,thecrossant_break],
         }, jsPsych.resumeExperiment)
       }else if(checkfail>4){
         jsPsych.endCurrentTimeline(),
@@ -149,12 +153,12 @@ var thecrossant_black={
     }
   }else if(op){
     data.rt=data.rt+100+timetakenforpluswindow
-    if(op!=pluscheck[curr_learning_trial-1]) {
+    if(op!=pluscheck[curr_learning_trial]) {
       checkfail=checkfail+1
       if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
-          timeline: [warning_page,learn_phase],
+          timeline: [warning_page,thecrossant_break],
         }, jsPsych.resumeExperiment)
       }else if(checkfail>4){
         jsPsych.endCurrentTimeline(),
@@ -169,10 +173,10 @@ var thecrossant_black={
     checkfail=checkfail+1
     if(checkfail>=checkthreshold&&checkfail<4){
       jsPsych.endCurrentTimeline(),
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [warning_page,learn_phase],
-          }, jsPsych.resumeExperiment)
-      }else if(checkfail>4){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [warning_page,thecrossant_break],
+        }, jsPsych.resumeExperiment)
+    }else if(checkfail>4){
       jsPsych.endCurrentTimeline(),
       jsPsych.addNodeToEndOfTimeline({
       timeline:[TaskFailed],},jsPsych.resumeExperiment)
@@ -204,7 +208,7 @@ var thecrossant_break={
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
     data.trial_type='color_black'
-    data.stimulus='black'
+    data.stimulus='black_plus_sign'
     timetakenforpluswindow=removecolor
     removecolor=colorStop(colordetretime)
     thecrossant.stimulus_duration= removecolor
@@ -213,6 +217,12 @@ var thecrossant_break={
     thecrossant_black.trial_duration=1000-removecolor
     thecrossant_break.stimulus_duration= 1000+removecolor
     thecrossant_break.trial_duration=1000+removecolor
+    curr_learning_trial=curr_learning_trial+1,
+    learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
+    learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
+    thecrossant.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
+    attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+    
   }
 }
 
@@ -239,14 +249,13 @@ var learn_phase = {
   trial_duration:colordetretime,
   on_finish: function(data) {
     data.trial_type = 'learn_phase(without_color)';
-    data.stimlus=learn_left[curr_learning_trial],learn_right[curr_learning_trial],
+    data.stimulus='black_plus_sign'
+    data.stimulus_left=learn_left[curr_learning_trial],
+    data.stimulus_left=learn_right[curr_learning_trial],
     sfa=1,
     colordetretime=colorStart(),
-    curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus_duration=colordetretime
     learn_phase.trial_duration=colordetretime
-    learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
   }
 }
 
@@ -258,9 +267,11 @@ var learn_phase_color = {
   stimulus_duration:100,
   trial_duration:100,
   on_finish: function(data) {
+    data.stimulus=pluscolor[curr_learning_trial]
+    data.stimulus_left=learn_left[curr_learning_trial]
+    data.stimulus_right=learn_right[curr_learning_trial]
     data.trial_type = 'rt_learn_phase(with_color)';
-    sfa=1,
-    learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
+    sfa=1
   }
 }
 
@@ -286,7 +297,9 @@ var directmemory_phase = {
   on_finish: function(data) {
     data.trial_type = 'directmemory_phase';
     data.stimulus=room_direct_up[curr_direct_trial];
-    data.stimulus_down=room_direct_left[curr_direct_trial],room_direct_mid[curr_direct_trial],room_direct_right[curr_direct_trial];
+    data.stimulus_down_left=room_direct_left[curr_direct_trial],
+    data.stimulus_down_mid=room_direct_mid[curr_direct_trial]
+    data.stimulus_down_right=room_direct_right[curr_direct_trial];
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
     directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
@@ -338,7 +351,8 @@ function createPhase3(numberoftrial){
         choices: ['space'],
         stimulus: phasethreeroom[0],
         on_finish: function (data) {
-          data.trial_type = specificline;
+          data.trial_type='Goal Directed Planning'
+          data.linedressed = specificline;
           wassup(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [thank_you],
@@ -351,7 +365,8 @@ function createPhase3(numberoftrial){
         choices: ['space'],
         stimulus: phasethreeroom[0],
         on_finish: function (data) {
-          data.trial_type = specificline;
+          data.trial_type='Goal Directed Planning'
+          data.linedressed = specificline;
           wassup(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
@@ -388,6 +403,7 @@ var thank_you = {
 timeline.push(welcome)
 timelinepushintro(intro_learn,instructnames)
 timeline.push(learn_phase)
+timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
 
 jsPsych.init({
   timeline: timeline,

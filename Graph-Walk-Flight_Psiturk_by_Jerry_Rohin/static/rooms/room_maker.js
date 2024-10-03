@@ -55,11 +55,11 @@ function add_room(room,room_timeline) {
 function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak,thecrossant,thecrossant_black,thecrossant_break){
   if(sfa && curr_blue_trial<n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [learn_phase_color,thecrossant,thecrossant_black,thecrossant_break,learn_phase],
+      timeline: [learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break],
     }, jsPsych.resumeExperiment)
   }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [learn_phase_color,thecrossant,thecrossant_black,thecrossant_break,thebreak],
+      timeline: [thebreak],
     }, jsPsych.resumeExperiment)
   }
 }
