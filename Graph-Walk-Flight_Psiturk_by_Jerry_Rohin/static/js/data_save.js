@@ -40,7 +40,7 @@ var save_data = function(final) {
   } else {
     //var timestamp = (new Date).toISOString().replace(/z|t/gi,' ').trim();
   //  var data_file_name =  'S_' + subject_id +'-'+timestamp +'.csv';
-    var data_file_name =  'S_' + subject_id + '.csv';
+    var data_file_name =  'S_' + useridtouse + '.csv';
   }
 
   // Save participant data file as a download in the web browser

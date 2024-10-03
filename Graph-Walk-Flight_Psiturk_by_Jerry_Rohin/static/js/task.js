@@ -44,6 +44,7 @@ var welcome = {
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
+    subject_id=useridtouse
   }
 }
 //welcome page end
@@ -251,7 +252,7 @@ var learn_phase = {
     data.trial_type = 'learn_phase(without_color)';
     data.stimulus='black_plus_sign'
     data.stimulus_left=learn_left[curr_learning_trial],
-    data.stimulus_left=learn_right[curr_learning_trial],
+    data.stimulus_right=learn_right[curr_learning_trial],
     sfa=1,
     colordetretime=colorStart(),
     learn_phase.stimulus_duration=colordetretime
