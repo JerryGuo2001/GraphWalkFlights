@@ -309,7 +309,7 @@ var directmemory_phase = {
 }
 //Direct Memory test end
 
-
+correctness = []
 //Shortest Path memory test
 var curr_shortest_trial=0
 var shortestpath_phase = {
@@ -332,8 +332,20 @@ var shortestpath_phase = {
     data.stimulus=room_shortest_up[curr_shortest_trial];
     data.stimulus_left=room_shortest_left[curr_shortest_trial];
     data.stimulus_right=room_shortest_right[curr_shortest_trial];
-    //data.accuracy= calculate the accuracy sum(correctness)/amount of trial
-    //data.correctness= 1/0/1/0
+    if ((data.key_press == 49 && room_shortest_left == room_shortest_correct)||(data.key_press == 50 && room_shortest_right == room_shortest_correct)) {
+      data.correctness = 1
+      correctness.push(1)
+    } else {
+      data.correctness = 0
+      correctness.push(0)
+    }
+    
+    let sum = 0;
+    correctness.forEach(function(value) {
+      sum += value;
+    });
+
+    data.accuracy = sum / correctness.length;
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
