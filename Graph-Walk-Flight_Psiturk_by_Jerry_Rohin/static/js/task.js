@@ -331,8 +331,9 @@ var shortestpath_phase = {
     data.trial_type = 'shortestpath_phase';
     data.stimulus=room_shortest_up[curr_shortest_trial];
     data.stimulus_left=room_shortest_left[curr_shortest_trial];
-    data.stimulus_right=room_shortest_right[curr_shortest_trial];
-    if ((data.key_press == 49 && room_shortest_left == room_shortest_correct)||(data.key_press == 50 && room_shortest_right == room_shortest_correct)) {
+    data.stimulus_right=room_shortest_right[curr_shortest_trial]
+    data.stimulus_correct=room_shortest_correct[curr_shortest_trial];
+    if ((data.key_press == 49 && data.stimulus_left == data.stimulus_correct)||(data.key_press == 50 && data.stimulus_right == data.stimulus_correct)) {
       data.correctness = 1
       correctness.push(1)
     } else {
