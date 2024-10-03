@@ -229,7 +229,7 @@ for (var i = 0; i < randomizedArray.length; i++){
 // Tot: 342, 140, 40
 
 var correctNode = []
-
+var correctDirectNodes = 0
 class Graph {
   constructor() {
     this.adjacencyList = {};
@@ -294,7 +294,9 @@ class Graph {
     }else if (Math.floor(Math.random() * 3 + 1) == 2){
       directNodes = [rightNode, centerNode, midNode, leftNode];
     } else {
-      directNodes = [midNode, centerNode, leftNode, rightNode]}
+      directNodes = [midNode, centerNode, leftNode, rightNode]
+    }
+    correctDirectNodes = leftNode
   }
 
   // Helper function to perform BFS and find all nodes k edges apart from the starting node
@@ -427,6 +429,7 @@ let directRight = []
 let directMid = []
 let directLeft = []
 let directUp = []
+let directCorrect = []
 var directNodes = 0
 
 for(let i = 1;i<13;i++){
@@ -435,6 +438,7 @@ for(let i = 1;i<13;i++){
   directUp.push(directNodes[1])
   directMid.push(directNodes[2])
   directRight.push(directNodes[3])
+  directCorrect.push(correctDirectNodes)
 }
 
 let directarr = [];
@@ -446,6 +450,7 @@ let room_direct_left=[]
 let room_direct_mid=[]
 let room_direct_right=[]
 let room_direct_up=[]
+let room_direct_correct=[]
 
 
 for(let i = 0;i<12;i++){
@@ -453,6 +458,7 @@ for(let i = 0;i<12;i++){
   room_direct_left.push(imageList[directLeft[directarr[i]]-1])
   room_direct_right.push(imageList[directRight[directarr[i]]-1])
   room_direct_mid.push(imageList[directMid[directarr[i]]-1])
+  room_direct_correct.push(imageList[directCorrect[directarr[i]]-1])
 }
 
 

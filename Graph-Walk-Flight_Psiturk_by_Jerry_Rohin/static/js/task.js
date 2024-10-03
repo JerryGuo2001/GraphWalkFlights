@@ -277,7 +277,7 @@ var learn_phase_color = {
 }
 
 // learning phase end
-
+var directcorrectness = []
 //Direct Memory test
 var curr_direct_trial=0
 var directmemory_phase = {
@@ -301,6 +301,23 @@ var directmemory_phase = {
     data.stimulus_down_left=room_direct_left[curr_direct_trial],
     data.stimulus_down_mid=room_direct_mid[curr_direct_trial]
     data.stimulus_down_right=room_direct_right[curr_direct_trial];
+    data.stimulus_correct=room_direct_correct[curr_shortest_trial];
+    if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
+    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||
+     (data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
+      data.correctness = 1
+      directcorrectness.push(1)
+    } else {
+      data.correctness = 0
+      directcorrectness.push(0)
+    }
+    
+    let directsum = 0;
+    directcorrectness.forEach(function(value) {
+      directsum += value;
+    });
+
+    data.accuracy = directsum / directcorrectness.length;
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
     directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
