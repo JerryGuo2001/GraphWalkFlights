@@ -56,6 +56,7 @@ function createinstruct(instruct_1,number){
     stimulus: instruct_1,
     on_finish: function (data) {
       data.trial_type = 'intro_'+number;
+      data.stimulus='instruct'
     }
   }
   return intro
@@ -82,6 +83,7 @@ intro_short=createfulintro(short_instruct,short_instructnames)
 var curr_learning_trial=0
 var colordetretime=colorStart()
 var removecolor=colorStop(colordetretime)
+var timetakenforpluswindow=removecolor
 
 var warning_page={
   type: 'html-keyboard-response',
@@ -107,6 +109,7 @@ var thecrossant= {
   stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
+    data.trial_type='rt_plussign_withcolor'
     console.log(colordetretime)
     kp=data.key_press
     thecrossant.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
@@ -124,9 +127,10 @@ var thecrossant_black={
   stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
-    data.trial_type ='thecrossant_black'
+    data.trial_type ='rt_thecrossant_black'
     op=data.key_press
     if (kp){
+      data.rt=null
     if(kp!=pluscheck[curr_learning_trial-1]) {
       checkfail=checkfail+1
       if(checkfail>=checkthreshold&&checkfail<4){
@@ -144,6 +148,7 @@ var thecrossant_black={
       checkfail=0
     }
   }else if(op){
+    data.rt=data.rt+100+timetakenforpluswindow
     if(op!=pluscheck[curr_learning_trial-1]) {
       checkfail=checkfail+1
       if(checkfail>=checkthreshold&&checkfail<4){
@@ -198,6 +203,9 @@ var thecrossant_break={
   stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
+    data.trial_type='color_black'
+    data.stimulus='black'
+    timetakenforpluswindow=removecolor
     removecolor=colorStop(colordetretime)
     thecrossant.stimulus_duration= removecolor
     thecrossant.trial_duration=removecolor
@@ -230,7 +238,8 @@ var learn_phase = {
   stimulus_duration:colordetretime,
   trial_duration:colordetretime,
   on_finish: function(data) {
-    data.trial_type = 'learn_phase';
+    data.trial_type = 'learn_phase(without_color)';
+    data.stimlus=learn_left[curr_learning_trial],learn_right[curr_learning_trial],
     sfa=1,
     colordetretime=colorStart(),
     curr_learning_trial=curr_learning_trial+1,
@@ -249,7 +258,7 @@ var learn_phase_color = {
   stimulus_duration:100,
   trial_duration:100,
   on_finish: function(data) {
-    data.trial_type = 'learn_phase';
+    data.trial_type = 'rt_learn_phase(with_color)';
     sfa=1,
     learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
   }
@@ -276,6 +285,8 @@ var directmemory_phase = {
   },
   on_finish: function(data) {
     data.trial_type = 'directmemory_phase';
+    data.stimulus=room_direct_up[curr_direct_trial];
+    data.stimulus_down=room_direct_left[curr_direct_trial],room_direct_mid[curr_direct_trial],room_direct_right[curr_direct_trial];
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
     directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
@@ -304,6 +315,11 @@ var shortestpath_phase = {
   },
   on_finish: function(data) {
     data.trial_type = 'shortestpath_phase';
+    data.stimulus=room_shortest_up[curr_shortest_trial];
+    data.stimulus_left=room_shortest_left[curr_shortest_trial];
+    data.stimulus_right=room_shortest_right[curr_shortest_trial];
+    //data.accuracy= calculate the accuracy sum(correctness)/amount of trial
+    //data.correctness= 1/0/1/0
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
