@@ -1,13 +1,13 @@
 //debug moode on/off
-debugmode= true
+debugmode= false
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=1 //how many shortest path you want
 }else{
-  n_learning_trial=3 //This determine the number of learning trial you want in total
-  n_direct_trial=2 //how many direct trial you want
-  n_shortest_trial=3 //how many shortest path you want
+  n_learning_trial=10 //This determine the number of learning trial you want in total
+  n_direct_trial=10 //how many direct trial you want
+  n_shortest_trial=10 //how many shortest path you want
 }
 
 //warningpage
