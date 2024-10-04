@@ -301,7 +301,7 @@ var directmemory_phase = {
     data.stimulus_down_left=room_direct_left[curr_direct_trial],
     data.stimulus_down_mid=room_direct_mid[curr_direct_trial]
     data.stimulus_down_right=room_direct_right[curr_direct_trial];
-    data.stimulus_correct=room_direct_correct[curr_shortest_trial];
+    data.stimulus_correct=room_direct_correct[curr_direct_trial];
     if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
     (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||
      (data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
