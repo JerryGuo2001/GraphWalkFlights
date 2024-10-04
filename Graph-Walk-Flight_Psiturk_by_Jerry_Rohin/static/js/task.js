@@ -400,6 +400,13 @@ function createPhase3(numberoftrial){
           for (const key in specificline) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
           }
+          if (goaldirIndex[curr_shortest_trial] < threeEdgePair.length){
+            data.condition = 'Three Edge Diff'
+          } else if (goaldirIndex[curr_shortest_trial] >= threeEdgePair.length && goaldirIndex[curr_shortest_trial] < threeEdgePair.length + fourEdgePair.length){
+            data.condition = 'Four Edge Diff'
+          } else if (goaldirIndex[curr_shortest_trial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
+            data.condition = 'Five Edge Diff'
+          }
           wassup(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [thank_you],

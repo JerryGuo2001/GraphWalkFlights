@@ -392,6 +392,10 @@ numberoftrial=4 // This determine the number of trial you want
 var room_goaldir_left = []
 var room_goaldir_right = []
 
+let threeEdgePair = graph.getPairsKEdgesApart(3)
+let fourEdgePair = graph.getPairsKEdgesApart(4)
+let fiveEdgePair = graph.getPairsKEdgesApart(5)
+
 let goaldirList = graph.getPairsKEdgesApart(3).concat(graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5))
 goaldirIndex = []
 for (let i = 0; i < goaldirList.length; i++) {
