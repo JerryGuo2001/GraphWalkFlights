@@ -389,7 +389,10 @@ function createPhase3(numberoftrial){
         // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
-          data.linedressed = specificline;
+          data.linedress=[]
+          for (const key in specificline) {
+              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+',x2:'+specificline[key].location.x2+',y1:'+specificline[key].location.y1+',y2:'+specificline[key].location.y2+']'
+          }
           wassup(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [thank_you],
