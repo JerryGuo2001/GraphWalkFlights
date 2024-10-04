@@ -389,7 +389,7 @@ function createPhase3(numberoftrial){
         // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
-          data.linedress=[]
+          data.linedress=''
           for (const key in specificline) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
           }
@@ -402,11 +402,7 @@ function createPhase3(numberoftrial){
     }else{
       phase3[i] = {
         type: 'html-keyboard-response',
-        stimulus: `<div>
-                     ${phasethreeroom[0]}
-                     <br>
-                     <button id="nextButton" style="display:none">Next</button>
-                   </div>`,
+        stimulus: phasethreeroom[0],
         choices: jsPsych.NO_KEYS, // Disable keyboard responses
         // on_load: function() {
         //   document.getElementById('nextButton').addEventListener('click', function() {
@@ -415,7 +411,7 @@ function createPhase3(numberoftrial){
         // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
-          data.linedress=[]
+          data.linedress=''
           for (const key in specificline) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
           }
