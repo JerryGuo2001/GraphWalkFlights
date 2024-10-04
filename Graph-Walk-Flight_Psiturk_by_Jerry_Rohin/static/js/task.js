@@ -357,7 +357,14 @@ var shortestpath_phase = {
       data.correctness = 0
       correctness.push(0)
     }
-    
+    if (shortestpatharray[curr_shortest_trial] < 10){
+      data.condition = 'One Edge Diff'
+    } else if (shortestpatharray[curr_shortest_trial] >= 10 && shortestpatharray[curr_shortest_trial] < 20){
+      data.condition = 'Two Edge Diff'
+    } else if (shortestpatharray[curr_shortest_trial] >= 20){
+      data.condition = 'Three Edge Diff'
+    }
+
     let sum = 0;
     correctness.forEach(function(value) {
       sum += value;
