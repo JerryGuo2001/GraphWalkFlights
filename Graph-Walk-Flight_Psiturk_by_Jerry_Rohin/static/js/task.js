@@ -371,16 +371,22 @@ var shortestpath_phase = {
   }
 }
 //Shortest Path memory end
-
+var phase3 = {}
 //Goal directed planning
 function createPhase3(numberoftrial){
-  let phase3 = {}
+  var phase3 = {}
   for (let i = 0; i < numberoftrial; i++){
     if (i==numberoftrial-1){
       phase3[i] = {
         type: 'html-keyboard-response',
-        choices: ['space'],
         stimulus: phasethreeroom[0],
+        choices: jsPsych.NO_KEYS, // Disable keyboard responses
+        // on_load: function() {
+        //   document.getElementById('nextButton').style.display = 'block'
+        //   document.getElementById('nextButton').addEventListener('click', function() {
+        //     jsPsych.finishTrial(); // End trial on button click
+        //   });
+        // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
           data.linedressed = specificline;
@@ -393,8 +399,17 @@ function createPhase3(numberoftrial){
     }else{
       phase3[i] = {
         type: 'html-keyboard-response',
-        choices: ['space'],
-        stimulus: phasethreeroom[0],
+        stimulus: `<div>
+                     ${phasethreeroom[0]}
+                     <br>
+                     <button id="nextButton" style="display:none">Next</button>
+                   </div>`,
+        choices: jsPsych.NO_KEYS, // Disable keyboard responses
+        // on_load: function() {
+        //   document.getElementById('nextButton').addEventListener('click', function() {
+        //     jsPsych.finishTrial(); // End trial on button click
+        //   });
+        // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
           data.linedressed = specificline;
