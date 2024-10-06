@@ -1,4 +1,4 @@
-var debug_mode = 0; // debug mode determines how long the blocks are, 5 sec in debug mode, 5 minutes in actual experiment
+dvar debug_mode = 0; // debug mode determines how long the blocks are, 5 sec in debug mode, 5 minutes in actual experiment
 //var data_save_method = 'csv_server_py';
 var data_save_method = 'csv_server_py';
 
@@ -299,8 +299,8 @@ var directmemory_phase = {
   choices: ['1','2','3'],
   response_ends_trial: false,
   stimulus:create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial),
-  stimulus_duration:3000,
-  trial_duration:3000,
+  stimulus_duration:5000,//5 second for now, we will discuss it 
+  trial_duration:5000,//5 second for now 
   on_load: function() {
     // Reveal other rooms after 500 ms
     setTimeout(function() {
