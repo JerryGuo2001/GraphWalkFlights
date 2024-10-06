@@ -6,7 +6,7 @@ if (debugmode==true){
   n_shortest_trial=1 //how many shortest path you want
   n_goaldir_trial=2 //how many goal directed planning you want
 }else{
-  n_learning_trial=10 //This determine the number of learning trial you want in total
+  n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=10 //how many direct trial you want
   n_shortest_trial=10 //how many shortest path you want
   n_goaldir_trial=10 //how many goal directed planning you want
@@ -122,6 +122,31 @@ class Graph {
     return this.adjacencyList[centerNode] || [];
   }
 
+  getSingleDirectNeighbor() {
+    const nodeIndexMap = new Map();
+    return (centerNode) => {
+        const neighbors = this.adjacencyList[centerNode] || [];
+        if (neighbors.length === 0) return null;
+        if (!nodeIndexMap.has(centerNode)) {
+            nodeIndexMap.set(centerNode, 0);
+        }
+        let index = nodeIndexMap.get(centerNode);
+        const neighbor = neighbors[index];
+        nodeIndexMap.set(centerNode, (index + 1) % neighbors.length);
+        return neighbor;
+    };
+}
+
+  initTriplet() {
+      this.correctNodefunc = this.getSingleDirectNeighbor();
+  }
+
+  cycleThroughNeighbors(node) {
+      const nextNeighbor = this.correctNodefunc(node);
+      return nextNeighbor
+  } 
+
+
   // Function to find all nodes that are not directly connected to the center node
   getNonDirectNeighbors(centerNode) {
     const directNeighbors = new Set(this.getDirectNeighbors(centerNode));
@@ -133,34 +158,73 @@ class Graph {
     return nonDirectNeighbors;
   }
 
+  getNeighborsAtDistance(centerNode, distance) {
+    // If distance is 0, return only the centerNode itself
+    if (distance === 0) {
+      return [centerNode];
+    }
+
+    // Initialize sets and queues for BFS
+    const visited = new Set([centerNode]);  // Track visited nodes to avoid cycles
+    const queue = [[centerNode, 0]];  // Queue for BFS, stores pairs [node, currentDistance]
+    const result = new Set();  // Store the nodes found at the desired distance
+
+    // BFS loop
+    while (queue.length > 0) {
+      const [currentNode, currentDistance] = queue.shift();
+
+      // Get neighbors of the current node
+      const neighbors = this.getDirectNeighbors(currentNode);
+
+      for (let neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+
+          // If we reached the desired distance, add the node to result
+          if (currentDistance + 1 === distance) {
+            result.add(neighbor);
+          }
+
+          // If still under the desired distance, keep exploring
+          if (currentDistance + 1 < distance) {
+            queue.push([neighbor, currentDistance + 1]);
+          }
+        }
+      }
+    }
+
+    return Array.from(result);  // Return the neighbors found at the specified distance
+}
   // Function to generate a triplet [directNeighbor, centerNode, randomNonDirectNeighbor]
   getTriplet(centerNode) {
     const directNeighbors = this.getDirectNeighbors(centerNode);
     const nonDirectNeighbors = this.getNonDirectNeighbors(centerNode);
-
+    const shorterNeighbor = this.getNeighborsAtDistance(centerNode,2)
+    const furtherNeighbor = this.getNeighborsAtDistance(centerNode,3).concat(this.getNeighborsAtDistance(centerNode,4))
     if (directNeighbors.length === 0 || nonDirectNeighbors.length === 0) {
       return null; // Return null if no valid triplet can be found
     }
 
     // Select a random direct neighbor (1 edge apart)
-    const leftNode = directNeighbors[Math.floor(Math.random() * directNeighbors.length)];
+
+    const correctNodeOption = this.cycleThroughNeighbors(centerNode)
 
     // Select a random non-direct neighbor (not directly connected)
-    const rightNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)];
-    let midNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)]
-    while(midNode == rightNode){
-      midNode = nonDirectNeighbors[Math.floor(Math.random() * nonDirectNeighbors.length)]
+    const shorterNode = shorterNeighbor[Math.floor(Math.random() * shorterNeighbor.length)];
+    const furtherNode = furtherNeighbor[Math.floor(Math.random() * furtherNeighbor.length)]
+    while(furtherNode == shorterNode){
+      furtherNode = furtherNeighbor[Math.floor(Math.random() * furtherNeighbor.length)]
     }
     
    
     if(Math.floor(Math.random() * 3 + 1) == 1) {
-      directNodes = [leftNode, centerNode, midNode, rightNode]
+      directNodes = [correctNodeOption, centerNode, furtherNode, shorterNode]
     }else if (Math.floor(Math.random() * 3 + 1) == 2){
-      directNodes = [rightNode, centerNode, midNode, leftNode];
-    } else {
-      directNodes = [midNode, centerNode, leftNode, rightNode]
+      directNodes = [shorterNode, centerNode, correctNodeOption, furtherNode];
+    } else{
+      directNodes = [furtherNode, centerNode, shorterNode, correctNodeOption]
     }
-    correctDirectNodes = leftNode
+    correctDirectNodes = correctNodeOption
   }
 
   // Helper function to perform BFS and find all nodes k edges apart from the starting node
@@ -279,7 +343,7 @@ graph.addEdge(11, 12);
 graph.displayGraph();
 
 //Direct Memory phase
-
+graph.initTriplet()
 let directRight = []
 let directMid = []
 let directLeft = []
@@ -288,18 +352,23 @@ let directCorrect = []
 var directNodes = 0
 
 for(let i = 1;i<13;i++){
-  graph.getTriplet(i)
-  directLeft.push(directNodes[0])
-  directUp.push(directNodes[1])
-  directMid.push(directNodes[2])
-  directRight.push(directNodes[3])
-  directCorrect.push(correctDirectNodes)
+  for(let j = 0;j<graph.getDirectNeighbors(i).length;j++){
+    graph.getTriplet(i)
+    directLeft.push(directNodes[0])
+    directUp.push(directNodes[1])
+    directMid.push(directNodes[2])
+    directRight.push(directNodes[3])
+    directCorrect.push(correctDirectNodes)
+  }
+  
 }
 
 let directarr = [];
   for (let i = 0; i < directLeft.length; i++) {
     directarr.push(i);
   }
+directarr = shuffle(directarr)
+directarr = shuffle(directarr)
 directarr = shuffle(directarr)
 let room_direct_left=[]
 let room_direct_mid=[]
@@ -308,7 +377,7 @@ let room_direct_up=[]
 let room_direct_correct=[]
 
 
-for(let i = 0;i<12;i++){
+for(let i = 0;i<directLeft.length;i++){
   room_direct_up.push(imageList[directUp[directarr[i]]-1])
   room_direct_left.push(imageList[directLeft[directarr[i]]-1])
   room_direct_right.push(imageList[directRight[directarr[i]]-1])
