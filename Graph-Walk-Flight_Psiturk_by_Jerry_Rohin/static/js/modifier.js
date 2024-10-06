@@ -368,6 +368,7 @@ for (let i = 0; i < 30; i++) {
   shortestpatharray.push(i);
 }
 shortestpatharray = shuffle(shortestpatharray)
+shortestpatharray = shuffle(shortestpatharray)
 shortUp = []
 shortLeft = []
 shortRight = []

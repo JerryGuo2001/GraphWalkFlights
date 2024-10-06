@@ -119,7 +119,7 @@ var thecrossant= {
     kp=data.key_press
   }
 }
-
+learningcorrectness = []
 var thecrossant_black={
   type: 'html-keyboard-response',
   choices: ['1','2'],
@@ -138,6 +138,8 @@ var thecrossant_black={
       data.rt=null
     if(kp!=pluscheck[curr_learning_trial]) {
       checkfail=checkfail+1
+      data.accuracy = 0
+      learningcorrectness.push(0)
       if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
@@ -151,11 +153,15 @@ var thecrossant_black={
       }
     }else{
       checkfail=0
+      data.accuracy = 1
+      learningcorrectness.push(1)
     }
   }else if(op){
     data.rt=data.rt+100+timetakenforpluswindow
     if(op!=pluscheck[curr_learning_trial]) {
       checkfail=checkfail+1
+      data.accuracy = 0
+      learningcorrectness.push(0)
       if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
@@ -169,6 +175,8 @@ var thecrossant_black={
       }
     }else{
       checkfail=0
+      data.accuracy = 1
+      learningcorrectness.push(1)
     }
   }else{
     checkfail=checkfail+1
@@ -184,6 +192,12 @@ var thecrossant_black={
       //end experiment
     }
   }
+  let learnsum = 0;
+    learningcorrectness.forEach(function(value) {
+      learnsum += value;
+    });
+
+    data.cummulative_accuracy = learnsum / learningcorrectness.length;
 }
 }
 
@@ -400,11 +414,11 @@ function createPhase3(numberoftrial){
           for (const key in specificline) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
           }
-          if (goaldirIndex[curr_shortest_trial] < threeEdgePair.length){
+          if (goaldirIndex[numberoftrial] < threeEdgePair.length){
             data.condition = 'Three Edge Diff'
-          } else if (goaldirIndex[curr_shortest_trial] >= threeEdgePair.length && goaldirIndex[curr_shortest_trial] < threeEdgePair.length + fourEdgePair.length){
+          } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length && goaldirIndex[numberoftrial] < threeEdgePair.length + fourEdgePair.length){
             data.condition = 'Four Edge Diff'
-          } else if (goaldirIndex[curr_shortest_trial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
+          } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
             data.condition = 'Five Edge Diff'
           }
           wassup(),
