@@ -1,5 +1,5 @@
 //debug moode on/off
-debugmode= true
+debugmode= false
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
@@ -278,15 +278,6 @@ graph.addEdge(11, 12);
 
 graph.displayGraph();
 
-let onediff = graph.getCustomTriplets(2,3).concat(graph.getCustomTriplets(3,4),graph.getCustomTriplets(4,5))
-let onediffcorrect = correctNode
-correctNode = []
-let twodiff = graph.getCustomTriplets(2,4).concat(graph.getCustomTriplets(3,5))
-let twodiffcorrect = correctNode
-correctNode = []
-let threediff = graph.getCustomTriplets(2,5)
-let threediffcorrect = correctNode
-
 //Direct Memory phase
 
 let directRight = []
@@ -327,21 +318,46 @@ for(let i = 0;i<12;i++){
 
 
 //Shoretst Path judge phase
+twothree = graph.getCustomTriplets(2,3)
+threefour = graph.getCustomTriplets(3,4)
+fourfive = graph.getCustomTriplets(4,5)
+
+twofour = graph.getCustomTriplets(2,4)
+threefive = graph.getCustomTriplets(3,5)
+
+twofive = graph.getCustomTriplets(2,5)
+
+
+let onediff = twothree.concat(threefour,fourfive)
+let onediffcorrect = correctNode
+correctNode = []
+let twodiff = twofour.concat(threefive)
+let twodiffcorrect = correctNode
+correctNode = []
+let threediff = twofive
+let threediffcorrect = correctNode
+
+cummulativediff = onediff.concat(twodiff,threediff)
+let cummulativeCorrect = onediffcorrect.concat(twodiffcorrect,threediffcorrect)
 
 let onediffarr = [];
+let cummulativearr = []
   for (let i = 0; i < onediff.length; i++) {
     onediffarr.push(i);
+    cummulativearr.push(i)
   }
 let twodiffarr = [];
-for (let i = 0; i < twodiff.length; i++) {
+for (let i = onediff.length; i < onediff.length + twodiff.length; i++) {
   twodiffarr.push(i);
+  cummulativearr.push(i)
 }
 let threediffarr = [];
 for (let i = 0; i < threediff.length; i++) {
   threediffarr.push(i);
+  cummulativearr.push(i)
 }
 
-
+cummulativearr=shuffle(cummulativearr)
 
 onediffarr = shuffle(onediffarr);
 twodiffarr = shuffle(twodiffarr);
@@ -350,46 +366,50 @@ let correctShortList = []
 let upList = []
 let leftList = []
 let rightList = []
-for (let i = 0;i<10;i++){
-  upList.push(onediff[onediffarr[i]][1])
-  leftList.push(onediff[onediffarr[i]][0])
-  rightList.push(onediff[onediffarr[i]][2])
-  correctShortList.push(onediffcorrect[onediffarr[i]])
-  upList.push(twodiff[twodiffarr[i]][1])
-  leftList.push(twodiff[twodiffarr[i]][0])
-  rightList.push(twodiff[twodiffarr[i]][2])
-  correctShortList.push(twodiffcorrect[twodiffarr[i]])
-  upList.push(threediff[threediffarr[i]][1])
-  leftList.push(threediff[threediffarr[i]][0])
-  rightList.push(threediff[threediffarr[i]][2])
-  correctShortList.push(threediffcorrect[threediffarr[i]])
+for (let i = 0;i<30;i++){
+  upList.push(cummulativediff[cummulativearr[i]][1])
+  leftList.push(cummulativediff[cummulativearr[i]][0])
+  rightList.push(cummulativediff[cummulativearr[i]][2])
+  correctShortList.push(cummulativeCorrect[cummulativearr[i]])
+  // upList.push(onediff[onediffarr[i]][1])
+  // leftList.push(onediff[onediffarr[i]][0])
+  // rightList.push(onediff[onediffarr[i]][2])
+  // correctShortList.push(onediffcorrect[onediffarr[i]])
+  // upList.push(twodiff[twodiffarr[i]][1])
+  // leftList.push(twodiff[twodiffarr[i]][0])
+  // rightList.push(twodiff[twodiffarr[i]][2])
+  // correctShortList.push(twodiffcorrect[twodiffarr[i]])
+  // upList.push(threediff[threediffarr[i]][1])
+  // leftList.push(threediff[threediffarr[i]][0])
+  // rightList.push(threediff[threediffarr[i]][2])
+  // correctShortList.push(threediffcorrect[threediffarr[i]])
 }
 
-let shortestpatharray = [];
-for (let i = 0; i < 30; i++) {
-  shortestpatharray.push(i);
-}
-shortestpatharray = shuffle(shortestpatharray)
-shortestpatharray = shuffle(shortestpatharray)
-shortUp = []
-shortLeft = []
-shortRight = []
-shortCorrect = []
-for (let i = 0;i<30;i++){
-  shortUp.push(upList[shortestpatharray[i]])
-  shortLeft.push(leftList[shortestpatharray[i]])
-  shortRight.push(rightList[shortestpatharray[i]])
-  shortCorrect.push(correctShortList[shortestpatharray[i]])
-}
+// let shortestpatharray = [];
+// for (let i = 0; i < 30; i++) {
+//   shortestpatharray.push(i);
+// }
+// shortestpatharray = shuffle(shortestpatharray)
+// shortestpatharray = shuffle(shortestpatharray)
+// shortUp = []
+// shortLeft = []
+// shortRight = []
+// shortCorrect = []
+// for (let i = 0;i<30;i++){
+//   shortUp.push(upList[shortestpatharray[i]])
+//   shortLeft.push(leftList[shortestpatharray[i]])
+//   shortRight.push(rightList[shortestpatharray[i]])
+//   shortCorrect.push(correctShortList[shortestpatharray[i]])
+// }
 var room_shortest_right = []
 var room_shortest_left = []
 var room_shortest_up = []
 var  room_shortest_correct = []
 for (let i = 0;i<n_shortest_trial;i++){
-  room_shortest_up.push(imageList[shortUp[i]-1])
-  room_shortest_left.push(imageList[shortLeft[i]-1])
-  room_shortest_right.push(imageList[shortRight[i]-1])
-  room_shortest_correct.push(imageList[shortCorrect[i]-1])
+  room_shortest_up.push(imageList[upList[i]-1])
+  room_shortest_left.push(imageList[leftList[i]-1])
+  room_shortest_right.push(imageList[rightList[i]-1])
+  room_shortest_correct.push(imageList[correctShortList[i]-1])
 }
 
 

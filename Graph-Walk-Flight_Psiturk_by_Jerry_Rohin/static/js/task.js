@@ -371,13 +371,31 @@ var shortestpath_phase = {
       data.accuracy = 0
       correctness.push(0)
     }
-    if (shortestpatharray[curr_shortest_trial] < 10){
+    let onedifflength = twothree.length + threefour.length + fourfive.length
+    let twodifflength = twofour.length + threefive.length
+    let threedifflength = twofive.length
+    if (cummulativearr[curr_shortest_trial] < onedifflength){
       data.condition = 'One Edge Diff'
-    } else if (shortestpatharray[curr_shortest_trial] >= 10 && shortestpatharray[curr_shortest_trial] < 20){
+    } else if (cummulativearr[curr_shortest_trial] >= onedifflength && cummulativearr[curr_shortest_trial] < onedifflength + twodifflength){
       data.condition = 'Two Edge Diff'
-    } else if (shortestpatharray[curr_shortest_trial] >= 20){
+    } else if (cummulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
       data.condition = 'Three Edge Diff'
     }
+
+    if (cummulativearr[curr_shortest_trial] < twothree.length){
+      data.specific_pairs = "Two Edge Three Edge"
+    } else if (cummulativearr[curr_shortest_trial] >= twothree.length && cummulativearr[curr_shortest_trial] < twothree.length + threefour.length){
+      data.specific_pairs = 'Three Edge Four Edge'
+    } else if (cummulativearr[curr_shortest_trial] >= twothree.length + threefour.length && cummulativearr[curr_shortest_trial] < onedifflength){
+      data.specific_pairs = 'Four Edge Five Edge'
+    } else if (cummulativearr[curr_shortest_trial] >= onedifflength && cummulativearr[curr_shortest_trial] < onedifflength + twofour.length){
+      data.specific_pairs = 'Two Edge Four Edge'
+    } else if (cummulativearr[curr_shortest_trial] >= onedifflength + twofour.length && cummulativearr[curr_shortest_trial] < onedifflength + twodifflength){
+      data.specific_pairs = 'Three Edge Five Edge'
+    } else if (cummulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
+      data.specific_pairs = 'Two Edge Five Edge'
+    }
+
 
     let sum = 0;
     correctness.forEach(function(value) {
