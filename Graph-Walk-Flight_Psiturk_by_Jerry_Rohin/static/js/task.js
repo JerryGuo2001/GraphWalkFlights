@@ -456,7 +456,7 @@ function createPhase3(numberoftrial){
 
 
 
-phase3=createPhase3(numberoftrial)
+phase3=createPhase3(n_goaldir_trial)
 learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])

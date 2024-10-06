@@ -4,10 +4,12 @@ if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=1 //how many shortest path you want
+  n_goaldir_trial=2 //how many goal directed planning you want
 }else{
   n_learning_trial=10 //This determine the number of learning trial you want in total
   n_direct_trial=10 //how many direct trial you want
   n_shortest_trial=10 //how many shortest path you want
+  n_goaldir_trial=1 //how many goal directed planning you want
 }
 
 //warningpage
@@ -392,7 +394,7 @@ for (let i = 0;i<n_shortest_trial;i++){
 
 
 //Goal Directed Navigation:
-numberoftrial=4 // This determine the number of trial you want
+
 var room_goaldir_left = []
 var room_goaldir_right = []
 
