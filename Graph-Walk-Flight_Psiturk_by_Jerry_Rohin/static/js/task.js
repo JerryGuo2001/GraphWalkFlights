@@ -305,10 +305,10 @@ var directmemory_phase = {
     if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
     (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||
      (data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
-      data.correctness = 1
+      data.accuracy = 1
       directcorrectness.push(1)
     } else {
-      data.correctness = 0
+      data.accuracy = 0
       directcorrectness.push(0)
     }
     
@@ -317,7 +317,7 @@ var directmemory_phase = {
       directsum += value;
     });
 
-    data.accuracy = directsum / directcorrectness.length;
+    data.cummulative_accuracy = directsum / directcorrectness.length;
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
     directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
@@ -351,10 +351,10 @@ var shortestpath_phase = {
     data.stimulus_right=room_shortest_right[curr_shortest_trial]
     data.stimulus_correct=room_shortest_correct[curr_shortest_trial];
     if ((data.key_press == 49 && data.stimulus_left == data.stimulus_correct)||(data.key_press == 50 && data.stimulus_right == data.stimulus_correct)) {
-      data.correctness = 1
+      data.accuracy = 1
       correctness.push(1)
     } else {
-      data.correctness = 0
+      data.accuracy = 0
       correctness.push(0)
     }
     if (shortestpatharray[curr_shortest_trial] < 10){
@@ -370,7 +370,7 @@ var shortestpath_phase = {
       sum += value;
     });
 
-    data.accuracy = sum / correctness.length;
+    data.cummulative_accuracy = sum / correctness.length;
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
