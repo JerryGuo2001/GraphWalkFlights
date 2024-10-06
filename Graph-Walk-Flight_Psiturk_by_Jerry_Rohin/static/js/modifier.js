@@ -92,6 +92,8 @@ for (var i = 0; i < randomizedArray.length; i++){
 
 var correctNode = []
 var correctDirectNodes = 0
+var shortDirectNodes = 0
+var farDirectNodes = 0
 
 // Graph object
 class Graph {
@@ -225,6 +227,8 @@ class Graph {
       directNodes = [furtherNode, centerNode, shorterNode, correctNodeOption]
     }
     correctDirectNodes = correctNodeOption
+    shortDirectNodes = shorterNode
+    farDirectNodes = furtherNode
   }
 
   // Helper function to perform BFS and find all nodes k edges apart from the starting node
@@ -349,6 +353,8 @@ let directMid = []
 let directLeft = []
 let directUp = []
 let directCorrect = []
+let directShort = []
+let directFar = []
 var directNodes = 0
 
 for(let i = 1;i<13;i++){
@@ -359,6 +365,8 @@ for(let i = 1;i<13;i++){
     directMid.push(directNodes[2])
     directRight.push(directNodes[3])
     directCorrect.push(correctDirectNodes)
+    directShort.push(shortDirectNodes)
+    directFar.push(farDirectNodes)
   }
   
 }
@@ -375,6 +383,8 @@ let room_direct_mid=[]
 let room_direct_right=[]
 let room_direct_up=[]
 let room_direct_correct=[]
+let room_direct_far=[]
+let room_direct_short=[]
 
 
 for(let i = 0;i<directLeft.length;i++){
@@ -383,6 +393,8 @@ for(let i = 0;i<directLeft.length;i++){
   room_direct_right.push(imageList[directRight[directarr[i]]-1])
   room_direct_mid.push(imageList[directMid[directarr[i]]-1])
   room_direct_correct.push(imageList[directCorrect[directarr[i]]-1])
+  room_direct_short.push(imageList[directShort[directarr[i]]-1])
+  room_direct_far.push(imageList[directFar[directarr[i]]-1])
 }
 
 
