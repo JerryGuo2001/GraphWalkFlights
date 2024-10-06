@@ -84,8 +84,20 @@ function initiatep3(){
 function drawLine(img1,img2) {
     // Create a new canvas element
     canvas = document.createElement('canvas');
+    img1new = 0
+    img2new = 0
     // Set the ID attribute for the canvas
-    canvas.id = `${img1.id}`+`${img2.id}`;
+    for(let i = 0;i<images.length;i++){
+            imgID = images[i]
+            if(img2.src == imgID.src){
+                img2new = imgID.id
+            }
+            if(img1.src == imgID.src){
+                img1new = imgID.id
+            }
+        }
+    
+    canvas.id = `${img1new}`+`${img2new}`;
     // Append the canvas to the parent container
     var containerdl = document.getElementById('div3');
     containerdl.appendChild(canvas);
@@ -113,7 +125,7 @@ function drawLine(img1,img2) {
     ctx.lineWidth = 2;  // Set the line width
     ctx.stroke();
     // Save the line information]
-    specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1.id+img2.id]}})
+    specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1new+img2new]}})
     specificline=mergeObjects(specificline,specificlinenew)
     linecounter=linecounter+1
 }
