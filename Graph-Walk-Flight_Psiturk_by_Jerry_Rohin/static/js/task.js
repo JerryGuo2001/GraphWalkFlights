@@ -316,14 +316,29 @@ var directmemory_phase = {
     data.stimulus_down_mid=room_direct_mid[curr_direct_trial]
     data.stimulus_down_right=room_direct_right[curr_direct_trial];
     data.stimulus_correct=room_direct_correct[curr_direct_trial];
+    data.stimulus_short=room_direct_short[curr_direct_trial];
+    data.stimulus_far=room_direct_far[curr_direct_trial];
     if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
     (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||
      (data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
       data.accuracy = 1
       directcorrectness.push(1)
+      data.weightedaccuracy = 1
     } else {
       data.accuracy = 0
       directcorrectness.push(0)
+      data.weightedaccuracy = 0
+    }
+
+    if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
+    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||
+     (data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
+      data.missedtrial = 'closer'
+      data.weighted_accuracy = 0.5
+    } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
+    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||
+     (data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
+      data.missedtrial = 'further'
     }
     
     let directsum = 0;
