@@ -125,10 +125,10 @@ var thecrossant_black={
   choices: ['1','2'],
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 1000-removecolor,
-  trial_duration: 1000-removecolor,
+  stimulus_duration: 2000-removecolor,
+  trial_duration: 2000-removecolor,
   response_ends_trial: false,
-  stimulus:create_memory_ten('black'),
+  stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
     data.trial_type ='rt_thecrossant_black'
@@ -228,12 +228,13 @@ var thecrossant_break={
     removecolor=colorStop(colordetretime)
     thecrossant.stimulus_duration= removecolor
     thecrossant.trial_duration=removecolor
-    thecrossant_black.stimulus_duration= 1000-removecolor
-    thecrossant_black.trial_duration=1000-removecolor
+    thecrossant_black.stimulus_duration= 2000-removecolor
+    thecrossant_black.trial_duration=2000-removecolor
     thecrossant_break.stimulus_duration= 1000+removecolor
     thecrossant_break.trial_duration=1000+removecolor
     curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
+    thecrossant_black.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
     learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
     thecrossant.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
     attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
@@ -338,7 +339,8 @@ var directmemory_phase = {
     } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
     (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||
      (data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
-      data.missedtrial = 'further'
+      data.missedtrial = 'closer'
+      data.weighted_accuracy = 0.5
     }
     
     let directsum = 0;
