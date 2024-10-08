@@ -197,7 +197,7 @@ var thecrossant_black={
       learnsum += value;
     });
 
-    data.cummulative_accuracy = learnsum / learningcorrectness.length;
+    data.cumulative_accuracy = learnsum / learningcorrectness.length;
 }
 }
 
@@ -348,7 +348,7 @@ var directmemory_phase = {
       directsum += value;
     });
 
-    data.cummulative_accuracy = directsum / directcorrectness.length;
+    data.cumulative_accuracy = directsum / directcorrectness.length;
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
     directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
@@ -391,25 +391,25 @@ var shortestpath_phase = {
     let onedifflength = twothree.length + threefour.length + fourfive.length
     let twodifflength = twofour.length + threefive.length
     let threedifflength = twofive.length
-    if (cummulativearr[curr_shortest_trial] < onedifflength){
+    if (cumulativearr[curr_shortest_trial] < onedifflength){
       data.condition = 'One Edge Diff'
-    } else if (cummulativearr[curr_shortest_trial] >= onedifflength && cummulativearr[curr_shortest_trial] < onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
       data.condition = 'Two Edge Diff'
-    } else if (cummulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
       data.condition = 'Three Edge Diff'
     }
 
-    if (cummulativearr[curr_shortest_trial] < twothree.length){
+    if (cumulativearr[curr_shortest_trial] < twothree.length){
       data.specific_pairs = "Two Edge Three Edge"
-    } else if (cummulativearr[curr_shortest_trial] >= twothree.length && cummulativearr[curr_shortest_trial] < twothree.length + threefour.length){
+    } else if (cumulativearr[curr_shortest_trial] >= twothree.length && cumulativearr[curr_shortest_trial] < twothree.length + threefour.length){
       data.specific_pairs = 'Three Edge Four Edge'
-    } else if (cummulativearr[curr_shortest_trial] >= twothree.length + threefour.length && cummulativearr[curr_shortest_trial] < onedifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= twothree.length + threefour.length && cumulativearr[curr_shortest_trial] < onedifflength){
       data.specific_pairs = 'Four Edge Five Edge'
-    } else if (cummulativearr[curr_shortest_trial] >= onedifflength && cummulativearr[curr_shortest_trial] < onedifflength + twofour.length){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + twofour.length){
       data.specific_pairs = 'Two Edge Four Edge'
-    } else if (cummulativearr[curr_shortest_trial] >= onedifflength + twofour.length && cummulativearr[curr_shortest_trial] < onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twofour.length && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
       data.specific_pairs = 'Three Edge Five Edge'
-    } else if (cummulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
       data.specific_pairs = 'Two Edge Five Edge'
     }
 
@@ -419,7 +419,7 @@ var shortestpath_phase = {
       sum += value;
     });
 
-    data.cummulative_accuracy = sum / correctness.length;
+    data.cumulative_accuracy = sum / correctness.length;
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)

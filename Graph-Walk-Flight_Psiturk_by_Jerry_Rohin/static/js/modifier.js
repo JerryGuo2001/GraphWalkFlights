@@ -34,16 +34,18 @@ instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6,inst
 
 //Text for direct memory instruction
 instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Great! We will move on to the main task now, remember to memorize the city-pairings to the best of your ability.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+// instruct_dir_1 is for post test learning phase
 instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Now that you have studied the various flights offered by AerBorn Airlines, you will be tested on your knowledge of what you just studied. On each trial, you will see a location and will have to select which city you can fly nonstop to via AerBorn Airlines.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_dir_3 = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see the starting location on top, and 3 city options below it. Press '1' on your keyboard for the left image, '2' for the middle, and '3' for the right. Please select only the city to which AerBorn Airlines flies directly (nonstop).</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3"] //Same for above, if you want to delete or add, just decrease or add the var
-dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3} //same for above
+dir_instructnames = ["instruct_dir_2","instruct_dir_3"] //Same for above, if you want to delete or add, just decrease or add the var
+dir_instruct={instruct_dir_2,instruct_dir_3} //same for above
 
 //Text for shortest path instruction
 instruct_short_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>In this next portion, you will be meeting with various clients who are looking for recommendations for travel. On each trial, you will see 3 locations:</p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><p></p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_short_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>The top city is where your client is located. You want to recommend a vacation destination that will require the fewest number of layovers (stops) from where the client is located. </p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><p></p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_short_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, imagine you studied the following flight paths: </p><br /><img src= '../static/images/Shortest.png' width='750' height='300'></img><p></p><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
-instruct_short_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><img src= '../static/images/MappedShortest.png' width='600' height='320'><img src= '../static/images/shortestIMG.png' width='500' height='300'></img><br /><p style ='font-size: 50px;line-height:1.5'>You should recommend flying to Detroit, since it requires fewer layovers from your client's location ( NYC > LA > Detroit, vs. NYC > LA > Austin > St. Louis) </p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
+instruct_short_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><img src= '../static/images/shortestinstruction.png' width='1200' height='700'></div><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>"
+//<img src= '../static/images/MappedShortest.png' width='600' height='320'><img src= '../static/images/shortestIMG.png' width='500' height='300'></img><br /><p style ='font-size: 50px;line-height:1.5'>You should recommend flying to Detroit, since it requires fewer layovers from your client's location ( NYC > LA > Detroit, vs. NYC > LA > Austin > St. Louis) </p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
 instruct_short_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Press the '1' key to recommend the city on the LEFT, and the '2' key to recommend the city on the RIGHT. If you are unsure of which destination is better, just try your best to make an educated guess. Remember, you want to recommend the destination that requires fewer layovers.</p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><p></p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 short_instructnames = ["instruct_short_1","instruct_short_2","instruct_short_3","instruct_short_4","instruct_short_5"]
 short_instruct={instruct_short_1,instruct_short_2,instruct_short_3,instruct_short_4,instruct_short_5} 
@@ -419,27 +421,27 @@ correctNode = []
 let threediff = twofive
 let threediffcorrect = correctNode
 
-cummulativediff = onediff.concat(twodiff,threediff)
-let cummulativeCorrect = onediffcorrect.concat(twodiffcorrect,threediffcorrect)
+cumulativediff = onediff.concat(twodiff,threediff)
+let cumulativeCorrect = onediffcorrect.concat(twodiffcorrect,threediffcorrect)
 
 let onediffarr = [];
-let cummulativearr = []
+let cumulativearr = []
   for (let i = 0; i < onediff.length; i++) {
     onediffarr.push(i);
-    cummulativearr.push(i)
+    cumulativearr.push(i)
   }
 let twodiffarr = [];
 for (let i = onediff.length; i < onediff.length + twodiff.length; i++) {
   twodiffarr.push(i);
-  cummulativearr.push(i)
+  cumulativearr.push(i)
 }
 let threediffarr = [];
 for (let i = 0; i < threediff.length; i++) {
   threediffarr.push(i);
-  cummulativearr.push(i)
+  cumulativearr.push(i)
 }
 
-cummulativearr=shuffle(cummulativearr)
+cumulativearr=shuffle(cumulativearr)
 
 onediffarr = shuffle(onediffarr);
 twodiffarr = shuffle(twodiffarr);
@@ -449,10 +451,10 @@ let upList = []
 let leftList = []
 let rightList = []
 for (let i = 0;i<30;i++){
-  upList.push(cummulativediff[cummulativearr[i]][1])
-  leftList.push(cummulativediff[cummulativearr[i]][0])
-  rightList.push(cummulativediff[cummulativearr[i]][2])
-  correctShortList.push(cummulativeCorrect[cummulativearr[i]])
+  upList.push(cumulativediff[cumulativearr[i]][1])
+  leftList.push(cumulativediff[cumulativearr[i]][0])
+  rightList.push(cumulativediff[cumulativearr[i]][2])
+  correctShortList.push(cumulativeCorrect[cumulativearr[i]])
   // upList.push(onediff[onediffarr[i]][1])
   // leftList.push(onediff[onediffarr[i]][0])
   // rightList.push(onediff[onediffarr[i]][2])
