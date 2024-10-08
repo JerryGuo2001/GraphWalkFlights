@@ -324,11 +324,11 @@ var directmemory_phase = {
      (data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
       data.accuracy = 1
       directcorrectness.push(1)
-      data.weightedaccuracy = 1
+      data.weighted_accuracy = 1
     } else {
       data.accuracy = 0
       directcorrectness.push(0)
-      data.weightedaccuracy = 0
+      data.weighted_accuracy = 0
     }
 
     if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
