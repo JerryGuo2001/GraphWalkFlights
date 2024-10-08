@@ -106,7 +106,7 @@ function drawLine(img1,img2) {
             }
         }
     
-    canvas.id = `${img1new}`+`${img2new}`;
+    canvas.id = `${img1.id}`+`${img2.id}`; // change at some point to show div
     // Append the canvas to the parent container
     var containerdl = document.getElementById('div3');
     containerdl.appendChild(canvas);
@@ -134,7 +134,7 @@ function drawLine(img1,img2) {
     ctx.lineWidth = 2;  // Set the line width
     ctx.stroke();
     // Save the line information]
-    specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1new+img2new]}})
+    specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1.id+img2.id]}})  // change at some point to show div
     specificline=mergeObjects(specificline,specificlinenew)
     linecounter=linecounter+1
 }
