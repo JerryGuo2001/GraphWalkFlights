@@ -21,7 +21,7 @@ checkthreshold=2 //this is to add the threshold for attentioncheck
 //Text for instruction
 instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>There is a new airline, AerBorn Airlines, that is offering flights to various destinations. You are a travel agent who is trying to help your clients make various travel arrangements.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Your job is to try and learn as many direct flights offered by AerBorn Airlines as possible so you could advise your clients to make their travel plans as efficiently as possible. To do this, your supervisor has asked you to study the daily flight paths taken by AerBorn Airlines. </p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will be shown two cities, which indicates a direct flight taken by AerBorn Airlines. For example:</p><br /><img src= '../static/images/LosAngeles.png' width='150' height='150' style='margin-right:200px'></img><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><p></p><br /><p style ='font-size: 50px;line-height:1.5'>indicates that AerBorn Airlines flew directly (nonstop) from Los Angeles to New York City</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will be shown two cities, which indicates a direct flight taken by AerBorn Airlines. For example:</p><br /><img src= '../static/images/LosAngeles.png' width='150' height='150' style='margin-right:200px'></img><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><p></p><br /><p style ='font-size: 50px;line-height:1.5'>indicates that AerBorn Airlines flew directly (nonstop) both from Los Angeles to New York City and New York City to Los Angeles</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see a series of these city-pairs and will try to learn as many of them as possible to best advise your future clients for travel. After studying the information, you will be asked to help your clients book travel to various destinations via AerBorn Airlines.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>First, you will see a series of practice images before moving on to the next task</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>While you are studying the flight paths, we will also ask you to do a simple color change task to make sure you are following instructions and paying attention to each trial.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
@@ -73,7 +73,7 @@ learn_right=[]
 
 let arr = [];
 for (let i = 0; i < 16; i++) {
-  for (let j = 0; j < 44; j++) {
+  for (let j = 0; j < 8; j++) {
     arr.push(i);
   }
 }
@@ -502,24 +502,38 @@ for (let i = 0;i<n_shortest_trial;i++){
 var room_goaldir_left = []
 var room_goaldir_right = []
 
+let twoEdgePair = graph.getPairsKEdgesApart(2)
 let threeEdgePair = graph.getPairsKEdgesApart(3)
 let fourEdgePair = graph.getPairsKEdgesApart(4)
 let fiveEdgePair = graph.getPairsKEdgesApart(5)
 
-let goaldirList = graph.getPairsKEdgesApart(3).concat(graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5))
+let goaldirList = graph.getPairsKEdgesApart(2).concat(graph.getPairsKEdgesApart(3),graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5))
 goaldirIndex = []
 for (let i = 0; i < goaldirList.length; i++) {
   goaldirIndex.push(i);
 }
 goaldirIndex = shuffle(goaldirIndex)
 
-for (let i = 0; i<goaldirList.length; i++){
+let shuffledList = []
+for (let i = 0;i < 4; i++){
+  shuffledList.push(goaldirList[goaldirIndex[i]])
+  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length]])
+  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length]])
+  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length + fourEdgePair.length]])
+}
+
+let shuffledIndex = []
+for (let i = 0; i < shuffledList.length; i++) {
+  shuffledIndex.push(i);
+}
+
+for (let i = 0; i<shuffledList.length; i++){
   if(Math.floor(Math.random() * 2 + 1) == 1){
-    room_goaldir_left.push(goaldirList[goaldirIndex[i]][0])
-    room_goaldir_right.push(goaldirList[goaldirIndex[i]][1])
+    room_goaldir_left.push(shuffledList[shuffledIndex[i]][0])
+    room_goaldir_right.push(shuffledList[shuffledIndex[i]][1])
   }else {
-    room_goaldir_left.push(goaldirList[goaldirIndex[i]][1])
-    room_goaldir_right.push(goaldirList[goaldirIndex[i]][0])
+    room_goaldir_left.push(shuffledList[shuffledIndex[i]][1])
+    room_goaldir_right.push(shuffledList[shuffledIndex[i]][0])
   }
 
 }
@@ -542,4 +556,4 @@ function colorStop(colordetretime){
 
 
 //randomDelay for Direct Memory Test and Shortest Path Judgement
-var randomDelay = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
+var randomDelay = Math.floor(Math.random() * (1500 - 100 + 1)) + 100;

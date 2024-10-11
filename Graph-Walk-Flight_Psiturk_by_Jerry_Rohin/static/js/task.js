@@ -303,7 +303,7 @@ var directmemory_phase = {
   stimulus_duration:5000,//5 second for now, we will discuss it 
   trial_duration:5000,//5 second for now 
   on_load: function() {
-    // Reveal other rooms after 500 ms
+    // Reveal other rooms after 1500 ms
     setTimeout(function() {
       for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
         document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
@@ -365,10 +365,10 @@ var shortestpath_phase = {
   choices: ['1','2'],
   response_ends_trial: false,
   stimulus:create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial),
-  stimulus_duration:3000,
-  trial_duration:3000,
+  stimulus_duration:6000,
+  trial_duration:6000,
   on_load: function() {
-    // Reveal other rooms after 500 ms
+    // Reveal other rooms after 1500 ms
     setTimeout(function() {
       for(let i = 0;i<document.getElementsByClassName('bottomshortest').length;i++){
         document.getElementsByClassName('bottomshortest')[i].style.visibility = 'visible';
