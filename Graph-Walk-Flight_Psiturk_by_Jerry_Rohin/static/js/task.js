@@ -39,7 +39,7 @@ var timeline = []
 //welcome page
 var welcome = {
   type: 'survey-html-form',
-  html: " <label for='worker_id'>Enter your Prolific Worker ID. Please make sure this is correct! </label><br><input type='text' id='worker_id' name='worker_id' required><br><br>",
+  html: "<label for='worker_id'>Enter your Prolific Worker ID. Please make sure this is correct! </label><br><input type='text' id='worker_id' name='worker_id' required><br><br>",
   on_finish: function (data) {
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
@@ -108,7 +108,7 @@ var thecrossant= {
   stimulus_duration: removecolor,
   trial_duration: removecolor,
   response_ends_trial: false,
-  stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
+  stimulus:create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial]),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
     data.stimulus=pluscolor[curr_learning_trial]
@@ -125,10 +125,10 @@ var thecrossant_black={
   choices: ['1','2'],
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 2000-removecolor,
-  trial_duration: 2000-removecolor,
+  stimulus_duration: 1000-removecolor,
+  trial_duration: 1000-removecolor,
   response_ends_trial: false,
-  stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
+  stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
     data.trial_type ='rt_thecrossant_black'
@@ -216,8 +216,8 @@ var thecrossant_break={
   choices: jsPsych.NO_KEYS,
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 1000+removecolor,
-  trial_duration: 1000+removecolor,
+  stimulus_duration: 100+removecolor,
+  trial_duration: 100+removecolor,
   response_ends_trial: false,
   stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
@@ -228,15 +228,17 @@ var thecrossant_break={
     removecolor=colorStop(colordetretime)
     thecrossant.stimulus_duration= removecolor
     thecrossant.trial_duration=removecolor
-    thecrossant_black.stimulus_duration= 2000-removecolor
-    thecrossant_black.trial_duration=2000-removecolor
-    thecrossant_break.stimulus_duration= 1000+removecolor
-    thecrossant_break.trial_duration=1000+removecolor
+    thecrossant_black.stimulus_duration= 1000-removecolor
+    thecrossant_black.trial_duration=1000-removecolor
+    thecrossant_break.stimulus_duration= 100+removecolor
+    thecrossant_break.trial_duration=100+removecolor
     curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    thecrossant_black.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    learn_phase_color.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
-    thecrossant.stimulus=create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial])
+    learn_phase.trial_duration=colordetretime+1500
+    learn_phase.stimulus_duration=colordetretime+1500
+    thecrossant_black.stimulus=create_memory_ten('black')
+    learn_phase_color.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
+    thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
     attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
     
   }
@@ -261,8 +263,8 @@ var learn_phase = {
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
-  stimulus_duration:colordetretime,
-  trial_duration:colordetretime,
+  stimulus_duration:colordetretime+1500,
+  trial_duration:colordetretime+1500,
   on_finish: function(data) {
     data.trial_type = 'learn_phase(without_color)';
     data.stimulus='black_plus_sign'
@@ -279,7 +281,7 @@ var learn_phase_color = {
   type: 'html-keyboard-responsefl',
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
-  stimulus:create_learningcolor_trial(learn_left,learn_right,curr_learning_trial,pluscolor[curr_learning_trial]),
+  stimulus:create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial]),
   stimulus_duration:100,
   trial_duration:100,
   on_finish: function(data) {
