@@ -216,8 +216,8 @@ var thecrossant_break={
   choices: jsPsych.NO_KEYS,
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 500,
-  trial_duration: 500,
+  stimulus_duration: 100,
+  trial_duration: 100,
   response_ends_trial: false,
   stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
@@ -229,8 +229,8 @@ var thecrossant_break={
     removecolor=colorStop(colordetretime)
     learn_phase_color.stimulus_duration= removecolor
     learn_phase_color.trial_duration=removecolor
-    thecrossant_black.stimulus_duration= 1000-removecolor
-    thecrossant_black.trial_duration=1000-removecolor
+    thecrossant_black.stimulus_duration= 2000-removecolor
+    thecrossant_black.trial_duration=2000-removecolor
     curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
     learn_phase.trial_duration=colordetretime+1500
@@ -317,8 +317,7 @@ var directmemory_phase = {
     data.stimulus_short=room_direct_short[curr_direct_trial];
     data.stimulus_far=room_direct_far[curr_direct_trial];
     if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
-    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||
-     (data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
+    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
       data.accuracy = 1
       directcorrectness.push(1)
       data.weighted_accuracy = 1
@@ -329,13 +328,11 @@ var directmemory_phase = {
     }
 
     if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
-    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||
-     (data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
+    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
       data.missedtrial = 'closer'
       data.weighted_accuracy = 0.5
     } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
-    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||
-     (data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
+    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
       data.missedtrial = 'closer'
       data.weighted_accuracy = 0.5
     }
