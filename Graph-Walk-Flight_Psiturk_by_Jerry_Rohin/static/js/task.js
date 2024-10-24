@@ -216,8 +216,8 @@ var thecrossant_break={
   choices: jsPsych.NO_KEYS,
   stimulus_height: 100,
   stimulus_width: 100,
-  stimulus_duration: 100+removecolor,
-  trial_duration: 100+removecolor,
+  stimulus_duration: 500,
+  trial_duration: 500,
   response_ends_trial: false,
   stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
@@ -231,8 +231,6 @@ var thecrossant_break={
     learn_phase_color.trial_duration=removecolor
     thecrossant_black.stimulus_duration= 1000-removecolor
     thecrossant_black.trial_duration=1000-removecolor
-    thecrossant_break.stimulus_duration= 100+removecolor
-    thecrossant_break.trial_duration=100+removecolor
     curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
     learn_phase.trial_duration=colordetretime+1500
