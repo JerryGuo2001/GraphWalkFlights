@@ -52,7 +52,11 @@ function continueButton() {
 function makeVisible() {
     document.getElementById("spiderman").style.display = "block";
 }
+
 goalIndex = 0
+let rightName = ''
+let leftName = ''
+
 function initiatep3(){
     makeVisible()
     continueButton()
@@ -71,7 +75,9 @@ function initiatep3(){
     // }
     container = document.getElementById('div1');
     document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
+    rightName = images[room_goaldir_left[goalIndex]-1].src
     document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
+    leftName = images[room_goaldir_left[goalIndex]-1].src
     for (let i = 1; i <= 12; i++) {
         if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
             images[i-1].style="display: none;" // Make them disappear in the top box
