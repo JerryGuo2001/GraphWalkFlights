@@ -297,8 +297,8 @@ var directmemory_phase = {
   choices: ['1','2','3'],
   response_ends_trial: false,
   stimulus:create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial),
-  stimulus_duration:5000,//5 second for now, we will discuss it 
-  trial_duration:5000,//5 second for now 
+  stimulus_duration:6500,//5 second for now, we will discuss it 
+  trial_duration:6500,//5 second for now 
   on_load: function() {
     // Reveal other rooms after 1500 ms
     setTimeout(function() {
@@ -359,8 +359,8 @@ var shortestpath_phase = {
   choices: ['1','2'],
   response_ends_trial: false,
   stimulus:create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial),
-  stimulus_duration:6000,
-  trial_duration:6000,
+  stimulus_duration:7500,
+  trial_duration:7500,
   on_load: function() {
     // Reveal other rooms after 1500 ms
     setTimeout(function() {
