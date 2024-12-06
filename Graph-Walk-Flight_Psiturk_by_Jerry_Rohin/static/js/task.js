@@ -261,8 +261,8 @@ var learn_phase = {
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
-  stimulus_duration:colordetretime+1500,
-  trial_duration:colordetretime+1500,
+  stimulus_duration:2000,
+  trial_duration:2000,
   on_finish: function(data) {
     data.trial_type = 'learn_phase(without_color)';
     data.stimulus='black_plus_sign'
