@@ -96,6 +96,11 @@ var warning_page={
   }
 }
 
+function sum() {
+  return arr.reduce((acc, num) => acc + num, 0)
+}
+
+
 let probe_num = NaN
 let probe_name = NaN
 function get_probe_num(){
