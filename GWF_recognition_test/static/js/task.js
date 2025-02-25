@@ -147,7 +147,7 @@ function start_probe() {
       response_ends_trial: true,
       on_finish: function(data) {
         data.stimulus = learn_img[trial_num]
-        data.trial_type = 'familiar_rating';
+        data.trial_type = 'probe_rating';
         data.probe = data.key_press - 48
         if (probe_num == data.key_press - 48) {
           data.probe_accuracy = 1
