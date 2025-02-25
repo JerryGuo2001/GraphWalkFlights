@@ -141,6 +141,7 @@ function start_probe() {
       `,
       response_ends_trial: true,
       on_finish: function(data) {
+        data.stimulus = learn_img[trial_num]
         data.trial_type = 'familiar_rating';
         data.probe = data.key_press - 48
         if (probe_num == data.key_press - 48) {
@@ -195,6 +196,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
+      data.stimulus= learn_img[trial_num]
       data.trial_type = 'familiar_rating';
       data.rating = data.key_press - 48
     } 
@@ -228,6 +230,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
+      data.stimulus= learn_img[trial_num]
       data.trial_type = 'unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -260,6 +263,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
+      data.stimulus= learn_img[trial_num]
       data.trial_type = 'memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -308,15 +312,15 @@ for (i=0;i<num_recognition_trials;i++){
       if(data.key_press == 49 && new_old[on_finish_num] == "OLD" || data.key_press == 50 && new_old[on_finish_num] == "NEW"){
         data.correct = 1
         correctResp.push(1)
-        data.accuracy = correctResp / correctResp.length
+        data.accuracy = sum(correctResp) / correctResp.length
       } else if (data.key_press == 49 && new_old[on_finish_num] == "NEW" || data.key_press == 50 && new_old[on_finish_num] == "OLD"){
         data.correct = 0 
         correctResp.push(0)
-        data.accuracy = correctResp / correctResp.length
+        data.accuracy = sum(correctResp) / correctResp.length
       } else {
         data.correct = NaN
         correctResp.push(0)
-        data.accuracy = correctResp / correctResp.length
+        data.accuracy = sum(correctResp) / correctResp.length
       }
       on_finish_num += 1
     }
