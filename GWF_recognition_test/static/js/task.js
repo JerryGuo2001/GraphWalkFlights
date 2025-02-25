@@ -48,6 +48,52 @@ var welcome = {
 }
 //welcome page end
 
+//fullscreen start
+
+var enterFullscreen = {
+  type: 'html-button-response',
+  stimulus: `
+        <style>
+            ul {
+                list-style-type: disc;
+                margin: 20px 0;
+                padding-left: 100px;
+                text-align: left;
+            }
+            li {
+                margin-bottom: 15px;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+            p {
+                font-size: 18px;
+                line-height: 1.6;
+                margin: 10px 0;
+                text-align: center;
+            }
+        </style>
+        <h3 style='text-align: center'><strong>Thank you for your participation in this study. Please:</strong></h3>
+        <br />
+        <ul>
+            <li>Follow the instructions for each task and try your best to perform well.</li>
+            <li>Maximize your browser and focus completely on the task without any distractions.</li>
+            <li><strong>DO NOT</strong> take notes during the experiment, as this interferes with our ability to accurately measure the learning process.</li>
+            <li><strong>DO NOT</strong> participate if you feel you cannot fully commit to these requirements.</li>
+        </ul> <br />
+        <p>When you are ready to take the experiment, click 'Enter Fullscreen' to begin.</p> <br />
+    `,
+  choices: ['Enter Fullscreen'],
+  on_finish: function() {
+      // Trigger fullscreen mode when the button is clicked
+      document.documentElement.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+      });
+  }
+};
+
+//fullscreen end
+
+
 //Instruction page
 function createinstruct(instruct_1,number){
   var intro={
@@ -74,7 +120,7 @@ for (let i = 0; i < instructnames.length; i++) {
 intro_learn=createfulintro(instruct,instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
-timeline.push(welcome)
+timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 
 

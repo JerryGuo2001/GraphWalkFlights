@@ -49,6 +49,49 @@ var welcome = {
 }
 //welcome page end
 
+//Fullscreen start
+var enterFullscreen = {
+  type: 'html-button-response',
+  stimulus: `
+        <style>
+            ul {
+                list-style-type: disc;
+                margin: 20px 0;
+                padding-left: 100px;
+                text-align: left;
+            }
+            li {
+                margin-bottom: 15px;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+            p {
+                font-size: 18px;
+                line-height: 1.6;
+                margin: 10px 0;
+                text-align: center;
+            }
+        </style>
+        <h3 style='text-align: center'><strong>Thank you for your participation in this study. Please:</strong></h3>
+        <br />
+        <ul>
+            <li>Follow the instructions for each task and try your best to perform well.</li>
+            <li>Maximize your browser and focus completely on the task without any distractions.</li>
+            <li><strong>DO NOT</strong> take notes during the experiment, as this interferes with our ability to accurately measure the learning process.</li>
+            <li><strong>DO NOT</strong> participate if you feel you cannot fully commit to these requirements.</li>
+        </ul> <br />
+        <p>When you are ready to take the experiment, click 'Enter Fullscreen' to begin.</p> <br />
+    `,
+  choices: ['Enter Fullscreen'],
+  on_finish: function() {
+      // Trigger fullscreen mode when the button is clicked
+      document.documentElement.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+      });
+  }
+};
+// Fullscreen end
+
 //Instruction page
 function createinstruct(instruct_1,number){
   var intro={
@@ -300,7 +343,21 @@ var directmemory_phase = {
   stimulus_duration:6500,//5 second for now, we will discuss it 
   trial_duration:6500,//5 second for now 
   on_load: function() {
-    // Reveal other rooms after 1500 ms
+    document.addEventListener('keydown', function(event) {
+      if (['1', '2', '3'].includes(event.key)) {
+        var selected_choice = event.key;
+        var image_ids = ['img1', 'img2', 'img3'];
+        image_ids.forEach(function(id) {
+          var image = document.getElementById(id);
+          if (image) {
+            image.style.border = '';
+          }
+        });
+        var selected_image = document.getElementById('img' + selected_choice);
+        if (selected_image) {
+          selected_image.style.border = '5px solid black';
+        }
+      }})
     setTimeout(function() {
       for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
         document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
@@ -362,6 +419,21 @@ var shortestpath_phase = {
   stimulus_duration:7500,
   trial_duration:7500,
   on_load: function() {
+    document.addEventListener('keydown', function(event) {
+      if (['1', '2'].includes(event.key)) {
+        var selected_choice = event.key;
+        var image_ids = ['img1', 'img2'];
+        image_ids.forEach(function(id) {
+          var image = document.getElementById(id);
+          if (image) {
+            image.style.border = '';
+          }
+        });
+        var selected_image = document.getElementById('img' + selected_choice);
+        if (selected_image) {
+          selected_image.style.border = '5px solid black'; 
+        }
+      }})
     // Reveal other rooms after 1500 ms
     setTimeout(function() {
       for(let i = 0;i<document.getElementsByClassName('bottomshortest').length;i++){
@@ -507,7 +579,7 @@ var thank_you = {
 
 
 //time line here
-timeline.push(welcome)
+timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 timeline.push(learn_phase)
 timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
