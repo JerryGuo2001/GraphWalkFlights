@@ -96,7 +96,7 @@ var warning_page={
   }
 }
 
-function sum() {
+function sum(arr) {
   return arr.reduce((acc, num) => acc + num, 0)
 }
 
