@@ -167,13 +167,13 @@ function get_probe_trial() {
 }
 get_probe_trial()
 let trial_num = 0
-function start_probe() {
+function start_probe(img,trial) {
   var probe_trial={
     type: 'html-keyboard-response',
       choices: ['1','2','3','4','5'],
       stimulus: `
         <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-          <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
+          <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
           <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
             Please press the ${get_probe_num()} option on your keyboard.
           </p>
@@ -192,7 +192,7 @@ function start_probe() {
       `,
       response_ends_trial: true,
       on_finish: function(data) {
-        data.stimulus = learn_img[trial_num]
+        data.stimulus = img[trial]
         data.trial_type = 'probe_rating';
         data.probe = data.key_press - 48
         if (probe_num == data.key_press - 48) {
@@ -254,7 +254,7 @@ for (i=0;i<num_learn_trials;i++) {
   }
   timeline.push(familiarity);
   if (probe_trial_num == 1){
-    start_probe()
+    start_probe(learn_img,trial_num)
   }
   var uniqueness = {
     type: 'html-keyboard-response',
@@ -288,7 +288,7 @@ for (i=0;i<num_learn_trials;i++) {
   }
   timeline.push(uniqueness);
   if (probe_trial_num == 2){
-    start_probe()
+    start_probe(learn_img,trial_num)
   }
   var memorability = {
     type: 'html-keyboard-response',
@@ -321,7 +321,7 @@ for (i=0;i<num_learn_trials;i++) {
   }
   timeline.push(memorability);
   if (probe_trial_num == 3){
-    start_probe()
+    start_probe(learn_img,trial_num)
   }
   let thebreak= {
     type: 'html-keyboard-response',
@@ -343,13 +343,128 @@ let on_finish_num = 0
 let correctResp = []
 
 for (i=0;i<num_recognition_trials;i++){
+  get_probe_trial()
+  var second_learn_phase = {
+    type: 'html-keyboard-responsefl',
+    choices: jsPsych.NO_KEYS,
+    response_ends_trial: false,
+    stimulus:create_image_learn(recognition_list,recog_trial_num),
+    stimulus_duration:3000,
+    trial_duration:3000,
+    on_finish: function(data) {
+      data.trial_type = 'second_learn_phase';
+      data.stimulus= recognition_list[recog_trial_num]
+      sfa=1
+    }
+  }
+  timeline.push(second_learn_phase)
+  var familiarity = {
+    type: 'html-keyboard-response',
+    choices: ['1','2','3','4','5'],
+    stimulus: `
+      <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          How familiar is the image on a scale of 1 to 5?
+        </p>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+          <br>
+          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+            <p>(1) Not at all familiar</p>
+            <p>(2) Slightly familiar</p>
+            <p>(3) Moderately familiar</p>
+            <p>(4) Very familiar</p>
+            <p>(5) Extremely familiar</p>
+          </div><br><br>
+        <strong>Press the number key that corresponds with your rating.</strong>
+        </p>
+      </div>
+    `,
+    response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus= recognition_list[recog_trial_num]
+      data.trial_type = 'familiar_rating';
+      data.rating = data.key_press - 48
+    } 
+  }
+  timeline.push(familiarity);
+  if (probe_trial_num == 1){
+    start_probe(recognition_list,recog_trial_num)
+  }
+  var uniqueness = {
+    type: 'html-keyboard-response',
+    choices: ['1','2','3','4','5'],
+    stimulus: `
+
+      <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
+        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          How unique is the image on a scale of 1 to 5?
+        </p>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+          <br>
+          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+            <p>(1) Not at all unique</p>
+            <p>(2) Slightly unique</p>
+            <p>(3) Moderately unique</p>
+            <p>(4) Very unique</p>
+            <p>(5) Extremely unique</p>
+          </div><br><br>
+        <strong>Press the number key that corresponds with your rating.</strong>
+        </p>
+      </div>
+    `,
+    response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus= recognition_list[recog_trial_num]
+      data.trial_type = 'pt2_unique_rating';
+      data.rating = data.key_press - 48
+    } 
+  }
+  timeline.push(uniqueness);
+  if (probe_trial_num == 2){
+    start_probe(recognition_list,recog_trial_num)
+  }
+  var memorability = {
+    type: 'html-keyboard-response',
+    choices: ['1','2','3','4','5'],
+    stimulus: `
+      <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          How memorable is the image on a scale of 1 to 5?
+        </p>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+          <br>
+          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+            <p>(1) Not at all memorable</p>
+            <p>(2) Slightly memorable</p>
+            <p>(3) Moderately memorable</p>
+            <p>(4) Very memorable</p>
+            <p>(5) Extremely memorable</p>
+          </div><br><br>
+        <strong>Press the number key that corresponds with your rating.</strong>
+        </p>
+      </div>
+    `,
+    response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus= recognition_list[recog_trial_num]
+      data.trial_type = 'memorable_rating';
+      data.rating = data.key_press - 48
+    } 
+  }
+  timeline.push(memorability);
+  if (probe_trial_num == 3){
+    start_probe(recognition_list,recog_trial_num)
+  }
   var img_recognition = {
     type: 'html-keyboard-response',
     choices: ['1','2'],
     response_ends_trial: true,
     stimulus:create_image_recognition(recognition_list,recog_trial_num),
-    stimulus_duration:5000,//5 second for now, we will discuss it 
-    trial_duration:5000,//5 second for now 
+    stimulus_duration:10000,
+    trial_duration:10000,
     on_finish: function(data) {
       data.trial_type = 'recognition_phase';
       data.stimulus= recognition_list[recog_trial_num]
@@ -399,8 +514,8 @@ for (i=0;i<num_recognition_trials;i++){
         </p>
       </div>
     `,
-    stimulus_duration:5000,//5 second for now, we will discuss it 
-    trial_duration:5000,//5 second for now 
+    stimulus_duration:10000,//5 second for now, we will discuss it 
+    trial_duration:10000,//5 second for now 
     on_finish: function (data){
       data.trial_type = 'confidence';
       data.stimulus= recognition_list[recog_trial_num]
