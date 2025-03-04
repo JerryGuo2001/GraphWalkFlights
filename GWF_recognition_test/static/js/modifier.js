@@ -50,7 +50,7 @@ function shuffle(array) {
 let img_mm_list = []
 let unshuffled_img_type = []
 
-for (i=1;i<26;i++){
+for (i=1;i<31;i++){
   if (i<10){
     img_mm_list.push(`img_manmade_0${i}.png`)
     unshuffled_img_type.push("MM")
@@ -61,7 +61,7 @@ for (i=1;i<26;i++){
 }
 let img_nat_list = []
 
-for (i=1;i<26;i++){
+for (i=1;i<31;i++){
   if (i<10){
     img_nat_list.push(`img_natural_0${i}.png`)
     unshuffled_img_type.push("NAT")
@@ -71,7 +71,34 @@ for (i=1;i<26;i++){
   }
 }
 
-var recognition_unshuffled = img_mm_list.concat(img_nat_list);
+let nat_arr = []
+let mm_arr = []
+
+for (let i = 0; i < img_mm_list.length;i++){
+  mm_arr.push(i)
+  nat_arr.push(i)
+}
+
+shuffle(mm_arr);
+shuffle(nat_arr);
+
+let mm_list_shuff = []
+let nat_list_shuff = []
+let unshuffled_img_type_learn = []
+
+for (let i = 0; i < img_mm_list.length;i++){
+  mm_list_shuff.push(img_mm_list[mm_arr[i]])
+  nat_list_shuff.push(img_nat_list[nat_arr[i]])
+}
+
+first_phase_unshuffled = mm_list_shuff.slice(0,15).concat(nat_list_shuff.slice(0,15))
+unshuffled_img_type_learn = unshuffled_img_type.slice(0,15).concat(unshuffled_img_type.slice(30,45))
+
+new_img_unshuffled = mm_list_shuff.slice(15).concat(nat_list_shuff.slice(15))
+unshuffled_img_type = unshuffled_img_type_learn.concat(unshuffled_img_type.slice(15,30),unshuffled_img_type.slice(45,60))
+
+
+var recognition_unshuffled = first_phase_unshuffled.concat(new_img_unshuffled);
 let slice_recognition_list = []
 let recognition_list = [];
 let recog_arr = [];
@@ -80,32 +107,28 @@ let new_old_unshuff = []
 let new_old = []
 let shuffled_img_type = []
 
+
+
+
 for (let i = 0; i < recognition_unshuffled.length; i++) {
   recog_arr.push(i);
-}
-shuffle(recog_arr)
-for (let i = 0; i < recognition_unshuffled.length;i++){
-  slice_recognition_list.push(recognition_unshuffled[recog_arr[i]])
   if (i < 30){
     new_old_unshuff.push("OLD")
   }else {
     new_old_unshuff.push("NEW")
   }
 }
-
-let learn_unshuffled = slice_recognition_list.slice(0,30)
-let foil_unshuffled = slice_recognition_list.slice(30)
-//var learn_unshuffled=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png']
-//let foil_unshuffled=['Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
-//  new_old.push(new_old_unshuff[recog_arr[i]])
-
 shuffle(recog_arr)
 for (let i = 0; i < recognition_unshuffled.length;i++){
-  recognition_list.push(slice_recognition_list[recog_arr[i]])
-  shuffled_img_type.push(unshuffled_img_type[recog_arr[i]])
+  recognition_list.push(recognition_unshuffled[recog_arr[i]])
   new_old.push(new_old_unshuff[recog_arr[i]])
+  shuffled_img_type.push(unshuffled_img_type[recog_arr[i]])
 }
 
+let learn_unshuffled = first_phase_unshuffled
+let foil_unshuffled = new_img_unshuffled
+
+let shuffled_learn_img_type = []
 let learn_img = [];
 let learn_arr = [];
 for (let i = 0; i < learn_unshuffled.length; i++) {
@@ -114,6 +137,7 @@ for (let i = 0; i < learn_unshuffled.length; i++) {
 shuffle(learn_arr)
 for (let i = 0; i < learn_unshuffled.length;i++){
   learn_img.push(learn_unshuffled[learn_arr[i]])
+  shuffled_learn_img_type.push(unshuffled_img_type_learn[learn_arr[i]])
 }
 
 let foil_img = [];

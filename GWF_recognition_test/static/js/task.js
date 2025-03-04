@@ -218,7 +218,7 @@ for (i=0;i<num_learn_trials;i++) {
     on_finish: function(data) {
       data.trial_type = 'learn_phase';
       data.stimulus= learn_img[trial_num]
-      data.image_type = shuffled_img_type[trial_num]
+      data.image_type = shuffled_learn_img_type[trial_num]
       sfa=1
     }
   }
@@ -354,6 +354,8 @@ for (i=0;i<num_recognition_trials;i++){
     on_finish: function(data) {
       data.trial_type = 'second_learn_phase';
       data.stimulus= recognition_list[recog_trial_num]
+      data.image_type = shuffled_img_type[recog_trial_num]
+      data.new_old = new_old[recog_trial_num]
       sfa=1
     }
   }
