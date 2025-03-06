@@ -145,13 +145,16 @@ var warning_page={
 function sum(arr) {
   return arr.reduce((acc, num) => acc + num, 0)
 }
-
+let remainingtimeline = []
 
 let probe_num = NaN
 let probe_name = NaN
+let prob_list=[]
+let prob_num = NaN
+let prob_index=0
 function get_probe_num(){
-  probe_num = Math.floor(Math.random()*5)+1
-  return probe_num
+  prob_num = Math.floor(Math.random()*5)+1
+  prob_list.push(prob_num)
 } 
 var probe_trial_num = null
 function get_probe_trial() {
@@ -168,6 +171,8 @@ function get_probe_trial() {
 get_probe_trial()
 let trial_num = 0
 function start_probe(img,trial) {
+  get_probe_num()
+  length.push(timeline.length)
   var probe_trial={
     type: 'html-keyboard-response',
       choices: ['1','2','3','4','5'],
@@ -175,7 +180,7 @@ function start_probe(img,trial) {
         <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
           <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
           <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-            Please press the ${get_probe_num()} option on your keyboard.
+            Please press the ${prob_list[prob_index]} option on your keyboard.
           </p>
           <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
             <br>
@@ -195,16 +200,45 @@ function start_probe(img,trial) {
         data.stimulus = img[trial]
         data.trial_type = 'probe_rating';
         data.probe = data.key_press - 48
-        if (probe_num == data.key_press - 48) {
+        console.log(data.probe)
+        console.log(prob_list[prob_index])
+        if (prob_list[prob_index] == data.key_press - 48) {
           data.probe_accuracy = 1
         } else{
           data.probe_accuracy = 0
+          if (warning < 2){
+            jsPsych.finishTrial()
+            jsPsych.endExperiment()
+            timeline.splice(length[prob_index]+1,0,warning_page)
+            remainingtimeline = timeline.splice(length[prob_index]+1)
+            jsPsych.init({
+              timeline: remainingtimeline,
+              preload_images: all_images,
+              max_load_time: 600000
+            })
+          }else {
+            timeline.splice(length[prob_index]+2,0,TaskFailed)
+          }
+          
         }
+        prob_index++
+        console.log(prob_list[prob_index])
       } 
   }
+
   timeline.push(probe_trial)
 }
+var length = []
 
+TaskFailed = {
+  type: 'html-keyboard-response',
+  stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
+            '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
+  choices: ['Esc'],
+  on_finish: function(data){
+    window.close();
+  }
+};
 
 for (i=0;i<num_learn_trials;i++) {
   get_probe_trial()
@@ -341,6 +375,13 @@ timelinepushintro(intro_dir,dir_instructnames)
 let recog_trial_num = 0
 let on_finish_num = 0
 let correctResp = []
+
+let wrongbreak= {
+  type: 'html-keyboard-response',
+  choices:jsPsych.NO_KEYS,
+  trial_duration: 400,
+  stimulus:create_memory_ten()
+}
 
 for (i=0;i<num_recognition_trials;i++){
   get_probe_trial()
