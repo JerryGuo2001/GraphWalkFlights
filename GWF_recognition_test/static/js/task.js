@@ -206,18 +206,22 @@ function start_probe(img,trial) {
           data.probe_accuracy = 1
         } else{
           data.probe_accuracy = 0
-          if (warning < 2){
+          if (warning < 1){
+            console.log("Wrong")
+            warning +=1
+            // jsPsych.finishTrial()
+            // jsPsych.endExperiment()
+            // timeline.splice(length[prob_index]+1,0,warning_page)
+            // remainingtimeline = timeline.splice(length[prob_index]+1)
+            // jsPsych.init({
+            //   timeline: remainingtimeline,
+            //   preload_images: all_images,
+            //   max_load_time: 600000
+            // })
+          }else {
+            // timeline.splice(length[prob_index]+2,0,TaskFailed)
             jsPsych.finishTrial()
             jsPsych.endExperiment()
-            timeline.splice(length[prob_index]+1,0,warning_page)
-            remainingtimeline = timeline.splice(length[prob_index]+1)
-            jsPsych.init({
-              timeline: remainingtimeline,
-              preload_images: all_images,
-              max_load_time: 600000
-            })
-          }else {
-            timeline.splice(length[prob_index]+2,0,TaskFailed)
           }
           
         }
