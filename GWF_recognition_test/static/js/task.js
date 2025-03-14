@@ -84,6 +84,8 @@ var enterFullscreen = {
     `,
   choices: ['Enter Fullscreen'],
   on_finish: function() {
+    data.trial_type = 'fullscreen';
+    data.stimulus = "Fullscreen"
       // Trigger fullscreen mode when the button is clicked
       document.documentElement.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
@@ -583,7 +585,9 @@ var thank_you = {
   stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_finish: function (data) {
     data.trial_type = 'thank_you';
+    data.stimulus = 'all_done'
     data.detectfocus = detectfocus;
+    data.warning = warning
     save_data(true)
   }
 }
