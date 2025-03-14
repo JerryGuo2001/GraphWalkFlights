@@ -85,7 +85,7 @@ var enterFullscreen = {
   choices: ['Enter Fullscreen'],
   on_finish: function() {
     data.trial_type = 'fullscreen';
-    data.stimulus = "Fullscreen"
+    data.stimulus = "fullscreen_prompt"
       // Trigger fullscreen mode when the button is clicked
       document.documentElement.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
