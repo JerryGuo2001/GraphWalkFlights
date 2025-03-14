@@ -1,11 +1,11 @@
 //debug moode on/off
-debugmode= true
+debugmode= false
 if (debugmode==true){
   num_learn_trials = 5
   num_recognition_trials = 5
 }else{
-  num_learn_trials = 25
-  num_recognition_trials = 50
+  num_learn_trials = 30
+  num_recognition_trials = 60
 }
 n_learning_trial=3 //This determine the number of learning trial you want in total
 n_direct_trial=10 //how many direct trial you want

@@ -170,8 +170,10 @@ function get_probe_trial() {
 }
 get_probe_trial()
 let trial_num = 0
+let instant_index = 0
 function start_probe(img,trial) {
   get_probe_num()
+  console.log(prob_list[instant_index])
   length.push(timeline.length)
   var probe_trial={
     type: 'html-keyboard-response',
@@ -180,7 +182,7 @@ function start_probe(img,trial) {
         <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
           <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
           <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-            Please press the ${prob_list[prob_index]} option on your keyboard.
+            Please press the ${prob_list[instant_index]} option on your keyboard.
           </p>
           <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
             <br>
@@ -206,9 +208,9 @@ function start_probe(img,trial) {
           data.probe_accuracy = 1
         } else{
           data.probe_accuracy = 0
-          if (warning < 1){
+          warning +=1
+          if (warning < 3){
             console.log("Wrong")
-            warning +=1
             // jsPsych.finishTrial()
             // jsPsych.endExperiment()
             // timeline.splice(length[prob_index]+1,0,warning_page)
@@ -228,8 +230,9 @@ function start_probe(img,trial) {
         prob_index++
         console.log(prob_list[prob_index])
       } 
+    
   }
-
+  instant_index += 1
   timeline.push(probe_trial)
 }
 var length = []
