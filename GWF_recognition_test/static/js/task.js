@@ -84,8 +84,6 @@ var enterFullscreen = {
     `,
   choices: ['Enter Fullscreen'],
   on_finish: function() {
-    data.trial_type = 'fullscreen';
-    data.stimulus = "fullscreen_prompt"
       // Trigger fullscreen mode when the button is clicked
       document.documentElement.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
@@ -266,36 +264,36 @@ for (i=0;i<num_learn_trials;i++) {
     }
   }
   timeline.push(learn_phase)
-  var familiarity = {
-    type: 'html-keyboard-response',
-    choices: ['1','2','3','4','5'],
-    stimulus: `
-      <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
-        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How familiar is the image on a scale of 1 to 5?
-        </p>
-        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-          <br>
-          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-            <p>(1) Not at all familiar</p>
-            <p>(2) Slightly familiar</p>
-            <p>(3) Moderately familiar</p>
-            <p>(4) Very familiar</p>
-            <p>(5) Extremely familiar</p>
-          </div><br><br>
-        <strong>Press the number key that corresponds with your rating.</strong>
-        </p>
-      </div>
-    `,
-    response_ends_trial: true,
-    on_finish: function(data) {
-      data.stimulus= learn_img[trial_num]
-      data.trial_type = 'familiar_rating';
-      data.rating = data.key_press - 48
-    } 
-  }
-  timeline.push(familiarity);
+  // var familiarity = {
+  //   type: 'html-keyboard-response',
+  //   choices: ['1','2','3','4','5'],
+  //   stimulus: `
+  //     <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+  //       <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
+  //       <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+  //         How familiar is the image on a scale of 1 to 5?
+  //       </p>
+  //       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+  //         <br>
+  //         <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+  //           <p>(1) Not at all familiar</p>
+  //           <p>(2) Slightly familiar</p>
+  //           <p>(3) Moderately familiar</p>
+  //           <p>(4) Very familiar</p>
+  //           <p>(5) Extremely familiar</p>
+  //         </div><br><br>
+  //       <strong>Press the number key that corresponds with your rating.</strong>
+  //       </p>
+  //     </div>
+  //   `,
+  //   response_ends_trial: true,
+  //   on_finish: function(data) {
+  //     data.stimulus= learn_img[trial_num]
+  //     data.trial_type = 'familiar_rating';
+  //     data.rating = data.key_press - 48
+  //   } 
+  // }
+  // timeline.push(familiarity);
   if (probe_trial_num == 1){
     start_probe(learn_img,trial_num)
   }
@@ -410,36 +408,36 @@ for (i=0;i<num_recognition_trials;i++){
     }
   }
   timeline.push(second_learn_phase)
-  var familiarity = {
-    type: 'html-keyboard-response',
-    choices: ['1','2','3','4','5'],
-    stimulus: `
-      <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
-        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How familiar is the image on a scale of 1 to 5?
-        </p>
-        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-          <br>
-          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-            <p>(1) Not at all familiar</p>
-            <p>(2) Slightly familiar</p>
-            <p>(3) Moderately familiar</p>
-            <p>(4) Very familiar</p>
-            <p>(5) Extremely familiar</p>
-          </div><br><br>
-        <strong>Press the number key that corresponds with your rating.</strong>
-        </p>
-      </div>
-    `,
-    response_ends_trial: true,
-    on_finish: function(data) {
-      data.stimulus= recognition_list[recog_trial_num]
-      data.trial_type = 'familiar_rating';
-      data.rating = data.key_press - 48
-    } 
-  }
-  timeline.push(familiarity);
+  // var familiarity = {
+  //   type: 'html-keyboard-response',
+  //   choices: ['1','2','3','4','5'],
+  //   stimulus: `
+  //     <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+  //       <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+  //       <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+  //         How familiar is the image on a scale of 1 to 5?
+  //       </p>
+  //       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+  //         <br>
+  //         <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+  //           <p>(1) Not at all familiar</p>
+  //           <p>(2) Slightly familiar</p>
+  //           <p>(3) Moderately familiar</p>
+  //           <p>(4) Very familiar</p>
+  //           <p>(5) Extremely familiar</p>
+  //         </div><br><br>
+  //       <strong>Press the number key that corresponds with your rating.</strong>
+  //       </p>
+  //     </div>
+  //   `,
+  //   response_ends_trial: true,
+  //   on_finish: function(data) {
+  //     data.stimulus= recognition_list[recog_trial_num]
+  //     data.trial_type = 'familiar_rating';
+  //     data.rating = data.key_press - 48
+  //   } 
+  // }
+  // timeline.push(familiarity);
   if (probe_trial_num == 1){
     start_probe(recognition_list,recog_trial_num)
   }
