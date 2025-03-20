@@ -159,9 +159,9 @@ function get_probe_num(){
 var probe_trial_num = null
 function get_probe_trial() {
   probe_trial_num = Math.floor(Math.random()*15)
-  probe_name = "familiar"
+  probe_name = "memorable"
   if (probe_trial_num == 1) {
-    probe_name = "familiar"
+    probe_name = "unique"
   } else if (probe_trial_num == 2) {
     probe_name = "unique"
   } else if (probe_trial_num == 3) {
