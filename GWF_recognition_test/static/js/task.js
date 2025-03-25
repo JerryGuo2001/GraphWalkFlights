@@ -179,7 +179,10 @@ function start_probe(img,trial) {
     type: 'html-keyboard-response',
       choices: ['1','2','3','4','5'],
       stimulus: `
-        <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+        <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+          Image ${trial + 1} / ${img.length}
+        </div>
+        <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
           <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
           <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
             Please press the ${prob_list[instant_index]} option on your keyboard.
@@ -264,36 +267,39 @@ for (i=0;i<num_learn_trials;i++) {
     }
   }
   timeline.push(learn_phase)
-  // var familiarity = {
-  //   type: 'html-keyboard-response',
-  //   choices: ['1','2','3','4','5'],
-  //   stimulus: `
-  //     <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-  //       <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
-  //       <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-  //         How familiar is the image on a scale of 1 to 5?
-  //       </p>
-  //       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-  //         <br>
-  //         <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-  //           <p>(1) Not at all familiar</p>
-  //           <p>(2) Slightly familiar</p>
-  //           <p>(3) Moderately familiar</p>
-  //           <p>(4) Very familiar</p>
-  //           <p>(5) Extremely familiar</p>
-  //         </div><br><br>
-  //       <strong>Press the number key that corresponds with your rating.</strong>
-  //       </p>
-  //     </div>
-  //   `,
-  //   response_ends_trial: true,
-  //   on_finish: function(data) {
-  //     data.stimulus= learn_img[trial_num]
-  //     data.trial_type = 'familiar_rating';
-  //     data.rating = data.key_press - 48
-  //   } 
-  // }
-  // timeline.push(familiarity);
+  var realistic = {
+    type: 'html-keyboard-response',
+    choices: ['1','2','3','4','5'],
+    stimulus: `
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${trial_num + 1} / ${learn_img.length}
+      </div>
+      <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
+        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          How realistic would it be for this image to exist in the real world on a scale of 1 to 5?
+        </p>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+          <br>
+          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+            <p>(1) Not at all realistic</p>
+            <p>(2) Slightly realistic</p>
+            <p>(3) Moderately realistic</p>
+            <p>(4) Very realistic</p>
+            <p>(5) Extremely realistic</p>
+          </div><br><br>
+        <strong>Press the number key that corresponds with your rating.</strong>
+        </p>
+      </div>
+    `,
+    response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus= learn_img[trial_num]
+      data.trial_type = 'realistic_rating';
+      data.rating = data.key_press - 48
+    } 
+  }
+  timeline.push(realistic);
   if (probe_trial_num == 1){
     start_probe(learn_img,trial_num)
   }
@@ -301,7 +307,9 @@ for (i=0;i<num_learn_trials;i++) {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
-
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${trial_num + 1} / ${learn_img.length}
+      </div>
       <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
         <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
@@ -335,6 +343,9 @@ for (i=0;i<num_learn_trials;i++) {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${trial_num + 1} / ${learn_img.length}
+      </div>
       <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
@@ -408,36 +419,39 @@ for (i=0;i<num_recognition_trials;i++){
     }
   }
   timeline.push(second_learn_phase)
-  // var familiarity = {
-  //   type: 'html-keyboard-response',
-  //   choices: ['1','2','3','4','5'],
-  //   stimulus: `
-  //     <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-  //       <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
-  //       <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-  //         How familiar is the image on a scale of 1 to 5?
-  //       </p>
-  //       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-  //         <br>
-  //         <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-  //           <p>(1) Not at all familiar</p>
-  //           <p>(2) Slightly familiar</p>
-  //           <p>(3) Moderately familiar</p>
-  //           <p>(4) Very familiar</p>
-  //           <p>(5) Extremely familiar</p>
-  //         </div><br><br>
-  //       <strong>Press the number key that corresponds with your rating.</strong>
-  //       </p>
-  //     </div>
-  //   `,
-  //   response_ends_trial: true,
-  //   on_finish: function(data) {
-  //     data.stimulus= recognition_list[recog_trial_num]
-  //     data.trial_type = 'familiar_rating';
-  //     data.rating = data.key_press - 48
-  //   } 
-  // }
-  // timeline.push(familiarity);
+  var realistic = {
+    type: 'html-keyboard-response',
+    choices: ['1','2','3','4','5'],
+    stimulus: `
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${recog_trial_num + 1} / ${recognition_list.length}
+      </div>
+      <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          How realistic would it be for this image to exist in the real world on a scale of 1 to 5?
+        </p>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+          <br>
+          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+            <p>(1) Not at all realistic</p>
+            <p>(2) Slightly realistic</p>
+            <p>(3) Moderately realistic</p>
+            <p>(4) Very realistic</p>
+            <p>(5) Extremely realistic</p>
+          </div><br><br>
+        <strong>Press the number key that corresponds with your rating.</strong>
+        </p>
+      </div>
+    `,
+    response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus= recognition_list[recog_trial_num]
+      data.trial_type = 'realistic_rating';
+      data.rating = data.key_press - 48
+    } 
+  }
+  timeline.push(realistic);
   if (probe_trial_num == 1){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -445,7 +459,9 @@ for (i=0;i<num_recognition_trials;i++){
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
-
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${recog_trial_num + 1} / ${recognition_list.length}
+      </div>
       <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
         <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
@@ -479,6 +495,9 @@ for (i=0;i<num_recognition_trials;i++){
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${recog_trial_num + 1} / ${recognition_list.length}
+      </div>
       <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
@@ -548,6 +567,9 @@ for (i=0;i<num_recognition_trials;i++){
     choices: ['1','2','3','4'],
     response_ends_trial: true,
     stimulus:`
+      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+        Image ${recog_trial_num + 1} / ${recognition_list.length}
+      </div>
       <div id="confidence" style="max-width: 1000px; margin: 100px auto; text-align: center;">
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
           How confident are you in your response?
