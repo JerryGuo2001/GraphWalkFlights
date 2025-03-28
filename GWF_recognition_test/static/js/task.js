@@ -277,7 +277,7 @@ for (i=0;i<num_learn_trials;i++) {
       <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How realistic would it be for this image to exist in the real world on a scale of 1 to 5?
+         How realistic is this image on a scale of 1 to 5 (e.g., do you think this place exists in the real world)? 
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -429,7 +429,7 @@ for (i=0;i<num_recognition_trials;i++){
       <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How realistic would it be for this image to exist in the real world on a scale of 1 to 5?
+          How realistic is this image on a scale of 1 to 5 (e.g., do you think this place exists in the real world)?
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
