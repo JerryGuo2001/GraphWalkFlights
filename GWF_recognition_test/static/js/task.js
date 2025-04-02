@@ -83,8 +83,10 @@ var enterFullscreen = {
         <p>When you are ready to take the experiment, click 'Enter Fullscreen' to begin.</p> <br />
     `,
   choices: ['Enter Fullscreen'],
-  on_finish: function() {
+  on_finish: function(data) {
       // Trigger fullscreen mode when the button is clicked
+      data.trial_type = "fullscreen"
+      data.stimulus = "fullscreen"
       document.documentElement.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
       });
@@ -169,6 +171,14 @@ function get_probe_trial() {
   } return probe_name, probe_trial_num
 }
 get_probe_trial()
+let learntrial = -1
+function get_learn_trial() {
+  learntrial += 1
+}
+let recogtrial = -1
+function get_recog_trial() {
+  recogtrial += 1
+}
 let trial_num = 0
 let instant_index = 0
 function start_probe(img,trial) {
@@ -183,7 +193,7 @@ function start_probe(img,trial) {
           Image ${trial + 1} / ${img.length}
         </div>
         <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-          <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
+          <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
           <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
             Please press the ${prob_list[instant_index]} option on your keyboard.
           </p>
@@ -260,9 +270,11 @@ for (i=0;i<num_learn_trials;i++) {
     stimulus_duration:3000,
     trial_duration:3000,
     on_finish: function(data) {
+      get_learn_trial()
+      console.log(learn_img[learntrial])
       data.trial_type = 'learn_phase';
-      data.stimulus= learn_img[trial_num]
-      data.image_type = shuffled_learn_img_type[trial_num]
+      data.stimulus= learn_img[learntrial]
+      data.image_type = shuffled_learn_img_type[learntrial]
       sfa=1
     }
   }
@@ -275,7 +287,7 @@ for (i=0;i<num_learn_trials;i++) {
         Image ${trial_num + 1} / ${learn_img.length}
       </div>
       <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
+        <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
          How realistic is this image on a scale of 1 to 5 (e.g., do you think this place exists in the real world)? 
         </p>
@@ -294,7 +306,8 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= learn_img[trial_num]
+      console.log(learntrial)
+      data.stimulus= learn_img[learntrial]
       data.trial_type = 'realistic_rating';
       data.rating = data.key_press - 48
     } 
@@ -311,7 +324,7 @@ for (i=0;i<num_learn_trials;i++) {
         Image ${trial_num + 1} / ${learn_img.length}
       </div>
       <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
+        <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
           How unique is the image on a scale of 1 to 5?
         </p>
@@ -330,7 +343,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= learn_img[trial_num]
+      data.stimulus= learn_img[learntrial]
       data.trial_type = 'unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -347,7 +360,7 @@ for (i=0;i<num_learn_trials;i++) {
         Image ${trial_num + 1} / ${learn_img.length}
       </div>
       <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
+        <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
           How memorable is the image on a scale of 1 to 5?
         </p>
@@ -366,7 +379,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= learn_img[trial_num]
+      data.stimulus= learn_img[learntrial]
       data.trial_type = 'memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -382,6 +395,7 @@ for (i=0;i<num_learn_trials;i++) {
     stimulus:create_memory_ten(),
     on_finish: function(data) {
       data.trial_type='thebreak'
+      data.stimulus = 'break'
     }
   }
   timeline.push(thebreak);
@@ -411,10 +425,12 @@ for (i=0;i<num_recognition_trials;i++){
     stimulus_duration:3000,
     trial_duration:3000,
     on_finish: function(data) {
+      get_recog_trial()
+      console.log(recognition_list[recogtrial])
       data.trial_type = 'second_learn_phase';
-      data.stimulus= recognition_list[recog_trial_num]
-      data.image_type = shuffled_img_type[recog_trial_num]
-      data.new_old = new_old[recog_trial_num]
+      data.stimulus= recognition_list[recogtrial]
+      data.image_type = shuffled_img_type[recogtrial]
+      data.new_old = new_old[recogtrial]
       sfa=1
     }
   }
@@ -427,7 +443,7 @@ for (i=0;i<num_recognition_trials;i++){
         Image ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
           How realistic is this image on a scale of 1 to 5 (e.g., do you think this place exists in the real world)?
         </p>
@@ -446,7 +462,7 @@ for (i=0;i<num_recognition_trials;i++){
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= recognition_list[recog_trial_num]
+      data.stimulus= recognition_list[recogtrial]
       data.trial_type = 'realistic_rating';
       data.rating = data.key_press - 48
     } 
@@ -463,7 +479,7 @@ for (i=0;i<num_recognition_trials;i++){
         Image ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
           How unique is the image on a scale of 1 to 5?
         </p>
@@ -482,7 +498,7 @@ for (i=0;i<num_recognition_trials;i++){
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= recognition_list[recog_trial_num]
+      data.stimulus= recognition_list[recogtrial]
       data.trial_type = 'pt2_unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -499,7 +515,7 @@ for (i=0;i<num_recognition_trials;i++){
         Image ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-        <img style='width: 250px;height: 250px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
+        <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${recognition_list[recog_trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
           How memorable is the image on a scale of 1 to 5?
         </p>
@@ -518,7 +534,7 @@ for (i=0;i<num_recognition_trials;i++){
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= recognition_list[recog_trial_num]
+      data.stimulus= recognition_list[recogtrial]
       data.trial_type = 'memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -590,7 +606,7 @@ for (i=0;i<num_recognition_trials;i++){
     trial_duration:10000,//5 second for now 
     on_finish: function (data){
       data.trial_type = 'confidence';
-      data.stimulus= recognition_list[recog_trial_num]
+      data.stimulus= 'confidence'
       data.confidence = data.key_press - 48
     }
   }

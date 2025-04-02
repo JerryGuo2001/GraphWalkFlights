@@ -5,13 +5,13 @@ function parse(str) {
 }
 
 function create_image_learn(presented_img, trial_num) {
-  return parse(`<div id=trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">Image ${trial_num + 1} / ${presented_img.length}</div><img style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'></style>`
+  return parse(`<div id=trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">Image ${trial_num + 1} / ${presented_img.length}</div><img style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 400px;height: 400px;' src='../static/images/%s' height='250'></style>`
   ,presented_img[trial_num])
   
 }
 
 function create_image_recognition(presented_img, trial_num) {
-  return parse(`<div id=trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">Image ${trial_num + 1} / ${recognition_list.length}</div><p style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);font-size: 25px;color:black;'>Is this image <strong>Old</strong> or <strong>New</strong>?</p><img style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'></style><p style='position:absolute;top: 80%;right: 50%;transform: translate(50%, -50%);font-size: 25px;color:black;'>Press '1' for <strong>Old</strong> and '2' for <strong>New</strong>.</p>`
+  return parse(`<div id=trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">Image ${trial_num + 1} / ${recognition_list.length}</div><p style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);font-size: 25px;color:black;'>Is this image <strong>Old</strong> or <strong>New</strong>?</p><img style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 400;height: 400px;' src='../static/images/%s' height='250'></style><p style='position:absolute;top: 80%;right: 50%;transform: translate(50%, -50%);font-size: 25px;color:black;'>Press '1' for <strong>Old</strong> and '2' for <strong>New</strong>.</p>`
   ,presented_img[trial_num])
   
 }
