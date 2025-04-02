@@ -212,7 +212,7 @@ function start_probe(img,trial) {
         } else{
           data.probe_accuracy = 0
           warning +=1
-          if (warning < 3){
+          if (warning < 4){
             console.log("Wrong")
             // jsPsych.finishTrial()
             // jsPsych.endExperiment()
