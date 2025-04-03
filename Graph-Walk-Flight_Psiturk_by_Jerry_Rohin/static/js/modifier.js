@@ -332,14 +332,13 @@ class Graph {
 
 // Initialize the graph
 const graph = new Graph();
-for (let i = 1; i < 13; i++) {
+for (let i = 1; i < 14; i++) {
   graph.addVertex(i);
 }
 
 graph.addEdge(1, 2);
 graph.addEdge(2, 3);
 graph.addEdge(2, 4);
-graph.addEdge(3, 4);
 graph.addEdge(3, 11);
 graph.addEdge(3, 6);
 graph.addEdge(4, 5);
@@ -347,9 +346,10 @@ graph.addEdge(4, 12);
 graph.addEdge(6, 7);
 graph.addEdge(6, 9);
 graph.addEdge(7, 8);
+graph.addEdge(7, 9);
+graph.addEdge(7, 13);
 graph.addEdge(8, 9);
 graph.addEdge(8, 10);
-graph.addEdge(9, 10);
 graph.addEdge(9, 11);
 graph.addEdge(11, 12);
 
