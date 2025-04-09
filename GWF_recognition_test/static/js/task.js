@@ -564,8 +564,8 @@ for (i=0;i<num_recognition_trials;i++){
     choices: ['1','2'],
     response_ends_trial: true,
     stimulus:create_image_recognition(recognition_list,recog_trial_num),
-    stimulus_duration:10000,
-    trial_duration:10000,
+    stimulus_duration:15000,
+    trial_duration:15000,
     on_finish: function(data) {
       data.trial_type = 'recognition_phase';
       data.stimulus= recognition_list[recog_trial_num]
@@ -618,8 +618,8 @@ for (i=0;i<num_recognition_trials;i++){
         </p>
       </div>
     `,
-    stimulus_duration:10000,//5 second for now, we will discuss it 
-    trial_duration:10000,//5 second for now 
+    stimulus_duration:15000,//5 second for now, we will discuss it 
+    trial_duration:15000,//5 second for now 
     on_finish: function (data){
       data.trial_type = 'confidence';
       data.stimulus= 'confidence'
