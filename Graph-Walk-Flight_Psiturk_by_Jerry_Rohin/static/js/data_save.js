@@ -17,20 +17,28 @@ var resubmit = function() {
 		});
 	};
 
-var save_data = function(final) {
-  // exclude unwanted keys/columns
-  var exclude_keys = ['internal_node_id','trial_index'];
-  var clean_data = jsPsych.data.get().ignore(exclude_keys);
-  var callback = function() {
-    if (final) {
-      // submit the HIT
+  var save_data = function(final) {
+    // exclude unwanted keys/columns
+    var exclude_keys = ['internal_node_id', 'trial_index'];
+    var clean_data = jsPsych.data.get().ignore(exclude_keys);
+    
+    var callback = function() {
+      // Only save data without completing the HIT during the task
       psiturk.saveData({
-            success: function(){
-              psiturk.completeHIT(); // when finished saving compute bonus, the quit
-            },
-            error: prompt_resubmit});
-    }
-  }
+        success: function(){
+          console.log("Data saved during the task.");
+        },
+        error: prompt_resubmit
+      });
+      
+      // If final is true, we complete the HIT after task finishes
+      if (final) {
+        psiturk.completeHIT();  // Complete the HIT when task is done
+      }
+    };
+  
+    // Call the callback to save the data during the task
+    callback();
   /* Save participant data file */
 
   // Set participant data file name
