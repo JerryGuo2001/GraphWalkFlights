@@ -249,6 +249,7 @@ function start_probe(img,trial) {
             // })
           }else {
             // timeline.splice(length[prob_index]+2,0,TaskFailed)
+            save_data()
             jsPsych.finishTrial()
             jsPsych.endExperiment()
           }
