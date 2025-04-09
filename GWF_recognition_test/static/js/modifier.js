@@ -18,7 +18,7 @@ checkfail=0 //this is to start the attentioncheck
 checkthreshold=2 //this is to add the threshold for attentioncheck
 
 //Text for instruction
-instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>Today, you will see various images. For each image, you will answer questions and rate how realistic, unique, and memorable they are. Note that realistic judgements ask how likely it is that this image exists in the real world.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>Today, you will see various images. For each image, you will answer questions and rate how familiar, unique, and memorable they are.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 // instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, you will first be presented with an image like the one below for 3 seconds.</p><br /><img src= '../static/images/img_manmade_practice.png' width='200' height='200'></img><br /><br><p style ='font-size: 50px;line-height:1.5'>During this time, your job is to try to remember the image to the best of your ability.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will use your keyboard to press the number that corresponds with your rating for each question. The rating scale ranges from 1-5.<br /><br />Please use the <strong>entire scale</strong>–-in other words, all images should not get the same ratings.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 //instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>After all the images are presented, you will see a list of images containing both the old images you studied and new ones as well. You will choose whether the image is new or old, so try to memorize the images to the best of your ability.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
@@ -47,26 +47,44 @@ function shuffle(array) {
 }
 
 let img_mm_list = []
+let unshuffled_img_type1 = []
+let unshuffled_img_type2 = []
+let unshuffled_img_type3 = []
+let unshuffled_img_type4 = []
 let unshuffled_img_type = []
 
+let shuffled_img_type1 = []
+let shuffled_img_type2 = []
+let shuffled_img_type3 = []
+let shuffled_img_type4 = []
+let shuffled_img_typeTotal = []
+
+let image_choose_index =[]
 for (i=1;i<31;i++){
-  if (i<10){
-    img_mm_list.push(`img_manmade_0${i}.png`)
-    unshuffled_img_type.push("MM")
+  image_choose_index.push(i)
+}
+shuffle(image_choose_index)
+
+for (i=1;i<16;i++){
+  if (image_choose_index[i]<10){
+    img_mm_list.push(`img_manmade_0${image_choose_index[i]}.png`)
+    unshuffled_img_type1.push("MM")
   } else {
-    img_mm_list.push(`img_manmade_${i}.png`)
-    unshuffled_img_type.push("MM")
+    img_mm_list.push(`img_manmade_${image_choose_index[i]}.png`)
+    unshuffled_img_type1.push("MM")
   }
 }
 let img_nat_list = []
 
-for (i=1;i<31;i++){
-  if (i<10){
-    img_nat_list.push(`img_natural_0${i}.png`)
-    unshuffled_img_type.push("NAT")
+shuffle(image_choose_index)
+
+for (i=1;i<16;i++){
+  if (image_choose_index[i]<10){
+    img_nat_list.push(`img_natural_0${image_choose_index[i]}.png`)
+    unshuffled_img_type2.push("NAT")
   } else {
-    img_nat_list.push(`img_natural_${i}.png`)
-    unshuffled_img_type.push("NAT")
+    img_nat_list.push(`img_natural_${image_choose_index[i]}.png`)
+    unshuffled_img_type2.push("NAT")
   }
 }
 
@@ -87,14 +105,71 @@ let unshuffled_img_type_learn = []
 
 for (let i = 0; i < img_mm_list.length;i++){
   mm_list_shuff.push(img_mm_list[mm_arr[i]])
+  shuffled_img_type1.push(unshuffled_img_type1[mm_arr[i]])
   nat_list_shuff.push(img_nat_list[nat_arr[i]])
+  shuffled_img_type2.push(unshuffled_img_type2[nat_arr[i]])
 }
 
-first_phase_unshuffled = mm_list_shuff.slice(0,15).concat(nat_list_shuff.slice(0,15))
-unshuffled_img_type_learn = unshuffled_img_type.slice(0,15).concat(unshuffled_img_type.slice(30,45))
+// US CITIES REAL
+let US_mm_list = []
 
-new_img_unshuffled = mm_list_shuff.slice(15).concat(nat_list_shuff.slice(15))
-unshuffled_img_type = unshuffled_img_type_learn.concat(unshuffled_img_type.slice(15,30),unshuffled_img_type.slice(45,60))
+let US_image_choose_index =[]
+for (i=1;i<18;i++){
+  image_choose_index.push(i)
+}
+shuffle(image_choose_index)
+
+for (i=1;i<16;i++){
+  if (i<10){
+    US_mm_list.push(`realUS/US_img_manmade_0${i}.png`)
+    unshuffled_img_type3.push("MM")
+  } else {
+    US_mm_list.push(`realUS/US_img_manmade_${i}.png`)
+    unshuffled_img_type3.push("MM")
+  }
+}
+let US_nat_list = []
+
+for (i=1;i<16;i++){
+  if (i<10){
+    US_nat_list.push(`realUS/US_img_natural_0${i}.png`)
+    unshuffled_img_type4.push("NAT")
+  } else {
+    US_nat_list.push(`realUS/US_img_natural_${i}.png`)
+    unshuffled_img_type4.push("NAT")
+  }
+}
+
+let US_nat_arr = []
+let US_mm_arr = []
+
+for (let i = 0; i < US_mm_list.length;i++){
+  US_mm_arr.push(i)
+  US_nat_arr.push(i)
+}
+
+shuffle(US_mm_arr);
+shuffle(US_nat_arr);
+
+let US_mm_list_shuff = []
+let US_nat_list_shuff = []
+let unshuffled_US_type_learn = []
+
+for (let i = 0; i < US_mm_list.length;i++){
+  US_mm_list_shuff.push(US_mm_list[US_mm_arr[i]])
+  shuffled_img_type3.push(unshuffled_img_type3[US_mm_arr[i]])
+  US_nat_list_shuff.push(US_nat_list[US_nat_arr[i]])
+  shuffled_img_type4.push(unshuffled_img_type4[US_nat_arr[i]])
+}
+//
+
+shuffled_img_typeTotal = shuffled_img_type1.concat(shuffled_img_type2,shuffled_img_type3,shuffled_img_type4)
+
+first_phase_unshuffled = mm_list_shuff.slice(0,7).concat(nat_list_shuff.slice(0,8), US_mm_list_shuff.slice(0,8), US_nat_list_shuff.slice(0,7))
+unshuffled_img_type_learn = shuffled_img_typeTotal.slice(0,7).concat(shuffled_img_typeTotal.slice(15,23),shuffled_img_typeTotal.slice(30,38),shuffled_img_typeTotal.slice(45,52))
+
+new_img_unshuffled = mm_list_shuff.slice(7).concat(nat_list_shuff.slice(8), US_mm_list_shuff.slice(8), US_nat_list_shuff.slice(7))
+unshuffled_img_type = unshuffled_img_type_learn.concat(shuffled_img_typeTotal.slice(7,15),shuffled_img_typeTotal.slice(23,30),shuffled_img_typeTotal.slice(38,45),shuffled_img_typeTotal.slice(52,60))
 
 
 var recognition_unshuffled = first_phase_unshuffled.concat(new_img_unshuffled);

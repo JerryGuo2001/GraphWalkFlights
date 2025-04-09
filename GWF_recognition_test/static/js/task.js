@@ -48,6 +48,20 @@ var welcome = {
 }
 //welcome page end
 
+var get_ready = {
+  type: 'html-keyboard-response',
+  stimulus: "<p style='font-size:60px'><b>Get Ready!</b></p>",
+  stimulus_duration: 1500,
+  trial_duration: 1500,
+  choices: jsPsych.NO_KEYS,
+  on_finish: function(data) {
+    // Add a custom trial type and stimulus
+    data.trial_type = 'instruct_dir_4';
+    data.stimulus = 'instruct';
+  }
+};
+
+
 //fullscreen start
 
 var enterFullscreen = {
@@ -122,9 +136,9 @@ for (let i = 0; i < instructnames.length; i++) {
 intro_learn=createfulintro(instruct,instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
-timeline.push(welcome,enterFullscreen)
+timeline.push(welcome, enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
-
+timeline.push(get_ready)
 
 //Instruction page end
 
@@ -279,26 +293,26 @@ for (i=0;i<num_learn_trials;i++) {
     }
   }
   timeline.push(learn_phase)
-  var realistic = {
+  var familiar = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
         Image ${trial_num + 1} / ${learn_img.length}
       </div>
-      <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+      <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${learn_img[trial_num]}' height='250'></style>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-         How realistic is this image on a scale of 1 to 5 (e.g., do you think this place exists in the real world)? 
+         How familiar is this image on a scale of 1 to 5 (e.g., have you seen or heard of this place before)? 
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
           <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-            <p>(1) Not at all realistic</p>
-            <p>(2) Slightly realistic</p>
-            <p>(3) Moderately realistic</p>
-            <p>(4) Very realistic</p>
-            <p>(5) Extremely realistic</p>
+            <p>(1) Not at all familiar</p>
+            <p>(2) Slightly familiar</p>
+            <p>(3) Moderately familiar</p>
+            <p>(4) Very familiar</p>
+            <p>(5) Extremely familiar</p>
           </div><br><br>
         <strong>Press the number key that corresponds with your rating.</strong>
         </p>
@@ -308,11 +322,11 @@ for (i=0;i<num_learn_trials;i++) {
     on_finish: function(data) {
       console.log(learntrial)
       data.stimulus= learn_img[learntrial]
-      data.trial_type = 'realistic_rating';
+      data.trial_type = 'familiar_rating';
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(realistic);
+  timeline.push(familiar);
   if (probe_trial_num == 1){
     start_probe(learn_img,trial_num)
   }
@@ -403,6 +417,7 @@ for (i=0;i<num_learn_trials;i++) {
 }
 
 timelinepushintro(intro_dir,dir_instructnames)
+timeline.push(get_ready)
 
 let recog_trial_num = 0
 let on_finish_num = 0
