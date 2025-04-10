@@ -551,7 +551,7 @@ for (i=0;i<num_recognition_trials;i++){
     response_ends_trial: true,
     on_finish: function(data) {
       data.stimulus= recognition_list[recogtrial]
-      data.trial_type = 'memorable_rating';
+      data.trial_type = 'pt2_memorable_rating';
       data.rating = data.key_press - 48
     } 
   }
