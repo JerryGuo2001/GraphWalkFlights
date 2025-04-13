@@ -25,6 +25,32 @@ document.addEventListener('visibilitychange', e=>{
   //this is to see if user are focus or not
   }  
 })
+let wrongbreak= {
+  type: 'html-keyboard-response',
+  choices:jsPsych.NO_KEYS,
+  trial_duration: 400,
+  stimulus:create_memory_ten()
+}
+
+var trialbreak= {
+  type: 'html-keyboard-response',
+  choices:jsPsych.NO_KEYS,
+  trial_duration: 100,
+  stimulus:""
+}
+
+function gen_break(stimulus){
+  trialbreak = {
+    type: 'html-keyboard-response',
+    choices: jsPsych.NO_KEYS, // No input allowed
+    stimulus: stimulus, // reuse the same screen
+    trial_duration: 100,
+    on_finish: function(data) {
+      data.trial_type = 'confidence_buffer';
+    }
+  };
+}
+
 
 // Randomly generate an 8-character alphanumeric subject ID via jsPsych
 var subject_id = jsPsych.randomization.randomID(8);
@@ -136,7 +162,7 @@ for (let i = 0; i < instructnames.length; i++) {
 intro_learn=createfulintro(instruct,instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
-timeline.push(welcome, enterFullscreen)
+timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 timeline.push(get_ready)
 
@@ -204,24 +230,12 @@ function start_probe(img,trial) {
       choices: ['1','2','3','4','5'],
       stimulus: `
         <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-          Image ${trial + 1} / ${img.length}
+          City ${trial + 1} / ${img.length}
         </div>
         <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-          <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${img[trial]}</b></p><br><br>
-          <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;color:red">
             Please press the ${prob_list[instant_index]} option on your keyboard.
           </p><br><br>
-          <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-            <br>
-            <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-              <p>(1) Not at all ${probe_name}</p>
-              <p>(2) Slightly ${probe_name}</p>
-              <p>(3) Moderately ${probe_name}</p>
-              <p>(4) Very ${probe_name}</p>
-              <p>(5) Extremely ${probe_name}</p>
-            </div><br><br>
-          <strong>Press the number key that corresponds with what is said above.</strong>
-          </p>
         </div>
       `,
       response_ends_trial: true,
@@ -261,7 +275,8 @@ function start_probe(img,trial) {
     
   }
   instant_index += 1
-  timeline.push(probe_trial)
+  gen_break(probe_trial.stimulus)
+  timeline.push(probe_trial,trialbreak)
 }
 var length = []
 
@@ -289,22 +304,23 @@ for (i=0;i<num_learn_trials;i++) {
       console.log(learn_img[learntrial])
       data.trial_type = 'learn_phase';
       data.stimulus= learn_img[learntrial]
-      data.image_type = shuffled_learn_img_type[learntrial]
+      data.city_type = shuffled_learn_img_type[learntrial]
       sfa=1
     }
   }
-  timeline.push(learn_phase)
+  gen_break(learn_phase.stimulus)
+  timeline.push(learn_phase,trialbreak)
   var familiar = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${trial_num + 1} / ${learn_img.length}
+        City ${trial_num + 1} / ${learn_img.length}
       </div>
       <div id="familiar" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${learn_img[trial_num]}</b></p><br><br>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-         How familiar is this image on a scale of 1 to 5 (e.g., have you seen or heard of this place before)? 
+         How familiar is this city name on a scale of 1 to 5 (e.g., have you seen or heard of this place before)? 
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -327,7 +343,8 @@ for (i=0;i<num_learn_trials;i++) {
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(familiar);
+  gen_break(familiar.stimulus)
+  timeline.push(familiar,trialbreak);
   if (probe_trial_num == 1){
     start_probe(learn_img,trial_num)
   }
@@ -336,12 +353,12 @@ for (i=0;i<num_learn_trials;i++) {
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${trial_num + 1} / ${learn_img.length}
+        City ${trial_num + 1} / ${learn_img.length}
       </div>
       <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
         <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${learn_img[trial_num]}</b></p><br><br>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How unique is the image on a scale of 1 to 5?
+          How unique is this city name on a scale of 1 to 5?
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -363,7 +380,8 @@ for (i=0;i<num_learn_trials;i++) {
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(uniqueness);
+  gen_break(uniqueness.stimulus)
+  timeline.push(uniqueness,trialbreak);
   if (probe_trial_num == 2){
     start_probe(learn_img,trial_num)
   }
@@ -372,12 +390,12 @@ for (i=0;i<num_learn_trials;i++) {
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${trial_num + 1} / ${learn_img.length}
+        City ${trial_num + 1} / ${learn_img.length}
       </div>
       <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${learn_img[trial_num]}</b></p><br><br>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How memorable is the image on a scale of 1 to 5?
+          How memorable is this city name on a scale of 1 to 5?
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -399,7 +417,8 @@ for (i=0;i<num_learn_trials;i++) {
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(memorability);
+  gen_break(memorability.stimulus)
+  timeline.push(memorability,trialbreak);
   if (probe_trial_num == 3){
     start_probe(learn_img,trial_num)
   }
@@ -424,12 +443,6 @@ let recog_trial_num = 0
 let on_finish_num = 0
 let correctResp = []
 
-let wrongbreak= {
-  type: 'html-keyboard-response',
-  choices:jsPsych.NO_KEYS,
-  trial_duration: 400,
-  stimulus:create_memory_ten()
-}
 
 for (i=0;i<num_recognition_trials;i++){
   get_probe_trial()
@@ -445,23 +458,24 @@ for (i=0;i<num_recognition_trials;i++){
       console.log(recognition_list[recogtrial])
       data.trial_type = 'second_learn_phase';
       data.stimulus= recognition_list[recogtrial]
-      data.image_type = shuffled_img_type[recogtrial]
+      data.city_type = shuffled_img_type[recogtrial]
       data.new_old = new_old[recogtrial]
       sfa=1
     }
   }
-  timeline.push(second_learn_phase)
+  gen_break(second_learn_phase.stimulus)
+  timeline.push(second_learn_phase,trialbreak)
   var realistic = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${recog_trial_num + 1} / ${recognition_list.length}
+        City ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${recognition_list[recog_trial_num]}</b></p><br><br>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How realistic is this image on a scale of 1 to 5 (e.g., do you think this place exists in the real world)?
+          How realistic is this city name on a scale of 1 to 5 (e.g., do you think this place exists in the real world)?
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -483,7 +497,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(realistic);
+  gen_break(realistic.stimulus)
+  timeline.push(realistic,trialbreak);
   if (probe_trial_num == 1){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -492,12 +507,12 @@ for (i=0;i<num_recognition_trials;i++){
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${recog_trial_num + 1} / ${recognition_list.length}
+        City ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="unique" style="max-width: 1200px; margin: 100px auto; text-align: center">  
         <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${recognition_list[recog_trial_num]}</b></p><br><br>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How unique is the image on a scale of 1 to 5?
+          How unique is this city name on a scale of 1 to 5?
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -519,7 +534,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(uniqueness);
+  gen_break(uniqueness.stimulus)
+  timeline.push(uniqueness,trialbreak);
   if (probe_trial_num == 2){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -528,12 +544,12 @@ for (i=0;i<num_recognition_trials;i++){
     choices: ['1','2','3','4','5'],
     stimulus: `
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${recog_trial_num + 1} / ${recognition_list.length}
+        City ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="memorable" style="max-width: 1200px; margin: 100px auto; text-align: center;">
         <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${recognition_list[recog_trial_num]}</b></p><br><br>
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How memorable is the image on a scale of 1 to 5?
+          How memorable is this city name on a scale of 1 to 5?
         </p>
         <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
           <br>
@@ -555,7 +571,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(memorability);
+  gen_break(memorability.stimulus)
+  timeline.push(memorability,trialbreak);
   if (probe_trial_num == 3){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -593,14 +610,15 @@ for (i=0;i<num_recognition_trials;i++){
     }
   }
   recog_trial_num += 1
-  timeline.push(img_recognition)
+  gen_break(img_recognition.stimulus)
+  timeline.push(img_recognition,trialbreak)
   var recog_confidence = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4'],
     response_ends_trial: true,
     stimulus:`
       <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        Image ${recog_trial_num + 1} / ${recognition_list.length}
+        City ${recog_trial_num + 1} / ${recognition_list.length}
       </div>
       <div id="confidence" style="max-width: 1000px; margin: 100px auto; text-align: center;">
         <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
@@ -626,7 +644,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.confidence = data.key_press - 48
     }
   }
-  timeline.push(recog_confidence);
+  gen_break(recog_confidence.stimulus)
+  timeline.push(recog_confidence,trialbreak);
 }
 
 

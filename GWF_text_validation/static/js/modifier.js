@@ -1,5 +1,5 @@
 //debug moode on/off
-debugmode= false
+debugmode= true
 if (debugmode==true){
   num_learn_trials = 5
   num_recognition_trials = 5
