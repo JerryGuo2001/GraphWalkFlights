@@ -61,6 +61,24 @@ var get_ready = {
   }
 };
 
+var trialbreak= {
+  type: 'html-keyboard-response',
+  choices:jsPsych.NO_KEYS,
+  trial_duration: 100,
+  stimulus:""
+}
+
+function gen_break(stimulus){
+  trialbreak = {
+    type: 'html-keyboard-response',
+    choices: jsPsych.NO_KEYS, // No input allowed
+    stimulus: stimulus, // reuse the same screen
+    trial_duration: 100,
+    on_finish: function(data) {
+      data.trial_type = 'confidence_buffer';
+    }
+  };
+}
 
 //fullscreen start
 
@@ -207,21 +225,9 @@ function start_probe(img,trial) {
           Image ${trial + 1} / ${img.length}
         </div>
         <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-          <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
-          <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+          <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;color:red">
             Please press the ${prob_list[instant_index]} option on your keyboard.
-          </p>
-          <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-            <br>
-            <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
-              <p>(1) Not at all ${probe_name}</p>
-              <p>(2) Slightly ${probe_name}</p>
-              <p>(3) Moderately ${probe_name}</p>
-              <p>(4) Very ${probe_name}</p>
-              <p>(5) Extremely ${probe_name}</p>
-            </div><br><br>
-          <strong>Press the number key that corresponds with what is said above.</strong>
-          </p>
+          </p><br><br>
         </div>
       `,
       response_ends_trial: true,
@@ -261,7 +267,8 @@ function start_probe(img,trial) {
     
   }
   instant_index += 1
-  timeline.push(probe_trial)
+  gen_break(probe_trial.stimulus)
+  timeline.push(probe_trial,trialbreak)
 }
 var length = []
 
@@ -282,8 +289,8 @@ for (i=0;i<num_learn_trials;i++) {
     choices: jsPsych.NO_KEYS,
     response_ends_trial: false,
     stimulus:create_image_learn(learn_img,trial_num),
-    stimulus_duration:3000,
-    trial_duration:3000,
+    stimulus_duration:1500,
+    trial_duration:1500,
     on_finish: function(data) {
       get_learn_trial()
       console.log(learn_img[learntrial])
@@ -327,7 +334,8 @@ for (i=0;i<num_learn_trials;i++) {
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(familiar);
+  gen_break(familiar.stimulus)
+  timeline.push(familiar,trialbreak);
   if (probe_trial_num == 1){
     start_probe(learn_img,trial_num)
   }
@@ -363,7 +371,8 @@ for (i=0;i<num_learn_trials;i++) {
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(uniqueness);
+  gen_break(uniqueness.stimulus)
+  timeline.push(uniqueness,trialbreak);
   if (probe_trial_num == 2){
     start_probe(learn_img,trial_num)
   }
@@ -399,7 +408,8 @@ for (i=0;i<num_learn_trials;i++) {
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(memorability);
+  gen_break(memorability.stimulus)
+  timeline.push(memorability,trialbreak);
   if (probe_trial_num == 3){
     start_probe(learn_img,trial_num)
   }
@@ -438,8 +448,8 @@ for (i=0;i<num_recognition_trials;i++){
     choices: jsPsych.NO_KEYS,
     response_ends_trial: false,
     stimulus:create_image_learn(recognition_list,recog_trial_num),
-    stimulus_duration:3000,
-    trial_duration:3000,
+    stimulus_duration:1500,
+    trial_duration:1500,
     on_finish: function(data) {
       get_recog_trial()
       console.log(recognition_list[recogtrial])
@@ -483,7 +493,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(realistic);
+  gen_break(realistic.stimulus)
+  timeline.push(realistic,trialbreak);
   if (probe_trial_num == 1){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -519,7 +530,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(uniqueness);
+  gen_break(uniqueness.stimulus)
+  timeline.push(uniqueness,trialbreak);
   if (probe_trial_num == 2){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -555,7 +567,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.rating = data.key_press - 48
     } 
   }
-  timeline.push(memorability);
+  gen_break(memorability.stimulus)
+  timeline.push(memorability,trialbreak);
   if (probe_trial_num == 3){
     start_probe(recognition_list,recog_trial_num)
   }
@@ -593,7 +606,8 @@ for (i=0;i<num_recognition_trials;i++){
     }
   }
   recog_trial_num += 1
-  timeline.push(img_recognition)
+  gen_break(img_recognition.stimulus)
+  timeline.push(img_recognition,trialbreak)
   var recog_confidence = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4'],
@@ -626,7 +640,8 @@ for (i=0;i<num_recognition_trials;i++){
       data.confidence = data.key_press - 48
     }
   }
-  timeline.push(recog_confidence);
+  gen_break(recog_confidence.stimulus)
+  timeline.push(recog_confidence,trialbreak);
 }
 
 
