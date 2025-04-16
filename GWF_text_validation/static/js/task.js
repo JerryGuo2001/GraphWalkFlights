@@ -47,6 +47,7 @@ function gen_break(stimulus){
     trial_duration: 100,
     on_finish: function(data) {
       data.trial_type = 'confidence_buffer';
+      data.stimulus = "confidence_buffer"
     }
   };
 }
