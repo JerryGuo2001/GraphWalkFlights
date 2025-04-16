@@ -233,9 +233,21 @@ function start_probe(img,trial) {
           City ${trial + 1} / ${img.length}
         </div>
         <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-          <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;color:red">
+          <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${img[trial]}</b></p><br><br>
+          <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
             Please press the ${prob_list[instant_index]} option on your keyboard.
-          </p><br><br>
+          </p><br>
+          <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+            <br>
+            <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+              <p>(1) Option Number 1</p>
+              <p>(2) Option Number 2</p>
+              <p>(3) Option Number 3</p>
+              <p>(4) Option Number 4</p>
+              <p>(5) Option Number 5</p>
+            </div><br><br>
+          <strong>Press the number key that corresponds with what is said above.</strong>
+          </p>
         </div>
       `,
       response_ends_trial: true,
