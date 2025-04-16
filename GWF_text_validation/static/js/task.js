@@ -157,14 +157,22 @@ for (let i = 0; i < instructnames.length; i++) {
   intro[i] = createinstruct(instruct[instructname],i)
 }return intro
 }
-
+let introbreak= {
+  type: 'html-keyboard-response',
+  choices:jsPsych.NO_KEYS,
+  trial_duration: 500,
+  stimulus:create_memory_ten(),
+  on_finish: function(data) {
+    data.trial_type='thebreak'
+    data.stimulus = 'break'
+  }}
 
 intro_learn=createfulintro(instruct,instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
 timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
-timeline.push(get_ready)
+timeline.push(get_ready,introbreak)
 
 //Instruction page end
 
@@ -223,7 +231,7 @@ let trial_num = 0
 let instant_index = 0
 function start_probe(img,trial) {
   get_probe_num()
-  console.log(prob_list[instant_index])
+  // console.log(prob_list[instant_index])
   length.push(timeline.length)
   var probe_trial={
     type: 'html-keyboard-response',
@@ -304,24 +312,24 @@ TaskFailed = {
 
 for (i=0;i<num_learn_trials;i++) {
   get_probe_trial()
-  var learn_phase = {
-    type: 'html-keyboard-responsefl',
-    choices: jsPsych.NO_KEYS,
-    response_ends_trial: false,
-    stimulus:create_image_learn(learn_img,trial_num),
-    stimulus_duration:3000,
-    trial_duration:3000,
-    on_finish: function(data) {
-      get_learn_trial()
-      console.log(learn_img[learntrial])
-      data.trial_type = 'learn_phase';
-      data.stimulus= learn_img[learntrial]
-      data.city_type = shuffled_learn_img_type[learntrial]
-      sfa=1
-    }
-  }
-  gen_break(learn_phase.stimulus)
-  timeline.push(learn_phase,trialbreak)
+  // var learn_phase = {
+  //   type: 'html-keyboard-responsefl',
+  //   choices: jsPsych.NO_KEYS,
+  //   response_ends_trial: false,
+  //   stimulus:create_image_learn(learn_img,trial_num),
+  //   stimulus_duration:3000,
+  //   trial_duration:3000,
+  //   on_finish: function(data) {
+  //     get_learn_trial()
+  //     console.log(learn_img[learntrial])
+  //     data.trial_type = 'learn_phase';
+  //     data.stimulus= learn_img[learntrial]
+  //     data.city_type = shuffled_learn_img_type[learntrial]
+  //     sfa=1
+  //   }
+  // }
+  // gen_break(learn_phase.stimulus)
+  // timeline.push(learn_phase,trialbreak)
   var familiar = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
@@ -349,6 +357,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
+      get_learn_trial()
       console.log(learntrial)
       data.stimulus= learn_img[learntrial]
       data.trial_type = 'familiar_rating';
@@ -437,7 +446,7 @@ for (i=0;i<num_learn_trials;i++) {
   let thebreak= {
     type: 'html-keyboard-response',
     choices:jsPsych.NO_KEYS,
-    trial_duration: 400,
+    trial_duration: 500,
     stimulus:create_memory_ten(),
     on_finish: function(data) {
       data.trial_type='thebreak'
@@ -458,25 +467,25 @@ let correctResp = []
 
 for (i=0;i<num_recognition_trials;i++){
   get_probe_trial()
-  var second_learn_phase = {
-    type: 'html-keyboard-responsefl',
-    choices: jsPsych.NO_KEYS,
-    response_ends_trial: false,
-    stimulus:create_image_learn(recognition_list,recog_trial_num),
-    stimulus_duration:3000,
-    trial_duration:3000,
-    on_finish: function(data) {
-      get_recog_trial()
-      console.log(recognition_list[recogtrial])
-      data.trial_type = 'second_learn_phase';
-      data.stimulus= recognition_list[recogtrial]
-      data.city_type = shuffled_img_type[recogtrial]
-      data.new_old = new_old[recogtrial]
-      sfa=1
-    }
-  }
-  gen_break(second_learn_phase.stimulus)
-  timeline.push(second_learn_phase,trialbreak)
+  // var second_learn_phase = {
+  //   type: 'html-keyboard-responsefl',
+  //   choices: jsPsych.NO_KEYS,
+  //   response_ends_trial: false,
+  //   stimulus:create_image_learn(recognition_list,recog_trial_num),
+  //   stimulus_duration:3000,
+  //   trial_duration:3000,
+  //   on_finish: function(data) {
+  //     get_recog_trial()
+  //     console.log(recognition_list[recogtrial])
+  //     data.trial_type = 'second_learn_phase';
+  //     data.stimulus= recognition_list[recogtrial]
+  //     data.city_type = shuffled_img_type[recogtrial]
+  //     data.new_old = new_old[recogtrial]
+  //     sfa=1
+  //   }
+  // }
+  // gen_break(second_learn_phase.stimulus)
+  // timeline.push(second_learn_phase,trialbreak)
   var realistic = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
@@ -504,6 +513,8 @@ for (i=0;i<num_recognition_trials;i++){
     `,
     response_ends_trial: true,
     on_finish: function(data) {
+      get_recog_trial()
+      console.log(recognition_list[recogtrial])
       data.stimulus= recognition_list[recogtrial]
       data.trial_type = 'realistic_rating';
       data.rating = data.key_press - 48
@@ -657,7 +668,7 @@ for (i=0;i<num_recognition_trials;i++){
     }
   }
   gen_break(recog_confidence.stimulus)
-  timeline.push(recog_confidence,trialbreak);
+  timeline.push(recog_confidence,trialbreak,introbreak);
 }
 
 
