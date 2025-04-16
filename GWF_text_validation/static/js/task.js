@@ -262,7 +262,6 @@ function start_probe(img,trial) {
       response_ends_trial: true,
       on_finish: function(data) {
         data.stimulus = "probe_rating"
-        data.name_trial = img[trial]
         data.trial_type = 'probe_rating';
         data.probe = data.key_press - 48
         console.log(data.probe)
@@ -400,7 +399,6 @@ for (i=0;i<num_learn_trials;i++) {
     response_ends_trial: true,
     on_finish: function(data) {
       data.stimulus = 'unique_rating';
-      data.name_trial= learn_img[learntrial]
       data.trial_type = 'unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -438,7 +436,6 @@ for (i=0;i<num_learn_trials;i++) {
     response_ends_trial: true,
     on_finish: function(data) {
       data.stimulus = 'memorable_rating';
-      data.name_trial= learn_img[learntrial]
       data.trial_type = 'memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -559,7 +556,6 @@ for (i=0;i<num_recognition_trials;i++){
     response_ends_trial: true,
     on_finish: function(data) {
       data.stimulus = 'pt2_unique_rating';
-      data.name_trial= recognition_list[recogtrial]
       data.trial_type = 'pt2_unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -597,7 +593,6 @@ for (i=0;i<num_recognition_trials;i++){
     response_ends_trial: true,
     on_finish: function(data) {
       data.stimulus= 'pt2_memorable_rating'
-      data.name_trial=recognition_list[recogtrial]
       data.trial_type = 'pt2_memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -617,7 +612,6 @@ for (i=0;i<num_recognition_trials;i++){
     on_finish: function(data) {
       data.trial_type = 'recognition_phase';
       data.stimulus = 'recognition_phase';
-      data.name_trial = recognition_list[recog_trial_num]
       if (data.key_press == 49){
         data.response = "old"
       } else if (data.key_press == 50){
