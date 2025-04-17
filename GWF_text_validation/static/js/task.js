@@ -679,7 +679,7 @@ for (i=0;i<num_recognition_trials;i++){
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
+  stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: CIMBPENS</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_start:function(data){
     save_data()
   },
