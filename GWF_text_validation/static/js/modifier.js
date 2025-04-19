@@ -1,7 +1,7 @@
 //debug moode on/off
-debugmode= false
+debugmode= true
 if (debugmode==true){
-  num_learn_trials = 5
+  num_learn_trials = 1
   num_recognition_trials = 5
 }else{
   num_learn_trials = 30
@@ -32,7 +32,7 @@ instruct={instruct_1,instruct_2,instruct_3} // IF you want to add or decrease nu
 //Text for direct memory instruction
 instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For this next portion, you will continue to make name judgements, but we will also test you on your memory for what you saw before.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>On each trial, you will be presented with a city name. In addition to providing ratings as you’ve done before, you will be asked to indicate if this is a city name you’ve seen before in the previous phase, or a new name you are seeing for the first time.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_dir_3 = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>If the city name is <strong>OLD</strong> (what you have seen before) press '1'. If it is <strong>NEW</strong> press '2'. If you are unsure, make your best guess. You will also be asked about how confident you are in your response.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_dir_3 = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will be asked how confident you are in determining whether the image is <b>OLD</b> (what you have seen before) or <b>NEW</b>.<br><br>If you think the image is definitely old, press '1'<br>If you think it is likely old, press '2'<br>If it is likely new, press '3'<br>If it is definitely new, press '4'<br></p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 // instruct_dir_4 = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will only have a couple of seconds to respond to every trial, so try to respond as quickly and as accurately as possible.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to start]</p>",
 dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3"] //Same for above, if you want to delete or add, just decrease or add the var
 dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3} //same for above

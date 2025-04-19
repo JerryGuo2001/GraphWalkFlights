@@ -360,8 +360,9 @@ for (i=0;i<num_learn_trials;i++) {
     on_finish: function(data) {
       get_learn_trial()
       console.log(learntrial)
-      data.stimulus = 'familiar_rating'
+      data.stimulus = learn_img[learntrial]
       data.name_trial= learn_img[learntrial]
+      data.city_type = shuffled_learn_img_type[learntrial]
       data.trial_type = 'familiar_rating';
       data.rating = data.key_press - 48
     } 
@@ -398,7 +399,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus = 'unique_rating';
+      data.stimulus = learn_img[learntrial]
       data.trial_type = 'unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -435,7 +436,7 @@ for (i=0;i<num_learn_trials;i++) {
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus = 'memorable_rating';
+      data.stimulus = learn_img[learntrial]
       data.trial_type = 'memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -517,8 +518,9 @@ for (i=0;i<num_recognition_trials;i++){
     on_finish: function(data) {
       get_recog_trial()
       console.log(recognition_list[recogtrial])
-      data.stimulus = 'realistic_rating';
+      data.stimulus = recognition_list[recogtrial]
       data.name_trial= recognition_list[recogtrial]
+      data.city_type = shuffled_img_type[recogtrial]
       data.trial_type = 'realistic_rating';
       data.rating = data.key_press - 48
     } 
@@ -555,7 +557,7 @@ for (i=0;i<num_recognition_trials;i++){
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus = 'pt2_unique_rating';
+      data.stimulus = recognition_list[recogtrial]
       data.trial_type = 'pt2_unique_rating';
       data.rating = data.key_press - 48
     } 
@@ -592,7 +594,7 @@ for (i=0;i<num_recognition_trials;i++){
     `,
     response_ends_trial: true,
     on_finish: function(data) {
-      data.stimulus= 'pt2_memorable_rating'
+      data.stimulus= recognition_list[recogtrial]
       data.trial_type = 'pt2_memorable_rating';
       data.rating = data.key_press - 48
     } 
@@ -604,26 +606,26 @@ for (i=0;i<num_recognition_trials;i++){
   }
   var img_recognition = {
     type: 'html-keyboard-response',
-    choices: ['1','2'],
+    choices: ['1','2','3','4'],
     response_ends_trial: true,
     stimulus:create_image_recognition(recognition_list,recog_trial_num),
     stimulus_duration:15000,
     trial_duration:15000,
     on_finish: function(data) {
       data.trial_type = 'recognition_phase';
-      data.stimulus = 'recognition_phase';
-      if (data.key_press == 49){
+      data.stimulus = recognition_list[recogtrial]
+      if (data.key_press <= 50){
         data.response = "old"
-      } else if (data.key_press == 50){
+      } else if (data.key_press > 50){
         data.response = "new"
       } else {
         data.response = "MISSED"
       }
-      if(data.key_press == 49 && new_old[on_finish_num] == "OLD" || data.key_press == 50 && new_old[on_finish_num] == "NEW"){
+      if(data.key_press <= 50 && new_old[on_finish_num] == "OLD" || data.key_press > 50 && new_old[on_finish_num] == "NEW"){
         data.correct = 1
         correctResp.push(1)
         data.accuracy = sum(correctResp) / correctResp.length
-      } else if (data.key_press == 49 && new_old[on_finish_num] == "NEW" || data.key_press == 50 && new_old[on_finish_num] == "OLD"){
+      } else if (data.key_press <= 50 && new_old[on_finish_num] == "NEW" || data.key_press > 50 && new_old[on_finish_num] == "OLD"){
         data.correct = 0 
         correctResp.push(0)
         data.accuracy = sum(correctResp) / correctResp.length
@@ -638,40 +640,41 @@ for (i=0;i<num_recognition_trials;i++){
   recog_trial_num += 1
   gen_break(img_recognition.stimulus)
   timeline.push(img_recognition,trialbreak)
-  var recog_confidence = {
-    type: 'html-keyboard-response',
-    choices: ['1','2','3','4'],
-    response_ends_trial: true,
-    stimulus:`
-      <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
-        City ${recog_trial_num + 1} / ${recognition_list.length}
-      </div>
-      <div id="confidence" style="max-width: 1000px; margin: 100px auto; text-align: center;">
-        <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-          How confident are you in your response?
-        </p>
-        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
-          <br>
-          <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 30px; margin-top: 20px;">
-            <p>(1) Not at all confident</p>
-            <p>(2) Slightly confident</p>
-            <p>(3) Moderately confident</p>
-            <p>(4) Very confident</p>
-          </div><br><br>
-        <strong>Press the number key that corresponds with your rating.</strong>
-        </p>
-      </div>
-    `,
-    stimulus_duration:15000,//5 second for now, we will discuss it 
-    trial_duration:15000,//5 second for now 
-    on_finish: function (data){
-      data.trial_type = 'confidence';
-      data.stimulus= 'confidence'
-      data.confidence = data.key_press - 48
-    }
-  }
-  gen_break(recog_confidence.stimulus)
-  timeline.push(recog_confidence,trialbreak,introbreak);
+  // var recog_confidence = {
+  //   type: 'html-keyboard-response',
+  //   choices: ['1','2','3','4'],
+  //   response_ends_trial: true,
+  //   stimulus:`
+  //     <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+  //       City ${recog_trial_num + 1} / ${recognition_list.length}
+  //     </div>
+  //     <div id="confidence" style="max-width: 1000px; margin: 100px auto; text-align: center;">
+  //       <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+  //         How confident are you in your response?
+  //       </p>
+  //       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+  //         <br>
+  //         <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 30px; margin-top: 20px;">
+  //           <p>(1) Not at all confident</p>
+  //           <p>(2) Slightly confident</p>
+  //           <p>(3) Moderately confident</p>
+  //           <p>(4) Very confident</p>
+  //         </div><br><br>
+  //       <strong>Press the number key that corresponds with your rating.</strong>
+  //       </p>
+  //     </div>
+  //   `,
+  //   stimulus_duration:15000,//5 second for now, we will discuss it 
+  //   trial_duration:15000,//5 second for now 
+  //   on_finish: function (data){
+  //     data.trial_type = 'confidence';
+  //     data.stimulus= 'confidence'
+  //     data.confidence = data.key_press - 48
+  //   }
+  // }
+  // gen_break(recog_confidence.stimulus)
+  // timeline.push(recog_confidence,trialbreak,introbreak);
+  timeline.push(introbreak)
 }
 
 

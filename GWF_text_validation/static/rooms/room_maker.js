@@ -11,7 +11,26 @@ function create_image_learn(presented_img, trial_num) {
 }
 
 function create_image_recognition(presented_img, trial_num) {
-  return parse(`<div id=trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">City ${trial_num + 1} / ${recognition_list.length}</div><p style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);font-size: 25px;color:black;'>Is this image <strong>Old</strong> or <strong>New</strong>?</p><p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>%s</b></p><p style='position:absolute;top: 80%;right: 50%;transform: translate(50%, -50%);font-size: 25px;color:black;'>Press '1' for <strong>Old</strong> and '2' for <strong>New</strong>.</p>`
+  return parse(`
+    <div id="trial-counter" style="position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold;">
+      City ${trial_num + 1} / ${presented_img.length}
+    </div>
+    <div id="recognition" style="max-width: 1200px; margin: 100px auto; text-align: center;">
+      <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>%s</b></p><br><br>
+      <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
+        Is this image <strong>OLD</strong> or <strong>NEW</strong>?
+      </p>
+      <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
+        <br>
+        <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
+          <p>(1) Definitely old &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p>(2) Likely old &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p>(3) Likely new &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p>(4) Definitely new &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div><br><br>
+      <strong>Press the number key that corresponds with your rating.</strong>
+      </p>
+    </div>`
   ,presented_img[trial_num])
   
 }
