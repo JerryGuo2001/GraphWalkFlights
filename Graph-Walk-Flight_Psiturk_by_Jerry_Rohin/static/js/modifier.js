@@ -84,6 +84,20 @@ for (let i = 0; i < 16; i++) {
   }
 }
 
+function ensureNoConsecutiveDuplicates(arr) {
+  for (let i = 1; i < arr.length; i++) {
+      if (arr[i] === arr[i - 1]) {
+          for (let j = i + 1; j < arr.length; j++) {
+              if (arr[j] !== arr[i] && arr[j - 1] !== arr[i]) {
+                  [arr[i], arr[j]] = [arr[j], arr[i]];
+                  break;
+              }
+          }
+      }
+  }
+  return arr;
+}
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -93,6 +107,8 @@ function shuffle(array) {
 }
 
 let randomizedArray = shuffle(arr);
+
+randomizedArray = ensureNoConsecutiveDuplicates(randomizedArray)
 
 for (var i = 0; i < randomizedArray.length; i++){
     learn_left.push(list_left[randomizedArray[i]])

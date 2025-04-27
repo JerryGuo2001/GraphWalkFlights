@@ -26,7 +26,7 @@ function displayhelp() {
 
 
 //function to initita all the necessary varibale
-function wassup(){
+function gdp_init(){
         //PART THAT NEED TO BE RUN UNDER BUTTON
     images = []
     attention=0
