@@ -234,10 +234,10 @@ function start_probe(img,trial) {
           City ${trial + 1} / ${img.length}
         </div>
         <div id="realistic" style="max-width: 1200px; margin: 100px auto; text-align: center;">
-          <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>${img[trial]}</b></p><br><br>
+          <img style='width: 350px;height: 350px;margin-bottom:100px' src='../static/images/${img[trial]}' height='250'></style>
           <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
             Please press the ${prob_list[instant_index]} option on your keyboard.
-          </p><br>
+          </p>
           <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
             <br>
             <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">

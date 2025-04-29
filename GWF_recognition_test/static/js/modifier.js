@@ -118,34 +118,88 @@ let shuffled_img_type3 = []
 let shuffled_img_type4 = []
 let shuffled_img_typeTotal = []
 
+
+let US_cities = [
+  "huntsville",
+  "sitka",
+  "bisbee",
+  "hotsprings",
+  "healdsburg",
+  "boulder",
+  "cornwall",
+  "delawarecity",
+  "westpalmbeach",
+  "athens",
+  "hilo",
+  "coeurdalene",
+  "peoria",
+  "carmel",
+  "okoboji",
+  "abilene",
+  "bowlinggreen",
+  "shreveport",
+  "barharbor",
+  "assateagueisland",
+  "gloucester",
+  "manistee",
+  "orr",
+  "natchez",
+  "lakeoftheozarks",
+  "livingston",
+  "alliance",
+  "gardnerville",
+  "hanover",
+  "capemay",
+  "albuquerque",
+  "watkinsglen",
+  "duck",
+  "medora",
+  "cleveland",
+  "yukon",
+  "sisters",
+  "newhope",
+  "newport",
+  "follybeach",
+  "custer",
+  "gatlinburg",
+  "sanantonio",
+  "parkcity",
+  "barnard",
+  "leesburg",
+  "sammamish",
+  "berkeleysprings",
+  "racine",
+  "cody"
+];
+
+let US_image_choose_index =[]
 let image_choose_index =[]
-for (i=1;i<31;i++){
+for (i=1;i<18;i++){
   image_choose_index.push(i)
 }
 shuffle(image_choose_index)
 
 for (i=1;i<16;i++){
-  if (image_choose_index[i]<10){
-    img_mm_list.push(`img_manmade_0${image_choose_index[i]}.png`)
+  if (i<10){
+    img_mm_list.push(`Fictional_Cities_List/img_manmade_0${i}.png`)
     unshuffled_img_type1.push("MM")
   } else {
-    img_mm_list.push(`img_manmade_${image_choose_index[i]}.png`)
+    img_mm_list.push(`Fictional_Cities_List/img_manmade_${i}.png`)
     unshuffled_img_type1.push("MM")
   }
 }
+let US_nat_list = []
 let img_nat_list = []
-
-shuffle(image_choose_index)
-
 for (i=1;i<16;i++){
-  if (image_choose_index[i]<10){
-    img_nat_list.push(`img_natural_0${image_choose_index[i]}.png`)
+  if (i<10){
+    img_nat_list.push(`Fictional_Cities_List/img_natural_0${i}.png`)
     unshuffled_img_type2.push("NAT")
   } else {
-    img_nat_list.push(`img_natural_${image_choose_index[i]}.png`)
+    img_nat_list.push(`Fictional_Cities_List/img_natural_${i}.png`)
     unshuffled_img_type2.push("NAT")
   }
 }
+
 
 let nat_arr = []
 let mm_arr = []
@@ -158,6 +212,7 @@ for (let i = 0; i < img_mm_list.length;i++){
 shuffle(mm_arr);
 shuffle(nat_arr);
 
+let US_mm_list = []
 let mm_list_shuff = []
 let nat_list_shuff = []
 let unshuffled_img_type_learn = []
@@ -170,34 +225,35 @@ for (let i = 0; i < img_mm_list.length;i++){
 }
 
 // US CITIES REAL
-let US_mm_list = []
 
-let US_image_choose_index =[]
-for (i=1;i<18;i++){
+
+
+let US_mm_cities_formatted = []
+let US_nat_cities_formatted = []
+for (i=0;i<50;i++){
+  US_mm_cities_formatted.push(`US_Cities_List/mm_${US_cities[i]}.png`)
+  US_nat_cities_formatted.push(`US_Cities_List/nat_${US_cities[i]}.png`)
   image_choose_index.push(i)
 }
 shuffle(image_choose_index)
 
 for (i=1;i<16;i++){
-  if (i<10){
-    US_mm_list.push(`realUS/US_img_manmade_0${i}.png`)
-    unshuffled_img_type3.push("MM")
-  } else {
-    US_mm_list.push(`realUS/US_img_manmade_${i}.png`)
-    unshuffled_img_type3.push("MM")
-  }
+  US_mm_list.push(US_mm_cities_formatted[i])
+  unshuffled_img_type3.push("MM")
 }
-let US_nat_list = []
+
+shuffle(image_choose_index)
 
 for (i=1;i<16;i++){
-  if (i<10){
-    US_nat_list.push(`realUS/US_img_natural_0${i}.png`)
-    unshuffled_img_type4.push("NAT")
-  } else {
-    US_nat_list.push(`realUS/US_img_natural_${i}.png`)
-    unshuffled_img_type4.push("NAT")
-  }
+  US_nat_list.push(US_nat_cities_formatted[i])
+  unshuffled_img_type4.push("NAT")
 }
+
+
+let US_mm_list_shuff = []
+let US_nat_list_shuff = []
+let unshuffled_US_type_learn = []
+
 
 let US_nat_arr = []
 let US_mm_arr = []
@@ -209,10 +265,6 @@ for (let i = 0; i < US_mm_list.length;i++){
 
 shuffle(US_mm_arr);
 shuffle(US_nat_arr);
-
-let US_mm_list_shuff = []
-let US_nat_list_shuff = []
-let unshuffled_US_type_learn = []
 
 for (let i = 0; i < US_mm_list.length;i++){
   US_mm_list_shuff.push(US_mm_list[US_mm_arr[i]])
