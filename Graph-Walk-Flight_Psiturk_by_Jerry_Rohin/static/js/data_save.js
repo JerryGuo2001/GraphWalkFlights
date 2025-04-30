@@ -4,6 +4,18 @@ var prompt_resubmit = function() {
 		$("#resubmit").click(resubmit);
 	};
 
+function generateRandomIdentifier() {
+    const now = new Date();
+    const hour = now.getHours().toString().padStart(2, '0');
+    const minute = now.getMinutes().toString().padStart(2, '0');
+    const rand = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    
+    const randomIdentifier = `${hour}${minute}_${rand}`;
+    return randomIdentifier;
+}
+
+let randomidentifier;
+
 var resubmit = function() {
 		document.body.innerHTML = "<h1>Trying to resubmit...</h1>";
 		reprompt = setTimeout(prompt_resubmit, 10000);
@@ -46,9 +58,13 @@ var resubmit = function() {
     var data_file_name = "dev_test.csv";
 
   } else {
-    //var timestamp = (new Date).toISOString().replace(/z|t/gi,' ').trim();
-  //  var data_file_name =  'S_' + subject_id +'-'+timestamp +'.csv';
-    var data_file_name =  'S_' + useridtouse + '.csv';
+      if (save_final_deter=='final'){
+        randomidentifier = generateRandomIdentifier();
+        var data_file_name =  'final_S_' + useridtouse +'_'+randomidentifier+ '.csv';
+      }else{
+        randomidentifier = generateRandomIdentifier();
+        var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
+      }
   }
 
   // Save participant data file as a download in the web browser

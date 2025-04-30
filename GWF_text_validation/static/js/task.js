@@ -2,6 +2,8 @@ var debug_mode = 0; // debug mode determines how long the blocks are, 5 sec in d
 //var data_save_method = 'csv_server_py';
 var data_save_method = 'csv_server_py';
 
+let save_final_deter;
+
 // Will be set to true when experiment is exiting fullscreen normally, to prevent above end experiment code
 var normal_exit = false;
 var window_height = window.screen.height;
@@ -769,6 +771,7 @@ var thank_you = {
   choices: ['space'],
   stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: CIMBPENS</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_start:function(data){
+    save_final_deter='final',
     save_data()
   },
   on_finish: function (data) {
