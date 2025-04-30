@@ -18,14 +18,14 @@ function create_image_recognition(presented_img, trial_num) {
     <div id="recognition" style="max-width: 1200px; margin: 100px auto; text-align: center;">
       <p style='position:absolute;top: 25%;right: 50%;transform: translate(50%, -50%);font-size: 50px;color:black;'><b>%s</b></p><br><br>
       <p style="font-size: 32px; line-height: 1.6; font-weight: bold; margin-bottom: 20px;">
-        Is this image <strong>OLD</strong> or <strong>NEW</strong>?
+        Is this city <strong>OLD</strong> or <strong>NEW</strong>?
       </p>
       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 30px;">
         <br>
         <div class='test' style="display: flex; justify-content: space-around; align-items: center; text-align: center; width: 100%; font-size: 28px; margin-top: 20px;">
           <p>(1) Definitely old &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <p>(2) Likely old &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <p>(3) Likely new &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p>(2) Maybe old &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p>(3) Maybe new &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           <p>(4) Definitely new &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         </div><br><br>
       <strong>Press the number key that corresponds with your rating.</strong>
