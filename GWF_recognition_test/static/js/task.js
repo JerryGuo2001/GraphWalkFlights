@@ -604,19 +604,19 @@ for (i=0;i<num_recognition_trials;i++){
     trial_duration:15000,
     on_finish: function(data) {
       data.trial_type = 'recognition_phase';
-      data.stimulus= recognition_list[recog_trial_num]
-      if (data.key_press == 49){
+      data.stimulus= recognition_list[recogtrial]
+      if (data.key_press <= 50){
         data.response = "old"
-      } else if (data.key_press == 50){
+      } else if (data.key_press > 50){
         data.response = "new"
       } else {
         data.response = "MISSED"
       }
-      if(data.key_press == 49 && new_old[on_finish_num] == "OLD" || data.key_press == 50 && new_old[on_finish_num] == "NEW"){
+      if(data.key_press <= 50 && new_old[on_finish_num] == "OLD" || data.key_press > 50 && new_old[on_finish_num] == "NEW"){
         data.correct = 1
         correctResp.push(1)
         data.accuracy = sum(correctResp) / correctResp.length
-      } else if (data.key_press == 49 && new_old[on_finish_num] == "NEW" || data.key_press == 50 && new_old[on_finish_num] == "OLD"){
+      } else if (data.key_press <= 50 && new_old[on_finish_num] == "NEW" || data.key_press > 50 && new_old[on_finish_num] == "OLD"){
         data.correct = 0 
         correctResp.push(0)
         data.accuracy = sum(correctResp) / correctResp.length
