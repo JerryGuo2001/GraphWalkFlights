@@ -1,8 +1,8 @@
 //debug moode on/off
-debugmode= false
+debugmode= true
 if (debugmode==true){
-  num_learn_trials = 5
-  num_recognition_trials = 5
+  num_learn_trials = 10
+  num_recognition_trials = 10
 }else{
   num_learn_trials = 30
   num_recognition_trials = 60
