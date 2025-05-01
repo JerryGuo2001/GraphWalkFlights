@@ -175,28 +175,28 @@ let US_cities = [
 
 let US_image_choose_index =[]
 let image_choose_index =[]
-for (i=1;i<18;i++){
+for (i=18;i<51;i++){
   image_choose_index.push(i)
 }
 shuffle(image_choose_index)
 
 for (i=1;i<16;i++){
-  if (i<10){
-    img_mm_list.push(`Fictional_Cities_List/img_manmade_0${i}.png`)
+  if (image_choose_index[i]<10){
+    img_mm_list.push(`Fictional_Cities_List/img_manmade_0${image_choose_index[i]}.png`)
     unshuffled_img_type1.push("MM")
   } else {
-    img_mm_list.push(`Fictional_Cities_List/img_manmade_${i}.png`)
+    img_mm_list.push(`Fictional_Cities_List/img_manmade_${image_choose_index[i]}.png`)
     unshuffled_img_type1.push("MM")
   }
 }
 let US_nat_list = []
 let img_nat_list = []
 for (i=1;i<16;i++){
-  if (i<10){
-    img_nat_list.push(`Fictional_Cities_List/img_natural_0${i}.png`)
+  if (image_choose_index[i]<10){
+    img_nat_list.push(`Fictional_Cities_List/img_natural_0${image_choose_index[i]}.png`)
     unshuffled_img_type2.push("NAT")
   } else {
-    img_nat_list.push(`Fictional_Cities_List/img_natural_${i}.png`)
+    img_nat_list.push(`Fictional_Cities_List/img_natural_${image_choose_index[i]}.png`)
     unshuffled_img_type2.push("NAT")
   }
 }
@@ -231,22 +231,22 @@ for (let i = 0; i < img_mm_list.length;i++){
 
 let US_mm_cities_formatted = []
 let US_nat_cities_formatted = []
-for (i=0;i<50;i++){
+for (i=17;i<50;i++){
   US_mm_cities_formatted.push(`US_Cities_List/mm_${US_cities[i]}.png`)
   US_nat_cities_formatted.push(`US_Cities_List/nat_${US_cities[i]}.png`)
-  image_choose_index.push(i)
+  US_image_choose_index.push(i)
 }
 shuffle(image_choose_index)
 
 for (i=1;i<16;i++){
-  US_mm_list.push(US_mm_cities_formatted[i])
+  US_mm_list.push(US_mm_cities_formatted[US_image_choose_index[i]])
   unshuffled_img_type3.push("MM")
 }
 
 shuffle(image_choose_index)
 
 for (i=1;i<16;i++){
-  US_nat_list.push(US_nat_cities_formatted[i])
+  US_nat_list.push(US_nat_cities_formatted[US_image_choose_index[i]])
   unshuffled_img_type4.push("NAT")
 }
 
