@@ -58,13 +58,12 @@ var resubmit = function() {
     var data_file_name = "dev_test.csv";
 
   } else {
-      if (save_final_deter=='final'){
-        randomidentifier = generateRandomIdentifier();
-        var data_file_name =  'final_S_' + useridtouse +'_'+randomidentifier+ '.csv';
-      }else{
-        randomidentifier = generateRandomIdentifier();
-        var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
-      }
+    if (save_final_deter=='final'){
+      var data_file_name =  'final_S_' + useridtouse + '.csv';
+    }else{
+      randomidentifier = generateRandomIdentifier();
+      var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
+    }
   }
 
   // Save participant data file as a download in the web browser

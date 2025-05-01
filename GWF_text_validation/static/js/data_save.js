@@ -51,8 +51,7 @@ var save_data = function(final) {
 
   } else {
     if (save_final_deter=='final'){
-      randomidentifier = generateRandomIdentifier();
-      var data_file_name =  'final_S_' + useridtouse +'_'+randomidentifier+ '.csv';
+      var data_file_name =  'final_S_' + useridtouse + '.csv';
     }else{
       randomidentifier = generateRandomIdentifier();
       var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
