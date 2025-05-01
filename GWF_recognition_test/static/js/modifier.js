@@ -175,7 +175,7 @@ let US_cities = [
 
 let US_image_choose_index =[]
 let image_choose_index =[]
-for (i=18;i<51;i++){
+for (i=1;i<51;i++){
   image_choose_index.push(i)
 }
 shuffle(image_choose_index)
@@ -231,7 +231,7 @@ for (let i = 0; i < img_mm_list.length;i++){
 
 let US_mm_cities_formatted = []
 let US_nat_cities_formatted = []
-for (i=17;i<50;i++){
+for (i=0;i<50;i++){
   US_mm_cities_formatted.push(`US_Cities_List/mm_${US_cities[i]}.png`)
   US_nat_cities_formatted.push(`US_Cities_List/nat_${US_cities[i]}.png`)
   US_image_choose_index.push(i)
