@@ -46,6 +46,7 @@ var welcome = {
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
     subject_id=useridtouse
+    save_data()
   }
 }
 //welcome page end
