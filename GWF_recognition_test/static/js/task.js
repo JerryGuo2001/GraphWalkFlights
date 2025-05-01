@@ -602,8 +602,6 @@ for (i=0;i<num_recognition_trials;i++){
     choices: ['1','2','3','4'],
     response_ends_trial: true,
     stimulus:create_image_recognition(recognition_list,recog_trial_num),
-    stimulus_duration:15000,
-    trial_duration:15000,
     on_finish: function(data) {
       data.trial_type = 'recognition_phase';
       data.stimulus= recognition_list[recogtrial]
