@@ -514,7 +514,7 @@ for (i=0;i<num_recognition_trials;i++){
       data.stimulus= recognition_list[recogtrial]
       data.name_trial= recognition_list[recogtrial]
       data.city_type = shuffled_img_type[recogtrial]
-      data.trial_type = 'realistic_rating';
+      data.trial_type = 'pt2_realistic_rating';
       data.rating = data.key_press - 48
     } 
   }
