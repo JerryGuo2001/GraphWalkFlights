@@ -74,6 +74,7 @@ var welcome = {
     window.useridtouse = useridtouse.split('"')[3];
     subject_id=useridtouse
     save_data()
+    localStorage.setItem('RefreshCheck', '1')
   }
 }
 //welcome page end
@@ -174,6 +175,10 @@ let introbreak= {
 intro_learn=createfulintro(instruct,instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
+let RefreshCheck = localStorage.getItem('RefreshCheck');
+if(RefreshCheck=='1'){
+  timeline.end()
+}
 timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 timeline.push(get_ready,introbreak)
