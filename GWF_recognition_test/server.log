@@ -92,3 +92,154 @@
 [2025-04-30 23:40:49 -0700] [35297] [CRITICAL] WORKER TIMEOUT (pid:35378)
 [2025-04-30 23:41:04 -0700] [35297] [CRITICAL] WORKER TIMEOUT (pid:35366)
 [2025-04-30 23:41:24 -0700] [35297] [CRITICAL] WORKER TIMEOUT (pid:35376)
+2025-05-03 13:44:24,009 Exception on /.well-known/gpc.json [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 749, in regularpage
+    return render_template(foldername+"/"+pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: .well-known/gpc.json
+2025-05-03 13:44:27,469 Exception on /.well-known/gpc.json [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 749, in regularpage
+    return render_template(foldername+"/"+pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: .well-known/gpc.json
+2025-05-03 13:44:38,356 Exception on /.well-known/gpc.json [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 749, in regularpage
+    return render_template(foldername+"/"+pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: .well-known/gpc.json
+2025-05-03 13:45:06,887 Exception on /.well-known/gpc.json [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 749, in regularpage
+    return render_template(foldername+"/"+pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: .well-known/gpc.json
+[2025-05-03 13:45:36 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40425)
+[2025-05-03 13:46:45 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40420)
+[2025-05-03 13:47:24 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40426)
+[2025-05-03 13:49:40 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40421)
+[2025-05-03 13:52:53 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40448)
+[2025-05-03 13:53:14 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40422)
+[2025-05-03 13:55:29 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40452)
+[2025-05-03 14:00:24 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40423)
+[2025-05-03 14:00:40 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40450)
+[2025-05-03 14:01:15 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40465)
+[2025-05-03 14:01:29 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40470)
+[2025-05-03 14:02:50 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40461)
+[2025-05-03 14:03:16 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40457)
+[2025-05-03 14:03:16 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40472)
+[2025-05-03 14:05:39 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40427)
+[2025-05-03 14:05:50 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40479)
+[2025-05-03 14:09:23 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40481)
+[2025-05-03 14:09:23 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40482)
+[2025-05-03 14:09:30 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40477)
+[2025-05-03 14:09:58 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40419)
+[2025-05-03 14:10:53 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40469)
+[2025-05-03 14:10:54 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40462)
+[2025-05-03 14:12:53 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40474)
+[2025-05-03 14:24:04 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40497)
+[2025-05-03 14:29:52 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40478)
+[2025-05-03 14:32:44 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40534)
+[2025-05-03 14:36:50 -0700] [40416] [CRITICAL] WORKER TIMEOUT (pid:40493)
