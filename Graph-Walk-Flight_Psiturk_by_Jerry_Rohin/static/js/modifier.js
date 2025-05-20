@@ -641,7 +641,7 @@ let threeEdgePair = graph.getPairsKEdgesApart(3)
 let fourEdgePair = graph.getPairsKEdgesApart(4)
 let fiveEdgePair = graph.getPairsKEdgesApart(5)
 
-let goaldirList = graph.getPairsKEdgesApart(2).concat(graph.getPairsKEdgesApart(3),graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5))
+let goaldirList = graph.getPairsKEdgesApart(2).concat(graph.getPairsKEdgesApart(3),graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5),graph.getPairsKEdgesApart(6))
 goaldirIndex = []
 for (let i = 0; i < goaldirList.length; i++) {
   goaldirIndex.push(i);
@@ -649,11 +649,14 @@ for (let i = 0; i < goaldirList.length; i++) {
 goaldirIndex = shuffle(goaldirIndex)
 
 let shuffledList = []
-for (let i = 0;i < 4; i++){
+for (let i = 0;i < 6; i++){
   shuffledList.push(goaldirList[goaldirIndex[i]])
   shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length]])
   shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length]])
   shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length + fourEdgePair.length]])
+}
+for (let i = 0; i < 2; i++){
+  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length]])
 }
 
 let shuffledIndex = []
