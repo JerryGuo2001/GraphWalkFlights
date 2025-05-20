@@ -466,38 +466,58 @@ var shortestpath_phase = {
       data.accuracy = 0
       correctness.push(0)
     }
-    let onedifflength = twothree.length + threefour.length + fourfive.length
-    let twodifflength = twofour.length + threefive.length
-    let threedifflength = twofive.length
+  
+    let onedifflength = 24
+    let twodifflength = 24
+    let threedifflength = 24
+    let fourdifflength = 13
+
     if (cumulativearr[curr_shortest_trial] < onedifflength){
       data.condition = 'One Edge Diff'
     } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
       data.condition = 'Two Edge Diff'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength + threedifflength){
       data.condition = 'Three Edge Diff'
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength + threedifflength){
+      data.condition = 'Four Edge Diff'
     }
 
-    if (cumulativearr[curr_shortest_trial] < twothree.length){
+    if (cumulativearr[curr_shortest_trial] < shuffled_twothree.length){
       data.specific_pairs = "Two Edge Three Edge"
-    } else if (cumulativearr[curr_shortest_trial] >= twothree.length && cumulativearr[curr_shortest_trial] < twothree.length + threefour.length){
+    } else if (cumulativearr[curr_shortest_trial] >= shuffled_twothree.length && cumulativearr[curr_shortest_trial] < shuffled_twothree.length + shuffled_threefour.length){
       data.specific_pairs = 'Three Edge Four Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= twothree.length + threefour.length && cumulativearr[curr_shortest_trial] < onedifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= shuffled_twothree.length + shuffled_threefour.length && cumulativearr[curr_shortest_trial] < shuffled_twothree.length + shuffled_threefour.length + shuffled_fourfive.length){
       data.specific_pairs = 'Four Edge Five Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + twofour.length){
+    } else if (cumulativearr[curr_shortest_trial] >= shuffled_twothree.length + shuffled_threefour.length + shuffled_fourfive.length && cumulativearr[curr_shortest_trial] < onedifflength){
+      data.specific_pairs = 'Five Edge Six Edge'
+
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + shuffled_twofour.length){
       data.specific_pairs = 'Two Edge Four Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twofour.length && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + shuffled_twofour.length && cumulativearr[curr_shortest_trial] < onedifflength + shuffled_twofour.length + shuffled_threefive.length){
       data.specific_pairs = 'Three Edge Five Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + shuffled_twofour.length + shuffled_threefive.length && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
+      data.specific_pairs = 'Four Edge Six Edge'
+
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength + shuffled_twofive.length){
+      data.specific_pairs = 'Two Edge Five Edge'
+    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength + shuffled_twofive.length && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength + threedifflength){
       data.specific_pairs = 'Two Edge Five Edge'
     }
 
+    else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength + threedifflength){
+      data.specific_pairs = 'Two Edge Six Edge'
+    }
 
+    console.log(data.condition)
+    console.log(data.specific_pairs)
     let sum = 0;
     correctness.forEach(function(value) {
       sum += value;
     });
-
+    console.log(data.accuracy)
     data.cumulative_accuracy = sum / correctness.length;
+
+
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
