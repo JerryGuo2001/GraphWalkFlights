@@ -1,15 +1,15 @@
 //debug moode on/off
-debugmode= false
+debugmode= true
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=3 //how many shortest path you want
   n_goaldir_trial=2 //how many goal directed planning you want
 }else{
-  n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=1 //how many direct trial you want
+  n_learning_trial=128 //This determine the number of learning trial you want in total
+  n_direct_trial=32 //how many direct trial you want
   n_shortest_trial=85 //how many shortest path you want
-  n_goaldir_trial=10 //how many goal directed planning you want
+  n_goaldir_trial=26 //how many goal directed planning you want
 }
 
 //warningpage
@@ -382,7 +382,7 @@ let directShort = []
 let directFar = []
 var directNodes = 0
 
-for(let i = 1;i<13;i++){
+for(let i = 1;i<14;i++){
   for(let j = 0;j<graph.getDirectNeighbors(i).length;j++){
     graph.getTriplet(i)
     directLeft.push(directNodes[0])
