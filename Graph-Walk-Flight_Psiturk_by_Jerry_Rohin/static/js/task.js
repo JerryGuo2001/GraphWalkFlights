@@ -599,6 +599,31 @@ short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
 
+
+//Semantic US map
+const semantic_phase3 = {
+  type: 'html-keyboard-response',
+  stimulus: semanticHTML,
+  choices: jsPsych.NO_KEYS,
+  on_load: function () {
+    initiatesemanticMap(); // start the UI
+  },
+  on_finish: function (data) {
+    data.trial_type = 'Semantic_US_Map';
+  
+    // Convert position object to comma-separated string
+    const parts = [];
+    for (const key in semanticImagePositions) {
+      const pos = semanticImagePositions[key];
+      parts.push(`${key}:x=${pos.x.toFixed(2)},y=${pos.y.toFixed(2)}`);
+    }
+    data.image_position = parts.join(',');
+    console.log(data.image_position)
+  }  
+};
+
+
+//
 // final thank you
 var thank_you = {
   type: 'html-keyboard-response',
@@ -617,6 +642,8 @@ var thank_you = {
 
 
 //time line here
+timeline.push(semantic_phase3)
+timeline.push(phase3[0])
 timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 timeline.push(learn_phase)

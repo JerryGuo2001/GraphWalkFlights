@@ -763,8 +763,8 @@ function getShortestPath(graph, start, goal) {
 let selectedPairs = {
     2: selectBestCoveragePairs(graph, graph.getPairsKEdgesApart(2), 9), // fallback if needed
     3: selectBestCoveragePairs(graph, graph.getPairsKEdgesApart(3), 9), // fallback if needed
-    4: selectBestCoveragePairs(graph, graph.getPairsKEdgesApart(4), 9), // fallback if needed
-    5: selectBestCoveragePairs(graph, graph.getPairsKEdgesApart(5), 3), // fallback if needed
+    4: selectBestCoveragePairs(graph, graph.getPairsKEdgesApart(4), 6), // fallback if needed
+    5: selectBestCoveragePairs(graph, graph.getPairsKEdgesApart(5), 6), // fallback if needed
     6:  graph.getPairsKEdgesApart(6)
 };
 
