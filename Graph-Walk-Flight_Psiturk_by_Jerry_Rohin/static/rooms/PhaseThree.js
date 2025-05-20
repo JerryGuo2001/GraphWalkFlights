@@ -17,7 +17,6 @@ var specificlinenew={};// Variable to hold the specific line
 var canvas=[]
 var linecounter=0
 
-
 //function to display the help instruction
 function displayhelp() {
     $('#bighelp').hide()
