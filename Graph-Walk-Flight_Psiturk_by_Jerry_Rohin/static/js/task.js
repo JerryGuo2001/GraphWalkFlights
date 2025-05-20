@@ -555,6 +555,8 @@ function createPhase3(numberoftrial){
             data.condition = 'Four Edge Diff'
           } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
             data.condition = 'Five Edge Diff'
+          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+sixEdgePair.length){
+            data.condition = 'Six Edge Diff'
           }
           gdp_init(),
           jsPsych.addNodeToEndOfTimeline({
