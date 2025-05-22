@@ -672,6 +672,12 @@ var thank_you = {
 
 
 //time line here
+
+//debug mode on phase3
+timeline.push(semantic_phase3)
+timeline.push(phase3[0])
+//delete this section when done
+
 timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 
