@@ -2,9 +2,9 @@
 debugmode= true
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=3 //how many direct trial you want
-  n_shortest_trial=3 //how many shortest path you want
-  n_goaldir_trial=2 //how many goal directed planning you want
+  n_direct_trial=1 //how many direct trial you want
+  n_shortest_trial=1 //how many shortest path you want
+  n_goaldir_trial=10 //how many goal directed planning you want
 }else{
   n_learning_trial=128 //This determine the number of learning trial you want in total
   n_direct_trial=32 //how many direct trial you want
@@ -73,6 +73,46 @@ function shuffle(array) {
   }
   return array;
 }
+
+let survey_questions = `
+<form id="survey">
+<p>Did the experiment go smoothly or were there problems? (Note: Your compensation will not depend on your answer below, so please be honest!!!) <span style="color: red;">*</span></p>
+<label><input type="radio" name="smooth" value="high" required> It went smoothly</label><br>
+<label><input type="radio" name="smooth" value="med"> There were minor bumps</label><br>
+<label><input type="radio" name="smooth" value="low"> There were significant problems. I don't think my responses should be included in the data.</label>
+
+<hr>
+
+<p>Which of the following problems did you have? <span style="color: red;">*</span></p>
+<label><input type="checkbox" name="problems" value="reload"> Sometimes a page wouldn't load and I would have to reload the page</label><br>
+<label><input type="checkbox" name="problems" value="connection"> During the experiment I experienced problems with my internet connection</label><br>
+<label><input type="checkbox" name="problems" value="none"> none--Everything ran smoothly</label>
+
+<hr>
+
+<p>Were you doing anything else while participating in this study? PLEASE BE HONEST--your compensation will not depend on your answer to this question. <span style="color: red;">*</span></p>
+<textarea id="distraction" name="distraction" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Please include any strategies you used to help learn during the task. Please be as specific as possible. <span style="color: red;">*</span></p>
+<textarea id="strategies" name="strategies" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Were some trials easier to learn than others? Please explain in detail if so. <span style="color: red;">*</span></p>
+<textarea id="easier" name="easier" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Have you participated in a similar study on another platform? If so, please provide the platform name (Mturk, Prolific, etc.) and your user ID for that platform. <br>PLEASE BE HONEST--your compensation will not depend on your answer to this question. <span style="color: red;">*</span></p>
+<textarea id="similar" name="similar" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Is there anything you would like the experimenters to know? For instance, was the task too difficult, boring, etc?</p>
+<textarea id="comments" name="comments" rows="3" style="width: 70%;"></textarea>
+<br><br></form>`;
 
 
 //learning phse
@@ -660,11 +700,6 @@ for (let i = 0;i<n_shortest_trial;i++){
 var room_goaldir_left = []
 var room_goaldir_right = []
 
-let twoEdgePair = graph.getPairsKEdgesApart(2)
-let threeEdgePair = graph.getPairsKEdgesApart(3)
-let fourEdgePair = graph.getPairsKEdgesApart(4)
-let fiveEdgePair = graph.getPairsKEdgesApart(5)
-let sixEdgePair = graph.getPairsKEdgesApart(6)
 
 function selectBestCoveragePairs(graph, pairs, count, trials = 100) {
     const allNodes = Object.keys(graph.adjacencyList).map(Number);
@@ -794,22 +829,33 @@ let selectedPairs = {
 };
 
 
+let twoEdgePair = selectedPairs[2]
+let threeEdgePair = selectedPairs[3]
+let fourEdgePair = selectedPairs[4]
+let fiveEdgePair = selectedPairs[5]
+let sixEdgePair = selectedPairs[6]
+
+let unshuff_goaldirIndex = []
 // Flatten all pairs into one list
 let allSelectedPairs = []
 for (let dist = 2; dist <= 6; dist++) {
     allSelectedPairs = allSelectedPairs.concat(selectedPairs[dist]);
 }
-
+for (let i = 0; i < allSelectedPairs.length; i++) {
+unshuff_goaldirIndex.push(i)
+}
 // Shuffle the combined list
 for (let i = allSelectedPairs.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [allSelectedPairs[i], allSelectedPairs[j]] = [allSelectedPairs[j], allSelectedPairs[i]];
+    [unshuff_goaldirIndex[i],unshuff_goaldirIndex[j]] = [unshuff_goaldirIndex[j],unshuff_goaldirIndex[i]]
 }
 
-
+let goaldirIndex = []
 for (let i = 0; i<allSelectedPairs.length; i++){
   room_goaldir_left.push(allSelectedPairs[i][0])
   room_goaldir_right.push(allSelectedPairs[i][1])
+  goaldirIndex.push(unshuff_goaldirIndex[i])
 }
 
 //color for the plus sign

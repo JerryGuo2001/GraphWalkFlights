@@ -579,18 +579,18 @@ function createPhase3(numberoftrial){
           for (const key in specificline) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
           }
-          if (goaldirIndex[numberoftrial] < threeEdgePair.length){
+          if (goaldirIndex[numberoftrial] < twoEdgePair.length){
             data.condition = 'Three Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length && goaldirIndex[numberoftrial] < threeEdgePair.length + fourEdgePair.length){
+          } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
             data.condition = 'Four Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
+          } else if (goaldirIndex[numberoftrial] >=twoEdgePair.length + threeEdgePair.length &&  goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length){
             data.condition = 'Five Edge Diff'
-          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+sixEdgePair.length){
+          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+twoEdgePair.length){
             data.condition = 'Six Edge Diff'
           }
           gdp_init(),
           jsPsych.addNodeToEndOfTimeline({
-            timeline: [thank_you],
+            timeline: [semantic_phase3,end_questions,thank_you],
           }, jsPsych.resumeExperiment)
         }
       }
@@ -611,6 +611,11 @@ function createPhase3(numberoftrial){
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
           }
           gdp_init(),
+          phase3[i+1].stimulus = `<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans
+          <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${generated_stimuli[0]['stimulus']}' alt='${generated_stimuli[0]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${generated_stimuli[1]['stimulus']}' alt='${generated_stimuli[1]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='${generated_stimuli[2]['stimulus']}' alt='${generated_stimuli[2]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${generated_stimuli[3]['stimulus']}' alt='${generated_stimuli[3]['label']}' alt='Custer' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+            <img id='drag05' src='${generated_stimuli[4]['stimulus']}' alt='${generated_stimuli[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]['stimulus']}' alt='${generated_stimuli[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]['stimulus']}' alt='${generated_stimuli[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]['stimulus']}' alt='${generated_stimuli[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]['stimulus']}' alt='${generated_stimuli[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${generated_stimuli[9]['stimulus']}' alt='${generated_stimuli[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]['stimulus']}' alt='${generated_stimuli[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]['stimulus']}' alt='${generated_stimuli[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+             <img id='drag13' src='${generated_stimuli[12]['stimulus']}' alt='${generated_stimuli[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'><button id='nextButton' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button></div></div></div>`
+          ,        
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
           }, jsPsych.resumeExperiment)
@@ -628,10 +633,9 @@ learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
-console.log(learn_base64_left)
 
 //Semantic US map
-const semantic_phase3 = {
+var semantic_phase3 = {
   type: 'html-keyboard-response',
   stimulus: semanticHTML,
   choices: jsPsych.NO_KEYS,
@@ -653,12 +657,87 @@ const semantic_phase3 = {
 };
 
 
+var end_questions = {
+  type: 'survey-html-form',
+  preamble: "<br><br><h1>Post-Task Survey</h1><p style='font-size: 16px'>Thank you for completing the task! We would like you to answer the following questions before the experiment ends. <br>Note: <span style='color: red;'>*</span> = required</p><hr>",
+  html: survey_questions + `
+        <button id="submit" class="custom-button">Submit Answers</button><br><br>`,
+  on_load: function() {
+    document.querySelector('.jspsych-btn').style.display = 'none';
+    document.getElementById("submit").addEventListener("click", function(event) {
+      
+      event.preventDefault();
+      problems = []
+      for (i=0;i<3;i++){
+          var response1=document.getElementsByName("smooth")[i].checked
+          if (response1){
+              smooth = document.getElementsByName("smooth")[i].value
+          }
+          var response2=document.getElementsByName("problems")[i].checked
+          if (response2){
+              problems.push(document.getElementsByName("problems")[i].value)
+          }
+      }
+    
+      distraction = document.getElementById("distraction").value
+      strategies = document.getElementById("strategies").value
+      easier = document.getElementById('easier').value
+      similar = document.getElementById('similar').value
+      comments = document.getElementById('comments').value
+      let checked = validateForm()
+      if (checked){
+        jsPsych.finishTrial()
+      }
+  
+  });
+  },
+  on_finish: function(data) {
+    data.trial_type = "survey"
+    data.stimulus = "survey-questions"
+    data.problems = problems
+    data.smooth = smooth
+    data.distraction = distraction
+    data.strategies = strategies
+    data.easier = easier
+    data.similar = similar
+    data.comments = comments
+    console.log(problems,smooth,distraction,strategies,easier,similar,comments)
+    save_data()
+  }
+};
+function validateForm() {
+  const requiredFields = document.querySelectorAll("[required]");
+  let allFilled = true;
+  requiredFields.forEach((field) => {
+    if (!field.value.trim()) {
+      allFilled = false;
+      field.style.border = "2px solid red";
+    } else {
+      field.style.border = "";
+    }
+  });
+
+  if (!allFilled) {
+    alert("Please fill out all required fields.");
+    return false;
+  }
+
+  return true;
+}
+var problems = []
+var smooth = 0 
+var distraction = 0 
+var strategies = 0 
+var easier = 0 
+var similar = 0 
+var comments = 0 
+
 //
 // final thank you
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email mnadkarn@gmail.com if you had any issues! </p>",
+  stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_start:function(data){
     save_final_deter='final',
     save_data()
@@ -733,8 +812,8 @@ waitUntilBase64Ready().then(() => {
   });
 
   //debug mode on phase3
-  timeline.push(semantic_phase3)
-  timeline.push(phase3[0])
+  // timeline.push(semantic_phase3)
+  // timeline.push(phase3[0])
   //delete this section when done
 
   timeline.push(welcome,enterFullscreen)
