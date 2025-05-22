@@ -14,6 +14,7 @@ var ac_colorprepare=colorStart()
 var ac_colorstop=colorStop(ac_colorprepare)
 var ac_colorlist=['blue','green','green','blue','green','green','blue','green','blue','blue']
 var ac_colornumber=0
+var ac_colortotal=10
 var total_ac = 0
 var correct_ac = 0
 ac_feedback = {}
