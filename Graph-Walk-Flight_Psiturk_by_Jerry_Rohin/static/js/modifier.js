@@ -76,6 +76,63 @@ function shuffle(array) {
 
 let survey_questions = `
 <form id="survey">
+
+<p>Have you visited any of the cities you learned about in this study?</p>
+<p style='font-size: 16px'>If so, please indicate how many times you've visited each city:</p><br>
+
+<label for="city1" style="margin-right: 100px;">${cityNameList[0]}</label>
+<input type="number" id="city1" name="${cityNameList[0]}" min="0" value="0"><br><br>
+
+<label for="city2" style="margin-right: 100px;">${cityNameList[1]}</label>
+<input type="number" id="city2" name="${cityNameList[1]}" min="0" value="0"><br><br>
+
+<label for="city3" style="margin-right: 100px;">${cityNameList[2]}</label>
+<input type="number" id="city3" name="${cityNameList[2]}" min="0" value="0"><br><br>
+
+<label for="city4" style="margin-right: 100px;">${cityNameList[3]}</label>
+<input type="number" id="city4" name="${cityNameList[3]}" min="0" value="0"><br><br>
+
+<label for="city5" style="margin-right: 100px;">${cityNameList[4]}</label>
+<input type="number" id="city5" name="${cityNameList[4]}" min="0" value="0"><br><br>
+
+<label for="city6" style="margin-right: 100px;">${cityNameList[5]}</label>
+<input type="number" id="city6" name="${cityNameList[5]}" min="0" value="0"><br><br>
+
+<label for="city7" style="margin-right: 100px;">${cityNameList[6]}</label>
+<input type="number" id="city7" name="${cityNameList[6]}" min="0" value="0"><br><br>
+
+<label for="city8" style="margin-right: 100px;">${cityNameList[7]}</label>
+<input type="number" id="city8" name="${cityNameList[7]}" min="0" value="0"><br><br>
+
+<label for="city9" style="margin-right: 100px;">${cityNameList[8]}</label>
+<input type="number" id="city9" name="${cityNameList[8]}" min="0" value="0"><br><br>
+
+<label for="city10" style="margin-right: 100px;">${cityNameList[9]}</label>
+<input type="number" id="city10" name="${cityNameList[9]}" min="0" value="0"><br><br>
+
+<label for="city11" style="margin-right: 100px;">${cityNameList[10]}</label>
+<input type="number" id="city11" name="${cityNameList[10]}" min="0" value="0"><br><br>
+
+<label for="city12" style="margin-right: 100px;">${cityNameList[11]}</label>
+<input type="number" id="city12" name="${cityNameList[11]}" min="0" value="0"><br><br>
+
+<label for="city13" style="margin-right: 100px;">${cityNameList[12]}</label>
+<input type="number" id="city13" name="${cityNameList[12]}" min="0" value="0"><br><br>
+
+
+<hr>
+
+<p>Which state do you currently live in? How long have you lived in this state (years)?<span style="color: red;">*</span></p>
+<textarea id="currentstate" name="currentstate" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>What other states have you lived in, and how many years did you spend in each one?<span style="color: red;">*</span></p>
+<textarea id="otherstate" name="otherstate" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+
 <p>Did the experiment go smoothly or were there problems? (Note: Your compensation will not depend on your answer below, so please be honest!!!) <span style="color: red;">*</span></p>
 <label><input type="radio" name="smooth" value="high" required> It went smoothly</label><br>
 <label><input type="radio" name="smooth" value="med"> There were minor bumps</label><br>
@@ -100,7 +157,7 @@ let survey_questions = `
 
 <hr>
 
-<p>Were some trials easier to learn than others? Please explain in detail if so. <span style="color: red;">*</span></p>
+<p>Were some routes easier to learn than others? Please explain why in detail if so. <span style="color: red;">*</span></p>
 <textarea id="easier" name="easier" rows="3" style="width: 70%;" required></textarea>
 
 <hr>

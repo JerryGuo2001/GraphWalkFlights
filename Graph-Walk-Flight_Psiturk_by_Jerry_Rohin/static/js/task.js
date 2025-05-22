@@ -37,7 +37,7 @@ var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
 var condition = psiturk.taskdata.get('condition') + 1; // they do zero-indexing
 
 var timeline = []
-
+console.log(`${cityNameList.join("; ")}`)
 //welcome page
 var welcome = {
   type: 'survey-html-form',
@@ -47,7 +47,9 @@ var welcome = {
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
     subject_id=useridtouse
-  
+    data.stimulus = "intro"
+    data.cities = `${cityNameList.join("; ")}`;
+    data.city_images = `${list_images.join("; ")}`
   }
 }
 //welcome page end
@@ -678,7 +680,13 @@ var end_questions = {
               problems.push(document.getElementsByName("problems")[i].value)
           }
       }
-    
+      
+      testedstates = []
+      for (let i = 0;i<cityNameList.length;i++){
+        testedstates.push(document.getElementById(`${cityNameList[i]}`).value)
+      }
+      currentstate = document.getElementById("currentstate").value
+      otherstate = document.getElementById("otherstate").value
       distraction = document.getElementById("distraction").value
       strategies = document.getElementById("strategies").value
       easier = document.getElementById('easier').value
@@ -816,7 +824,7 @@ waitUntilBase64Ready().then(() => {
   // timeline.push(phase3[0])
   //delete this section when done
 
-  timeline.push(welcome,enterFullscreen)
+  timeline.push(welcome,end_questions,enterFullscreen)
   timelinepushintro(intro_learn,instructnames)
 
 
