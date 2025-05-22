@@ -40,60 +40,22 @@ function initiatesemanticMap() {
 
     cityNames.forEach((city, i) => {
         const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
-
-        const dotWrapper = document.createElement('div');
-        dotWrapper.id = id;
-        dotWrapper.draggable = true;
-        dotWrapper.style.width = '80px';
-        dotWrapper.style.height = '80px';
-        dotWrapper.style.position = 'relative';
-        dotWrapper.style.display = 'inline-block';
-        dotWrapper.style.margin = '8px';
-        dotWrapper.style.cursor = 'grab';
-
-        const label = document.createElement('div');
-        label.textContent = city;
-        label.style.textAlign = 'center';
-        label.style.fontWeight = 'bold';
-        label.style.fontSize = '12px';
-
-        const dot = document.createElement('div');
-        dot.dataset.city = city;
-        dot.style.width = '20px';
-        dot.style.height = '20px';
-        dot.style.backgroundColor = 'black';
-        dot.style.borderRadius = '50%';
-        dot.style.margin = '0 auto';
-
-        const preview = document.createElement('img');
-        preview.src = `../static/images/${city}.png`;
-        preview.alt = city;
-        preview.style.position = 'absolute';
-        preview.style.width = '80px';
-        preview.style.height = '80px';
-        preview.style.left = '110%';
-        preview.style.top = '50%';
-        preview.style.transform = 'translateY(-50%)';
-        preview.style.display = 'none';
-        preview.style.border = '1px solid #333';
-        preview.style.background = '#fff';
-        preview.style.zIndex = '10';
-
-        dotWrapper.appendChild(label);
-        dotWrapper.appendChild(dot);
-        dotWrapper.appendChild(preview);
-        cityListContainer.appendChild(dotWrapper);
-
-        dotWrapper.addEventListener('dragstart', function (ev) {
-            ev.dataTransfer.setData("text/plain", dotWrapper.id);
+    
+        const img = document.createElement('img');
+        img.id = id;
+        img.src = `../static/images/${city}.png`;
+        img.alt = city;
+        img.draggable = true;
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.margin = '8px';
+    
+        img.addEventListener('dragstart', function (ev) {
+            ev.dataTransfer.setData("text/plain", id);
+            ev.dataTransfer.setData("text/city", city); // store city name too
         });
-
-        dotWrapper.addEventListener('mouseenter', () => {
-            preview.style.display = 'block';
-        });
-        dotWrapper.addEventListener('mouseleave', () => {
-            preview.style.display = 'none';
-        });
+    
+        cityListContainer.appendChild(img);
     });
 
     window.allowSemanticDrop = function (ev) {
@@ -102,28 +64,78 @@ function initiatesemanticMap() {
 
     window.dropSemanticEvent = function (ev) {
         ev.preventDefault();
-        const data = ev.dataTransfer.getData("text/plain");
-        const dragged = document.getElementById(data);
+        const id = ev.dataTransfer.getData("text/plain");
+        const city = ev.dataTransfer.getData("text/city");
+        const original = document.getElementById(id);
         const dropZone = document.getElementById("semanticZone");
-
-        if (dragged && dropZone) {
-            dropZone.appendChild(dragged);
-
+    
+        if (original && dropZone) {
+            // Remove the original image
+            original.remove();
+    
+            // Create dot-wrapper in place of image
+            const dotWrapper = document.createElement('div');
+            dotWrapper.id = id;
+            dotWrapper.style.width = '80px';
+            dotWrapper.style.height = '80px';
+            dotWrapper.style.position = 'absolute';
+            dotWrapper.style.cursor = 'grab';
+    
+            const label = document.createElement('div');
+            label.textContent = city;
+            label.style.textAlign = 'center';
+            label.style.fontWeight = 'bold';
+            label.style.fontSize = '12px';
+    
+            const dot = document.createElement('div');
+            dot.style.width = '20px';
+            dot.style.height = '20px';
+            dot.style.backgroundColor = 'black';
+            dot.style.borderRadius = '50%';
+            dot.style.margin = '0 auto';
+    
+            const preview = document.createElement('img');
+            preview.src = `../static/images/${city}.png`;
+            preview.alt = city;
+            preview.style.position = 'absolute';
+            preview.style.width = '80px';
+            preview.style.height = '80px';
+            preview.style.left = '110%';
+            preview.style.top = '50%';
+            preview.style.transform = 'translateY(-50%)';
+            preview.style.display = 'none';
+            preview.style.border = '1px solid #333';
+            preview.style.background = '#fff';
+            preview.style.zIndex = '10';
+    
+            dotWrapper.appendChild(label);
+            dotWrapper.appendChild(dot);
+            dotWrapper.appendChild(preview);
+    
+            // Hover events for image preview
+            dotWrapper.addEventListener('mouseenter', () => preview.style.display = 'block');
+            dotWrapper.addEventListener('mouseleave', () => preview.style.display = 'none');
+    
+            // Enable dragging after drop
+            dotWrapper.draggable = true;
+            dotWrapper.addEventListener('dragstart', function (ev) {
+                ev.dataTransfer.setData("text/plain", id);
+            });
+    
+            // Position dotWrapper where dropped
             const dropRect = dropZone.getBoundingClientRect();
-            const dotWidth = dragged.offsetWidth;
-            const dotHeight = dragged.offsetHeight;
-
+            const dotWidth = 80;
+            const dotHeight = 80;
             let x = ev.clientX - dropRect.left - dotWidth / 2;
             let y = ev.clientY - dropRect.top - dotHeight / 2;
-
             x = Math.max(0, Math.min(x, dropRect.width - dotWidth));
             y = Math.max(0, Math.min(y, dropRect.height - dotHeight));
-
-            dragged.style.position = 'absolute';
-            dragged.style.left = `${x}px`;
-            dragged.style.top = `${y}px`;
-
-            droppedImages.add(dragged.id);
+            dotWrapper.style.left = `${x}px`;
+            dotWrapper.style.top = `${y}px`;
+    
+            dropZone.appendChild(dotWrapper);
+            droppedImages.add(id);
+    
             if (droppedImages.size === 13) {
                 activateSemanticSubmitButton();
             }
