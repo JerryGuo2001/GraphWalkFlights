@@ -1032,8 +1032,8 @@ waitUntilBase64Ready().then(() => {
   timeline.push(prac_attentioncheck_blackplus)
   //delete this section when done
 
-  // timeline.push(welcome,end_questions,enterFullscreen)
-  // timelinepushintro(intro_learn,instructnames)
+  timeline.push(welcome,end_questions,enterFullscreen)
+  timelinepushintro(intro_learn,instructnames)
 
 
   learnphaseone()
