@@ -118,12 +118,13 @@ function initiatesemanticMap() {
             dot.style.borderRadius = '50%';
             dot.style.margin = '0 auto';
     
+            match = generated_stimuli.find(obj => obj.label === city);
             const preview = document.createElement('img');
-            preview.src = `../static/images/${city}.png`;
+            preview.src = match.stimulus;
             preview.alt = city;
             preview.style.position = 'absolute';
             preview.style.width = '80px';
-            preview.style.height = '80px';
+            preview.style.height = '100px';
             preview.style.left = '110%';
             preview.style.top = '50%';
             preview.style.transform = 'translateY(-50%)';
@@ -197,3 +198,4 @@ function activateSemanticSubmitButton() {
         jsPsych.finishTrial(); // This ends the trial
     }, { once: true });
 }
+var match = []
