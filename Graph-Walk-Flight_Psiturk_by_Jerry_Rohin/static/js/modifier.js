@@ -2,7 +2,7 @@
 debugmode= true
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=1 //how many direct trial you want
+  n_direct_trial=3 //how many direct trial you want
   n_shortest_trial=3 //how many shortest path you want
   n_goaldir_trial=2 //how many goal directed planning you want
 }else{
@@ -66,9 +66,41 @@ instruct_mem_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify
 mem_instructnames = ["instruct_mem_1","instruct_mem_2","instruct_mem_3","instruct_mem_4","instruct_mem_5","instruct_mem_6"]
 mem_instruct={instruct_mem_1,instruct_mem_2,instruct_mem_3,instruct_mem_4,instruct_mem_5,instruct_mem_6} 
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+
 //learning phse
 
-imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png','Yukon.png'] // change last one
+// noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
+
+// let unshuffled_imageList = noprefix_imageList.map(filename => {
+//   let prefix = Math.random() < 0.5 ? 'US_Cities_List/mm_' : 'US_Cities_List/nat_';
+//   return prefix + filename;
+// });
+
+// let unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
+
+// let city_arr = [];
+// for (let i = 0;i<unshuffled_cityNameList.length;i++){
+//   city_arr.push(i)
+// }
+// let list_images = []
+// let cityNameList = []
+// shuffle(city_arr)
+// for (let i = 0;i<unshuffled_cityNameList.length;i++){
+//   list_images.push(unshuffled_imageList[city_arr[i]])
+//   cityNameList.push(unshuffled_cityNameList[city_arr[i]])
+// }
+
+let imageList = list_images
+
+
 
 imageIndex= [[0,1], [1,2], [1,3], [2,10], [2,5], [3,4], [3,11], [5,6], [5,8], [6,7], [6,8], [6,12], [7,8], [7,9], [8,10], [10,11]]
 
@@ -98,13 +130,6 @@ function ensureNoConsecutiveDuplicates(arr) {
   return arr;
 }
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
 
 let randomizedArray = shuffle(arr);
 

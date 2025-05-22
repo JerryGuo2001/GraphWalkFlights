@@ -47,6 +47,7 @@ var welcome = {
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
     subject_id=useridtouse
+  
   }
 }
 //welcome page end
@@ -93,7 +94,15 @@ var enterFullscreen = {
   }
 };
 // Fullscreen end
-
+learn_base64_left = []
+learn_base64_right = []
+direct_base64_up = []
+direct_base64_left = []
+direct_base64_mid = []
+direct_base64_right = []
+shortest_base64_up = []
+shortest_base64_left = []
+shortest_base64_right = []
 //Instruction page
 function createinstruct(instruct_1,number){
   var intro={
@@ -124,6 +133,16 @@ intro_short=createfulintro(short_instruct,short_instructnames)
 
 //Instruction page end
 
+function waitUntilBase64Ready() {
+  return new Promise(resolve => {
+    const check = setInterval(() => {
+      if (generated_stimuli.length === imageList.length) {
+        clearInterval(check);
+        resolve();
+      }
+    }, 100);
+  });
+}
 
 // learning phase
 var curr_learning_trial=0
@@ -144,149 +163,193 @@ var warning_page={
   }
 }
 
+var thecrossant ={}
+var thecrossant_black = {}
+var learningcorrectness = []
+var TaskFailed = {}
+var thecrossant_break = {}
+var learn_phase = {}
+var learn_phase_color = {}
 
-var thecrossant= {
-  type: 'html-keyboard-response',
-  choices: ['1','2'],
-  stimulus_height: 100,
-  stimulus_width: 100,
-  stimulus_duration: 500,
-  trial_duration: 500,
-  response_ends_trial: false,
-  stimulus:create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial]),
-  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
-  on_finish: function(data) {
-    data.stimulus=pluscolor[curr_learning_trial]
-    data.stimulus_left=learn_left[curr_learning_trial]
-    data.stimulus_right=learn_right[curr_learning_trial]
-    data.trial_type='rt_plussign_withcolor'
-    console.log(colordetretime)
-    kp=data.key_press
+
+function learnphaseone(){
+  thecrossant= {
+    type: 'html-keyboard-response',
+    choices: ['1','2'],
+    stimulus_height: 100,
+    stimulus_width: 100,
+    stimulus_duration: 500,
+    trial_duration: 500,
+    response_ends_trial: false,
+    stimulus:create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial]),
+    prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+    on_finish: function(data) {
+      data.stimulus=pluscolor[curr_learning_trial]
+      data.stimulus_left=learn_base64_left[curr_learning_trial]
+      data.stimulus_right=learn_base64_right[curr_learning_trial]
+      data.trial_type='rt_plussign_withcolor'
+      console.log(colordetretime)
+      kp=data.key_press
+    }
   }
-}
-learningcorrectness = []
-var thecrossant_black={
-  type: 'html-keyboard-response',
-  choices: ['1','2'],
-  stimulus_height: 100,
-  stimulus_width: 100,
-  stimulus_duration: 2000-removecolor,
-  trial_duration: 2000-removecolor,
-  response_ends_trial: false,
-  stimulus:create_memory_ten('black'),
-  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
-  on_finish: function(data) {
-    data.trial_type ='rt_thecrossant_black'
-    data.stimulus='black_plus_sign'
-    op=data.key_press
-    if (kp){
-      data.rt=null
-    if(kp!=pluscheck[curr_learning_trial]) {
+  learningcorrectness = []
+  thecrossant_black={
+    type: 'html-keyboard-response',
+    choices: ['1','2'],
+    stimulus_height: 100,
+    stimulus_width: 100,
+    stimulus_duration: 2000-removecolor,
+    trial_duration: 2000-removecolor,
+    response_ends_trial: false,
+    stimulus:create_memory_ten('black'),
+    prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+    on_finish: function(data) {
+      data.trial_type ='rt_thecrossant_black'
+      data.stimulus='black_plus_sign'
+      op=data.key_press
+      if (kp){
+        data.rt=null
+      if(kp!=pluscheck[curr_learning_trial]) {
+        checkfail=checkfail+1
+        data.accuracy = 0
+        learningcorrectness.push(0)
+        if(checkfail>=checkthreshold&&checkfail<4){
+          jsPsych.endCurrentTimeline(),
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [warning_page,thecrossant_break],
+          }, jsPsych.resumeExperiment)
+        }else if(checkfail>4){
+          jsPsych.endCurrentTimeline(),
+          jsPsych.addNodeToEndOfTimeline({
+          timeline:[TaskFailed],},jsPsych.resumeExperiment)
+          //end experiment
+        }
+      }else{
+        checkfail=0
+        data.accuracy = 1
+        learningcorrectness.push(1)
+      }
+    }else if(op){
+      data.rt=data.rt+100+timetakenforpluswindow
+      if(op!=pluscheck[curr_learning_trial]) {
+        checkfail=checkfail+1
+        data.accuracy = 0
+        learningcorrectness.push(0)
+        if(checkfail>=checkthreshold&&checkfail<4){
+          jsPsych.endCurrentTimeline(),
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [warning_page,thecrossant_break],
+          }, jsPsych.resumeExperiment)
+        }else if(checkfail>4){
+          jsPsych.endCurrentTimeline(),
+          jsPsych.addNodeToEndOfTimeline({
+          timeline:[TaskFailed],},jsPsych.resumeExperiment)
+          //end experiment
+        }
+      }else{
+        checkfail=0
+        data.accuracy = 1
+        learningcorrectness.push(1)
+      }
+    }else{
       checkfail=checkfail+1
-      data.accuracy = 0
-      learningcorrectness.push(0)
       if(checkfail>=checkthreshold&&checkfail<4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
           timeline: [warning_page,thecrossant_break],
-        }, jsPsych.resumeExperiment)
+          }, jsPsych.resumeExperiment)
       }else if(checkfail>4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
         timeline:[TaskFailed],},jsPsych.resumeExperiment)
         //end experiment
       }
-    }else{
-      checkfail=0
-      data.accuracy = 1
-      learningcorrectness.push(1)
     }
-  }else if(op){
-    data.rt=data.rt+100+timetakenforpluswindow
-    if(op!=pluscheck[curr_learning_trial]) {
-      checkfail=checkfail+1
-      data.accuracy = 0
-      learningcorrectness.push(0)
-      if(checkfail>=checkthreshold&&checkfail<4){
-        jsPsych.endCurrentTimeline(),
-        jsPsych.addNodeToEndOfTimeline({
-          timeline: [warning_page,thecrossant_break],
-        }, jsPsych.resumeExperiment)
-      }else if(checkfail>4){
-        jsPsych.endCurrentTimeline(),
-        jsPsych.addNodeToEndOfTimeline({
-        timeline:[TaskFailed],},jsPsych.resumeExperiment)
-        //end experiment
-      }
-    }else{
-      checkfail=0
-      data.accuracy = 1
-      learningcorrectness.push(1)
+    let learnsum = 0;
+      learningcorrectness.forEach(function(value) {
+        learnsum += value;
+      });
+
+      data.cumulative_accuracy = learnsum / learningcorrectness.length;
+  }
+  }
+
+  TaskFailed = {
+    type: 'html-keyboard-response',
+    stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
+              '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
+    choices: ['Esc'],
+    on_finish: function(data){
+      window.close();
     }
-  }else{
-    checkfail=checkfail+1
-    if(checkfail>=checkthreshold&&checkfail<4){
-      jsPsych.endCurrentTimeline(),
-      jsPsych.addNodeToEndOfTimeline({
-        timeline: [warning_page,thecrossant_break],
-        }, jsPsych.resumeExperiment)
-    }else if(checkfail>4){
-      jsPsych.endCurrentTimeline(),
-      jsPsych.addNodeToEndOfTimeline({
-      timeline:[TaskFailed],},jsPsych.resumeExperiment)
-      //end experiment
+  };
+
+  thecrossant_break={
+    type: 'html-keyboard-response',
+    choices: jsPsych.NO_KEYS,
+    stimulus_height: 100,
+    stimulus_width: 100,
+    stimulus_duration: 100,
+    trial_duration: 100,
+    response_ends_trial: false,
+    stimulus:create_memory_ten('black'),
+    prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+    on_finish: function(data) {
+      data.trial_type='color_black'
+      data.stimulus='black_plus_sign'
+      timetakenforpluswindow=removecolor
+      colordetretime=colorStart()
+      removecolor=colorStop(colordetretime)
+      learn_phase_color.stimulus_duration= removecolor
+      learn_phase_color.trial_duration=removecolor
+      thecrossant_black.stimulus_duration= 2000-removecolor
+      thecrossant_black.trial_duration=2000-removecolor
+      curr_learning_trial=curr_learning_trial+1,
+      learn_phase.stimulus=create_learning_trial(learn_base64_left,learn_base64_right,curr_learning_trial)
+      learn_phase.trial_duration=2500
+      learn_phase.stimulus_duration=2500
+      thecrossant_black.stimulus=create_memory_ten('black')
+      thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
+      attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+      
     }
   }
-  let learnsum = 0;
-    learningcorrectness.forEach(function(value) {
-      learnsum += value;
-    });
 
-    data.cumulative_accuracy = learnsum / learningcorrectness.length;
-}
-}
-
-var TaskFailed = {
-  type: 'html-keyboard-response',
-  stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
-            '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
-  choices: ['Esc'],
-  on_finish: function(data){
-    window.close();
+  learn_phase = {
+    type: 'html-keyboard-responsefl',
+    choices: jsPsych.NO_KEYS,
+    response_ends_trial: false,
+    stimulus:create_learning_trial(learn_base64_left,learn_base64_right,curr_learning_trial),
+    stimulus_duration:2000,
+    trial_duration:2000,
+    on_finish: function(data) {
+      data.trial_type = 'learn_phase(without_color)';
+      data.stimulus='black_plus_sign'
+      data.stimulus_left=learn_base64_left[curr_learning_trial],
+      data.stimulus_right=learn_base64_right[curr_learning_trial],
+      sfa=1
+    }
   }
-};
 
-var thecrossant_break={
-  type: 'html-keyboard-response',
-  choices: jsPsych.NO_KEYS,
-  stimulus_height: 100,
-  stimulus_width: 100,
-  stimulus_duration: 100,
-  trial_duration: 100,
-  response_ends_trial: false,
-  stimulus:create_memory_ten('black'),
-  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
-  on_finish: function(data) {
-    data.trial_type='color_black'
-    data.stimulus='black_plus_sign'
-    timetakenforpluswindow=removecolor
-    colordetretime=colorStart()
-    removecolor=colorStop(colordetretime)
-    learn_phase_color.stimulus_duration= removecolor
-    learn_phase_color.trial_duration=removecolor
-    thecrossant_black.stimulus_duration= 2000-removecolor
-    thecrossant_black.trial_duration=2000-removecolor
-    curr_learning_trial=curr_learning_trial+1,
-    learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    learn_phase.trial_duration=2000
-    learn_phase.stimulus_duration=2000
-    thecrossant_black.stimulus=create_memory_ten('black')
-    thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
-    attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
-    
+  learn_phase_color = {
+    type: 'html-keyboard-responsefl',
+    choices: jsPsych.NO_KEYS,
+    response_ends_trial: false,
+    stimulus:create_memory_ten(),
+    stimulus_duration:removecolor,
+    trial_duration:removecolor,
+    on_finish: function(data) {
+      data.stimulus=pluscolor[curr_learning_trial]
+      data.stimulus_left=learn_base64_left[curr_learning_trial]
+      data.stimulus_right=learn_base64_right[curr_learning_trial]
+      data.trial_type = 'black_cross(without_color)';
+      sfa=1
+    }
   }
-}
 
+  timeline.push(learn_phase)
+  timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
+}
 function createbreak(intro_dir,instructnames,directmemory_phase){
   let thebreak= {
     type: 'html-keyboard-response',
@@ -300,39 +363,6 @@ function createbreak(intro_dir,instructnames,directmemory_phase){
   }
   return thebreak
 }
-
-var learn_phase = {
-  type: 'html-keyboard-responsefl',
-  choices: jsPsych.NO_KEYS,
-  response_ends_trial: false,
-  stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
-  stimulus_duration:2000,
-  trial_duration:2000,
-  on_finish: function(data) {
-    data.trial_type = 'learn_phase(without_color)';
-    data.stimulus='black_plus_sign'
-    data.stimulus_left=learn_left[curr_learning_trial],
-    data.stimulus_right=learn_right[curr_learning_trial],
-    sfa=1
-  }
-}
-
-var learn_phase_color = {
-  type: 'html-keyboard-responsefl',
-  choices: jsPsych.NO_KEYS,
-  response_ends_trial: false,
-  stimulus:create_memory_ten(),
-  stimulus_duration:removecolor,
-  trial_duration:removecolor,
-  on_finish: function(data) {
-    data.stimulus=pluscolor[curr_learning_trial]
-    data.stimulus_left=learn_left[curr_learning_trial]
-    data.stimulus_right=learn_right[curr_learning_trial]
-    data.trial_type = 'black_cross(without_color)';
-    sfa=1
-  }
-}
-
 // learning phase end
 var directcorrectness = []
 //Direct Memory test
@@ -341,7 +371,7 @@ var directmemory_phase = {
   type: 'html-keyboard-responsefl',
   choices: ['1','2','3'],
   response_ends_trial: false,
-  stimulus:create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial),
+  stimulus:create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial),
   stimulus_duration:6500,//5 second for now, we will discuss it 
   trial_duration:6500,//5 second for now 
   on_load: function() {
@@ -409,7 +439,7 @@ var directmemory_phase = {
     data.cumulative_accuracy = directsum / directcorrectness.length;
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
-    directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
+    directmemory_phase.stimulus=create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
     attentioncheck(directmemory_phase,a=1,curr_direct_trial,n_direct_trial,short_break)
   }
 }
@@ -422,7 +452,7 @@ var shortestpath_phase = {
   type: 'html-keyboard-responsefl',
   choices: ['1','2'],
   response_ends_trial: false,
-  stimulus:create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial),
+  stimulus:create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial),
   stimulus_duration:7500,
   trial_duration:7500,
   on_load: function() {
@@ -520,7 +550,7 @@ var shortestpath_phase = {
 
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
-    shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
+    shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
     attentioncheck(shortestpath_phase,a=1,curr_shortest_trial,n_shortest_trial,dir_break)
   }
 }
@@ -598,7 +628,7 @@ learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
-
+console.log(learn_base64_left)
 
 //Semantic US map
 const semantic_phase3 = {
@@ -642,21 +672,83 @@ var thank_you = {
 
 
 //time line here
-timeline.push(semantic_phase3)
-timeline.push(phase3[0])
 timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
-timeline.push(learn_phase)
-timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
 
-jsPsych.init({
-  timeline: timeline,
-  preload_images: all_images,
-  max_load_time: 600000,
-  on_finish: function () {
-    /* Retrieve the participant's data from jsPsych */
-    // Determine and save participant bonus payment
-    psiturk.recordUnstructuredData("subject_id", subject_id);
-    save_data(true)
-  },
+
+waitUntilBase64Ready().then(() => {
+
+  console.log(generated_stimuli)
+  // Learning
+  learn_base64_left = learn_left.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+  if (learn_base64_left.includes(null)) {
+    console.error("Some filenames in learn_left were not found in generated_stimuli!");
+  }
+
+  learn_base64_right = learn_right.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+  if (learn_base64_right.includes(null)) {
+    console.error("Some filenames in learn_right were not found in generated_stimuli!");
+  }
+  //
+
+  // Direct Memory
+  direct_base64_up = room_direct_up.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+  direct_base64_left = room_direct_left.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+  direct_base64_mid = room_direct_mid.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+  direct_base64_right = room_direct_right.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+  // Relative Distance Judgement
+  shortest_base64_up = room_shortest_up.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+  shortest_base64_left = room_shortest_left.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+  shortest_base64_right = room_shortest_right.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; // or throw an error if not found
+  });
+
+
+  learnphaseone()
+  directmemory_phase.stimulus = create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
+
+  shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
+  
+  jsPsych.init({
+    timeline: timeline,
+    preload_images: all_images,
+    max_load_time: 600000,
+    on_finish: function () {
+      /* Retrieve the participant's data from jsPsych */
+      // Determine and save participant bonus payment
+      psiturk.recordUnstructuredData("subject_id", subject_id);
+      save_data(true)
+    },
+  })
 })
