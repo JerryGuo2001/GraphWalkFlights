@@ -58,7 +58,7 @@ img.onload = function() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   
     // Draw label text
-    ctx.font = '80px Arial';
+    ctx.font = '70px Arial';
     ctx.fillStyle = 'black';
     ctx.textAlign = 'center';
     ctx.fillText(labels[i], canvas.width / 2, 130);
