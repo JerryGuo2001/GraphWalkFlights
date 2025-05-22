@@ -181,8 +181,9 @@ function getACvalues() {
     response_ends_trial: true, 
     on_load: function() {
       document.getElementById("continue-button").addEventListener("click", function() {
-        timelinepushintro(intro_learn,instructnames)
-        learnphaseone()
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [welcome],
+        }, jsPsych.resumeExperiment)
       });
     },
     on_finish: function(data) {
@@ -212,12 +213,8 @@ var instruct_lastonebefore_practice={
   on_finish: function (data) {
     data.trial_type = 'last_instruct';
     data.stimulus='instruct'
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [timeline.push(prac_attentioncheck_blackplus)],
-    }, jsPsych.resumeExperiment)
   }
 }
-
 
 
 //practice attention check end
@@ -564,7 +561,6 @@ function learnphaseone(){
   timeline.push(learn_phase)
   timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
 }
-
 function createbreak(intro_dir,instructnames,directmemory_phase){
   let thebreak= {
     type: 'html-keyboard-response',
@@ -1034,11 +1030,14 @@ waitUntilBase64Ready().then(() => {
 
   //debug mode on phase3
   // timeline.push(semantic_phase3)
+  timeline.push(prac_attentioncheck_blackplus)
   //delete this section when done
 
-  timeline.push(welcome,end_questions,enterFullscreen)
-  timeline.push(instruct_lastonebefore_practice)
+  // timeline.push(welcome,end_questions,enterFullscreen)
+  // timelinepushintro(intro_learn,instructnames)
 
+
+  learnphaseone()
   directmemory_phase.stimulus = create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
 
   shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
