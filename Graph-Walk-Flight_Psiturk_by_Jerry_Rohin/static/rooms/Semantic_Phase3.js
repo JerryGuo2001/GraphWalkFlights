@@ -65,7 +65,10 @@ function initiatesemanticMap() {
     window.dropSemanticEvent = function (ev) {
         ev.preventDefault();
         const id = ev.dataTransfer.getData("text/plain");
-        const city = ev.dataTransfer.getData("text/city");
+        let city = ev.dataTransfer.getData("text/city");
+        if (!city && document.getElementById(id)) {
+            city = document.getElementById(id).dataset.city;
+        }
         const original = document.getElementById(id);
         const dropZone = document.getElementById("semanticZone");
     
@@ -75,6 +78,7 @@ function initiatesemanticMap() {
     
             // Create dot-wrapper in place of image
             const dotWrapper = document.createElement('div');
+            dotWrapper.dataset.city = city; // <-- Store city name on the element
             dotWrapper.id = id;
             dotWrapper.style.width = '80px';
             dotWrapper.style.height = '80px';
@@ -119,7 +123,8 @@ function initiatesemanticMap() {
             // Enable dragging after drop
             dotWrapper.draggable = true;
             dotWrapper.addEventListener('dragstart', function (ev) {
-                ev.dataTransfer.setData("text/plain", id);
+                ev.dataTransfer.setData("text/plain", dotWrapper.id);
+                ev.dataTransfer.setData("text/city", dotWrapper.dataset.city); // <-- Make sure this is set again
             });
     
             // Position dotWrapper where dropped
