@@ -18,28 +18,84 @@ let semanticHTML =
 
 let semanticImagePositions = {};  // Global store
 
-
 function initiatesemanticMap() {
-    let droppedImages = new Set(); // Track which image IDs have been dropped
-    // Inject semantic interface
+    const cityNames = [
+        "Aliance", "Boulder", "Cornwall", "Custer", "DelawareCity", "Medora", "Newport",
+        "ParkCity", "Racine", "Sitka", "WestPalmBeach", "Yukon", "Yukon"
+    ];
+
+    let droppedImages = new Set();
     let wrapper = document.createElement('div');
     wrapper.id = 'semanticWrapper';
     wrapper.innerHTML = semanticHTML;
     document.body.appendChild(wrapper);
 
-    // Show instructions
-    const instructions = document.getElementById('semanticInstructions');
-    if (instructions) instructions.style.display = 'block';
-
-    // Hide launch button
+    document.getElementById('semanticInstructions').style.display = 'block';
     const startBtn = document.getElementById("launchMap");
     if (startBtn) startBtn.style.display = "none";
+    document.getElementById("cityMapWrapper").style.display = "block";
 
-    // Show main UI
-    const mainContainer = document.getElementById("cityMapWrapper");
-    if (mainContainer) mainContainer.style.display = "block";
+    const cityListContainer = document.getElementById('cityList');
+    cityListContainer.innerHTML = '';
 
-    // Drag-and-drop handlers (declare on window so ondrop/onover can access)
+    cityNames.forEach((city, i) => {
+        const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
+
+        const dotWrapper = document.createElement('div');
+        dotWrapper.id = id;
+        dotWrapper.draggable = true;
+        dotWrapper.style.width = '80px';
+        dotWrapper.style.height = '80px';
+        dotWrapper.style.position = 'relative';
+        dotWrapper.style.display = 'inline-block';
+        dotWrapper.style.margin = '8px';
+        dotWrapper.style.cursor = 'grab';
+
+        const label = document.createElement('div');
+        label.textContent = city;
+        label.style.textAlign = 'center';
+        label.style.fontWeight = 'bold';
+        label.style.fontSize = '12px';
+
+        const dot = document.createElement('div');
+        dot.dataset.city = city;
+        dot.style.width = '20px';
+        dot.style.height = '20px';
+        dot.style.backgroundColor = 'black';
+        dot.style.borderRadius = '50%';
+        dot.style.margin = '0 auto';
+
+        const preview = document.createElement('img');
+        preview.src = `../static/images/${city}.png`;
+        preview.alt = city;
+        preview.style.position = 'absolute';
+        preview.style.width = '80px';
+        preview.style.height = '80px';
+        preview.style.left = '110%';
+        preview.style.top = '50%';
+        preview.style.transform = 'translateY(-50%)';
+        preview.style.display = 'none';
+        preview.style.border = '1px solid #333';
+        preview.style.background = '#fff';
+        preview.style.zIndex = '10';
+
+        dotWrapper.appendChild(label);
+        dotWrapper.appendChild(dot);
+        dotWrapper.appendChild(preview);
+        cityListContainer.appendChild(dotWrapper);
+
+        dotWrapper.addEventListener('dragstart', function (ev) {
+            ev.dataTransfer.setData("text/plain", dotWrapper.id);
+        });
+
+        dotWrapper.addEventListener('mouseenter', () => {
+            preview.style.display = 'block';
+        });
+        dotWrapper.addEventListener('mouseleave', () => {
+            preview.style.display = 'none';
+        });
+    });
+
     window.allowSemanticDrop = function (ev) {
         ev.preventDefault();
     };
@@ -49,35 +105,32 @@ function initiatesemanticMap() {
         const data = ev.dataTransfer.getData("text/plain");
         const dragged = document.getElementById(data);
         const dropZone = document.getElementById("semanticZone");
-    
+
         if (dragged && dropZone) {
             dropZone.appendChild(dragged);
-    
+
             const dropRect = dropZone.getBoundingClientRect();
-            const imgWidth = dragged.offsetWidth;
-            const imgHeight = dragged.offsetHeight;
-    
-            // Raw drop coordinates
-            let x = ev.clientX - dropRect.left - imgWidth / 2;
-            let y = ev.clientY - dropRect.top - imgHeight / 2;
-    
-            // Clamp within bounds
-            x = Math.max(0, Math.min(x, dropRect.width - imgWidth));
-            y = Math.max(0, Math.min(y, dropRect.height - imgHeight));
-    
-            dragged.style.position = "absolute";
+            const dotWidth = dragged.offsetWidth;
+            const dotHeight = dragged.offsetHeight;
+
+            let x = ev.clientX - dropRect.left - dotWidth / 2;
+            let y = ev.clientY - dropRect.top - dotHeight / 2;
+
+            x = Math.max(0, Math.min(x, dropRect.width - dotWidth));
+            y = Math.max(0, Math.min(y, dropRect.height - dotHeight));
+
+            dragged.style.position = 'absolute';
             dragged.style.left = `${x}px`;
             dragged.style.top = `${y}px`;
-    
-            // Track dropped image
+
             droppedImages.add(dragged.id);
-    
             if (droppedImages.size === 13) {
                 activateSemanticSubmitButton();
             }
         }
-    };    
+    };
 }
+
 
 function activateSemanticSubmitButton() {
     const submitBtn = document.getElementById('confirmsemantic');
