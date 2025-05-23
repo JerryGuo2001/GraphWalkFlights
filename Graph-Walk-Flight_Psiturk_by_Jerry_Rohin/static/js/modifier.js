@@ -1,10 +1,10 @@
 //debug moode on/off
 debugmode= true
 if (debugmode==true){
-  n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=1 //how many direct trial you want
-  n_shortest_trial=1 //how many shortest path you want
-  n_goaldir_trial=10 //how many goal directed planning you want
+  n_learning_trial=5 //This determine the number of learning trial you want in total
+  n_direct_trial=5 //how many direct trial you want
+  n_shortest_trial=5 //how many shortest path you want
+  n_goaldir_trial=5 //how many goal directed planning you want
 }else{
   n_learning_trial=128 //This determine the number of learning trial you want in total
   n_direct_trial=32 //how many direct trial you want
@@ -18,18 +18,47 @@ warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: aut
 checkfail=0 //this is to start the attentioncheck
 checkthreshold=2 //this is to add the threshold for attentioncheck
 
+var kickout_record=0
+var kickout_total=2
+var ac_colortotal=9
+
+
+// Add custom CSS for buttons dynamically
+const style = document.createElement('style');
+style.innerHTML = `
+  .custom-button {
+    background-color: lightgreen; /* Set the background color */
+    color: black; /* Set the text color */
+    font-size: 20px; /* Make the font size bigger */
+    padding: 10px 25px; /* Adjust padding for larger buttons */
+    border: none; /* Remove borders */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change cursor to pointer when hovering */
+  }
+  .custom-button:hover {
+    background-color: green; /* Darker green on hover */
+    color: white; /* Change text color on hover */
+  }
+`;
+document.head.appendChild(style); // Append the styles to the document head
+
+
+
+
 //Text for instruction
 instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>There is a new airline, AerBorn Airlines, that is offering flights to various destinations. You are a travel agent who is trying to help your clients make their travel arrangements.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Your job is to try and learn the direct flights offered by AerBorn Airlines so you can advise your clients to make their travel plans as efficient as possible. To do this, your supervisor has asked you to study the daily flight paths taken by AerBorn Airlines. </p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will be shown two cities, which indicates a direct flight taken by AerBorn Airlines. For example:</p><br /><img src= '../static/images/LosAngeles.png' width='150' height='150' style='margin-right:50px'></img><img src= '../static/images/arrows.png' width='150' height='150'></img><img src= '../static/images/NewYorkCity.png' width='150' height='150' style='margin-left:50px'></img><p></p><br /><p style ='font-size: 50px;line-height:1.5'>indicates that AerBorn Airlines flies directly (nonstop) both from Los Angeles to New York City and New York City to Los Angeles.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see a series of these city-pairs and will try to learn as many of them as possible to best advise your future clients for travel. After studying the information, you will be asked to help your clients book travel to various destinations via AerBorn Airlines.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>First, you will see a series of practice images before moving on to the next task.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>While you are studying the flight paths, we will also ask you to do a simple color change task to make sure you are following instructions and paying attention to each trial.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>To make sure that you are paying attention on each trial, you will see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 50px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_8="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Remember, the goal is to (1) memorize the flight paths, and  (2) try to respond as quickly and as accurately as possible when you see the cross change color.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the object pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>To make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the pairs. If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get enough of the color check trials correct.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 
-instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_5","instruct_6","instruct_7","instruct_8"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
-instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6,instruct_7,instruct_8} // IF you want to add or decrease number of page for instruct, just delete or add var here.
+
+instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_6","instruct_7"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
+instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_6,instruct_7} // IF you want to add or decrease number of page for instruct, just delete or add var here.
+
+
+instruct_8="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Remember, the goal is to (1) memorize the flight paths, and  (2) try to respond as quickly and as accurately as possible when you see the cross change color.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 
 
 //Text for direct memory instruction
