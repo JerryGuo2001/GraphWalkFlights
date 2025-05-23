@@ -877,6 +877,7 @@ var semantic_phase3 = {
   stimulus: semanticHTML,
   choices: jsPsych.NO_KEYS,
   on_load: function () {
+    save_data()
     initiatesemanticMap(); // start the UI
   },
   on_finish: function (data) {
@@ -948,6 +949,7 @@ var end_questions = {
     save_data()
   }
 };
+
 function validateForm() {
   const requiredFields = document.querySelectorAll("[required]");
   let allFilled = true;
