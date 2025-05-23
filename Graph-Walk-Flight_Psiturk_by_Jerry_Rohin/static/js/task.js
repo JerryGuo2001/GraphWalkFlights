@@ -50,7 +50,6 @@ var welcome = {
     data.stimulus = "intro"
     data.cities = `${cityNameList.join("; ")}`;
     data.city_images = `${list_images.join("; ")}`
-    save_data()
   }
 }
 //welcome page end
