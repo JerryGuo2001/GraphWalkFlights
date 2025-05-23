@@ -43,7 +43,6 @@ var welcome = {
   type: 'survey-html-form',
   html: "<label for='worker_id'>Enter your Prolific Worker ID. Please make sure this is correct! </label><br><input type='text' id='worker_id' name='worker_id' required><br><br>",
   on_finish: function (data) {
-    save_data()
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
@@ -51,6 +50,7 @@ var welcome = {
     data.stimulus = "intro"
     data.cities = `${cityNameList.join("; ")}`;
     data.city_images = `${image_city_names.join("; ")}`
+    save_data()
   }
 }
 //welcome page end
