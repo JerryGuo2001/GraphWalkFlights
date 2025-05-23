@@ -1,5 +1,5 @@
 let semanticHTML =
-    "<div id='semanticInstructions' style='display:none'><br><p>Drag the city object towards what you think it belonged to on this US map. When finished, submit button will appear at the bottom.</p>" +
+    "<div id='semanticInstructions' style='display:none'><br><p>For each location, click and drag each city image onto a map. The image will convert to a point so you can precisely place the point onto the map provided. When you have placed all locations onto the map, you can finish the experiment.</p>" +
     "<div id='cityMapWrapper' style='display: none;'>" +
     "<div id='semanticMain'><br><div id='cityList' style='width: 900px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
     [...Array(13)].map((_, i) => {

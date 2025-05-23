@@ -865,10 +865,10 @@ dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 var semantic_instructions = {
   type: 'html-keyboard-response',
   choices: ['spacebar'],
-  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>It seems you got one wrong. Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>You are almost done with the task! For this final task, we will ask you to place the city names you learned about on a map. Please do not look up the actual locations--we care about where YOU THINK the locations are, which may have guided your thought process during this task. <b>OPENING A SEPARATE WINDOW OR TAB MAY CAUSE THE EXPERIMENT TO CLOSE OUT</b>.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
   on_finish: function (data) {
-    data.trial_type = 'attentioncheck_help';
-    data.stimulus='instruct'
+    data.trial_type = 'semanticinstructions';
+    data.stimulus='instruct-semantic'
 }
 }
 
