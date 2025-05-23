@@ -117,6 +117,28 @@ function initiatep3(){
 //PART THAT NEED TO BE RUN UNDER BUTTON END
 
 function drawLine(img1,img2) {
+    // Prevent direct connection between imgL and imgR
+    if ((img1.id === 'imgL' && img2.id === 'imgR') || (img1.id === 'imgR' && img2.id === 'imgL')) {
+        const message = document.createElement('div');
+        message.innerText = "There is no direct flight between these cities. Pick at least one in-between city to start with.";
+        message.style.position = 'fixed';
+        message.style.top = '20px';
+        message.style.left = '50%';
+        message.style.transform = 'translateX(-50%)';
+        message.style.backgroundColor = '#f44336';  // red
+        message.style.color = 'white';
+        message.style.padding = '10px 20px';
+        message.style.borderRadius = '8px';
+        message.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.1)';
+        message.style.fontSize = '18px';
+        message.style.zIndex = '1000';
+        document.body.appendChild(message);
+
+        setTimeout(() => {
+        message.remove();
+        }, 2000);
+        return;
+    }
     // Create a new canvas element
     canvas = document.createElement('canvas');
     img1new = 0
