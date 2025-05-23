@@ -94,7 +94,7 @@ function initiatep3(){
     document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
     rightName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
     document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
-    leftName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
+    leftName = generated_stimuli[room_goaldir_left[goalIndex]-1]['label']
     for (let i = 1; i <= 13; i++) {
         if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
             images[i-1].style="display: none;" // Make them disappear in the top box

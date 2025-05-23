@@ -88,8 +88,10 @@ var enterFullscreen = {
         <p>When you are ready to take the experiment, click 'Enter Fullscreen' to begin.</p> <br />
     `,
   choices: ['Enter Fullscreen'],
-  on_finish: function() {
+  on_finish: function(data) {
       // Trigger fullscreen mode when the button is clicked
+      data.trial_type = "fullscreen"
+      data.stimulus = "make_fullscreen"
       document.documentElement.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
       });
@@ -247,6 +249,7 @@ function learnphaseone(){
     trial_duration:ac_colorstop,
     on_finish: function(data) {
       data.trial_type = 'prac_atten_color';
+      data.stimulus = 'prac_stop_color'
       csfa=data.key_press
       jsPsych.addNodeToEndOfTimeline({
         timeline: [prac_attentioncheck_thethird],
