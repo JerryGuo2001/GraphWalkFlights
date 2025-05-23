@@ -30,6 +30,8 @@ cityNameList.push(unshuffled_cityNameList[city_arr[i]])
 }
 let imageFiles = list_images
 let labels = cityNameList
+let image_city_names = list_images.map(path => path.replace("../static/images/", ""));
+
 const prefixOptions = ['', ''];
 
 // === MAIN ===

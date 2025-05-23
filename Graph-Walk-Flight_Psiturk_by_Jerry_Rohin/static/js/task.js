@@ -49,7 +49,7 @@ var welcome = {
     subject_id=useridtouse
     data.stimulus = "intro"
     data.cities = `${cityNameList.join("; ")}`;
-    data.city_images = `${list_images.join("; ")}`
+    data.city_images = `${image_city_names.join("; ")}`
   }
 }
 //welcome page end
@@ -105,6 +105,11 @@ direct_base64_right = []
 shortest_base64_up = []
 shortest_base64_left = []
 shortest_base64_right = []
+
+
+let left_images = learn_left.map(path => path.replace("../static/images/", ""));
+let right_images = learn_right.map(path => path.replace("../static/images/", ""));
+
 //Instruction page
 function createinstruct(instruct_1,number){
   var intro={
@@ -411,8 +416,8 @@ function learnphaseone(){
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
       data.stimulus=pluscolor[curr_learning_trial]
-      data.stimulus_left=learn_base64_left[curr_learning_trial]
-      data.stimulus_right=learn_base64_right[curr_learning_trial]
+      data.stimulus_left=left_images[curr_learning_trial]
+      data.stimulus_right=right_images[curr_learning_trial]
       data.trial_type='rt_plussign_withcolor'
       console.log(colordetretime)
       kp=data.key_press
@@ -551,8 +556,8 @@ function learnphaseone(){
     on_finish: function(data) {
       data.trial_type = 'learn_phase(without_color)';
       data.stimulus='black_plus_sign'
-      data.stimulus_left=learn_base64_left[curr_learning_trial],
-      data.stimulus_right=learn_base64_right[curr_learning_trial],
+      data.stimulus_left=left_images[curr_learning_trial],
+      data.stimulus_right=right_images[curr_learning_trial],
       sfa=1
     }
   }
@@ -566,8 +571,8 @@ function learnphaseone(){
     trial_duration:removecolor,
     on_finish: function(data) {
       data.stimulus=pluscolor[curr_learning_trial]
-      data.stimulus_left=learn_base64_left[curr_learning_trial]
-      data.stimulus_right=learn_base64_right[curr_learning_trial]
+      data.stimulus_left=left_images[curr_learning_trial]
+      data.stimulus_right=right_images[curr_learning_trial]
       data.trial_type = 'black_cross(without_color)';
       sfa=1
     }
@@ -800,6 +805,7 @@ function createPhase3(numberoftrial){
         // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
+          data.stimulus = `GDP-${i}`
           data.imgL_ID = leftName
           data.imgR_ID = rightName
           data.linedress=''
@@ -833,9 +839,21 @@ function createPhase3(numberoftrial){
         // },
         on_finish: function (data) {
           data.trial_type='Goal Directed Planning'
+          data.stimulus = `GDP-${i}`
+          data.imgL_ID = leftName
+          data.imgR_ID = rightName
           data.linedress=''
-          for (const key in specificline) {
+          for (var key in specificline) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+          }
+          if (goaldirIndex[numberoftrial] < twoEdgePair.length){
+            data.condition = 'Three Edge Diff'
+          } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
+            data.condition = 'Four Edge Diff'
+          } else if (goaldirIndex[numberoftrial] >=twoEdgePair.length + threeEdgePair.length &&  goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length){
+            data.condition = 'Five Edge Diff'
+          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+twoEdgePair.length){
+            data.condition = 'Six Edge Diff'
           }
           gdp_init(),
           phase3[i+1].stimulus = `<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans
