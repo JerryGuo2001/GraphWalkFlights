@@ -76,8 +76,6 @@ let rightName = ''
 let leftName = ''
 
 function initiatep3(){
- 
-    continueButton()
     makeVisible()
     $('#displayhelp').show()
     for (let i = 1; i <= 13; i++) {
@@ -165,12 +163,12 @@ function drawLine(img1,img2) {
     specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1.id+img2.id]}})  // change at some point to show div
     specificline=mergeObjects(specificline,specificlinenew)
     linecounter=linecounter+1
-}
-
-function dragLine(img1) {
     if(leftAndRightAreConnected()){
         continueButton()
     }
+}
+
+function dragLine(img1) {
     // Create a new canvas element
     for (i=0;i<=linecounter;i++){
         if (specificline[i]){
