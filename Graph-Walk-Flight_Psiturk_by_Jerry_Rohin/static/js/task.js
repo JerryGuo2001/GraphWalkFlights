@@ -877,7 +877,6 @@ var semantic_phase3 = {
   stimulus: semanticHTML,
   choices: jsPsych.NO_KEYS,
   on_load: function () {
-    save_data()
     initiatesemanticMap(); // start the UI
   },
   on_finish: function (data) {
@@ -946,7 +945,6 @@ var end_questions = {
     data.similar = similar
     data.comments = comments
     console.log(problems,smooth,distraction,strategies,easier,similar,comments)
-    save_data()
   }
 };
 

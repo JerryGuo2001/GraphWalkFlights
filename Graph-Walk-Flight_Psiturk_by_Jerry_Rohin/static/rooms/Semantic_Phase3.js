@@ -196,6 +196,6 @@ function activateSemanticSubmitButton() {
         }
 
         jsPsych.finishTrial(); // This ends the trial
-    }, { once: true });
+    });
 }
 var match = []
