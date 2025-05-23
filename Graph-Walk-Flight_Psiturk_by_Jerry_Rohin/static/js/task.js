@@ -958,6 +958,9 @@ var end_questions = {
   on_finish: function(data) {
     data.trial_type = "survey"
     data.stimulus = "survey-questions"
+    data.testedstates = testedstates
+    data.currentstate = currentstate
+    data.otherstate = otherstate
     data.problems = problems
     data.smooth = smooth
     data.distraction = distraction
