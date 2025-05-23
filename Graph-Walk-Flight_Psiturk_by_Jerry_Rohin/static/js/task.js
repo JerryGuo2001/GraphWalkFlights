@@ -1083,7 +1083,6 @@ waitUntilBase64Ready().then(() => {
   // timeline.push(semantic_phase3)
   // timeline.push(phase3[0])
   //delete this section when done
-  timeline.push(phase3[0])
   timeline.push(welcome,enterFullscreen)
   timelinepushintro(intro_learn,instructnames)
 
