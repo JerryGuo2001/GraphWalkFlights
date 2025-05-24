@@ -631,11 +631,11 @@ var directmemory_phase = {
       
       
       }})
-    setTimeout(function() {
-      for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
-        document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
-      }
-    }, randomDelay);
+    // setTimeout(function() {
+    //   for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
+    //     document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
+    //   }
+    // }, randomDelay);
   },
   on_finish: function(data) {
     data.trial_type = 'directmemory_phase';
@@ -713,11 +713,11 @@ var shortestpath_phase = {
       }
     });
     // Reveal other rooms after 1500 ms
-    setTimeout(function() {
-      for(let i = 0;i<document.getElementsByClassName('bottomshortest').length;i++){
-        document.getElementsByClassName('bottomshortest')[i].style.visibility = 'visible';
-      }
-    }, randomDelay);
+    // setTimeout(function() {
+    //   for(let i = 0;i<document.getElementsByClassName('bottomshortest').length;i++){
+    //     document.getElementsByClassName('bottomshortest')[i].style.visibility = 'visible';
+    //   }
+    // }, randomDelay);
   },
   on_finish: function(data) {
     data.trial_type = 'shortestpath_phase';
@@ -733,8 +733,8 @@ var shortestpath_phase = {
       correctness.push(0)
     }
   
-    let onedifflength = 24
-    let twodifflength = 24
+    let onedifflength = 48
+    let twodifflength = 36
     let threedifflength = 24
     let fourdifflength = 13
 

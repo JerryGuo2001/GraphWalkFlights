@@ -8,7 +8,7 @@ if (debugmode==true){
 }else{
   n_learning_trial=128 //This determine the number of learning trial you want in total
   n_direct_trial=32 //how many direct trial you want
-  n_shortest_trial=85 //how many shortest path you want
+  n_shortest_trial=121 //how many shortest path you want
   n_goaldir_trial=33 //how many goal directed planning you want
 }
 
@@ -51,7 +51,7 @@ instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: au
 instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will be shown two cities, which indicates a direct flight taken by AerBorn Airlines. For example:</p><br /><img src= '../static/images/LosAngeles.png' width='150' height='150' style='margin-right:50px'></img><img src= '../static/images/arrows.png' width='150' height='150'></img><img src= '../static/images/NewYorkCity.png' width='150' height='150' style='margin-left:50px'></img><p></p><br /><p style ='font-size: 50px;line-height:1.5'>indicates that AerBorn Airlines flies directly (nonstop) both from Los Angeles to New York City and New York City to Los Angeles.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see a series of these city-pairs and will try to learn as many of them as possible to best advise your future clients for travel. After studying the information, you will be asked to help your clients book travel to various destinations via AerBorn Airlines.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>While you are studying the flight paths, we will also ask you to do a simple color change task to make sure you are following instructions and paying attention to each trial.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the object pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>To make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the pairs. If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get enough of the color check trials correct.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the flight pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>To make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the cities. If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get enough of the color check trials correct.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to start the practice]</p>",
 
 
 instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_6","instruct_7"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
@@ -680,52 +680,52 @@ let shuffled_twosix_correct = []
 
 let combined_arr = []
 
-for (let i = 0;i < 6;i++){
+for (let i = 0;i < 12;i++){
   shuffled_twothree.push(twothree[twothree_arr[i]])
   shuffled_twothree_correct.push(twothreecorrect[twothree_arr[i]])
   combined_arr.push(i)
 
   shuffled_threefour.push(threefour[threefour_arr[i]]);
   shuffled_threefour_correct.push(threefourcorrect[threefour_arr[i]]);
-  combined_arr.push(i+6);
+  combined_arr.push(i+12);
 
   shuffled_fourfive.push(fourfive[fourfive_arr[i]]);
   shuffled_fourfive_correct.push(fourfivecorrect[fourfive_arr[i]]);
-  combined_arr.push(i+12);
+  combined_arr.push(i+24);
 
   shuffled_fivesix.push(fivesix[fivesix_arr[i]]);
   shuffled_fivesix_correct.push(fivesixcorrect[fivesix_arr[i]]);
-  combined_arr.push(i+18);
+  combined_arr.push(i+36);
 }
 
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 12; i++) {
   shuffled_twofour.push(twofour[twofour_arr[i]]);
   shuffled_twofour_correct.push(twofourcorrect[twofour_arr[i]]);
-  combined_arr.push(i+24);
+  combined_arr.push(i+48);
 
   shuffled_threefive.push(threefive[threefive_arr[i]]);
   shuffled_threefive_correct.push(threefivecorrect[threefive_arr[i]]);
-  combined_arr.push(i+32);
+  combined_arr.push(i+60);
 
   shuffled_foursix.push(foursix[foursix_arr[i]]);
   shuffled_foursix_correct.push(foursixcorrect[foursix_arr[i]]);
-  combined_arr.push(i+40);
+  combined_arr.push(i+72);
 }
 
 for (let i = 0; i < 12; i++) {
   shuffled_twofive.push(twofive[twofive_arr[i]]);
   shuffled_twofive_correct.push(twofivecorrect[twofive_arr[i]]);
-  combined_arr.push(i+48);
+  combined_arr.push(i+84);
 
   shuffled_threesix.push(threesix[threesix_arr[i]]);
   shuffled_threesix_correct.push(threesixcorrect[threesix_arr[i]]);
-  combined_arr.push(i+60);
+  combined_arr.push(i+96);
 }
 
 for (let i = 0; i < 13; i++) {
   shuffled_twosix.push(twosix[twosix_arr[i]]);
   shuffled_twosix_correct.push(twosixcorrect[twosix_arr[i]]);
-  combined_arr.push(i+72);
+  combined_arr.push(i+108);
 }
 
 let cumulativediff = shuffled_twothree
