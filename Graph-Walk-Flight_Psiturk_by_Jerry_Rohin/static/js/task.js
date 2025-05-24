@@ -1011,7 +1011,8 @@ var thank_you = {
   stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_start:function(data){
     save_final_deter='final',
-    save_data()
+    save_data(),
+    markVersion1AsFinished()
   },
   on_finish: function (data) {
     data.trial_type = 'thank_you';

@@ -4,6 +4,57 @@ var prompt_resubmit = function() {
 		$("#resubmit").click(resubmit);
 	};
 
+async function markVersion1AsFinished() {
+  const fetchUrl = "https://gwdeterversion.vercel.app/api/fetch-runsheet";
+  const uploadUrl = "https://gwdeterversion.vercel.app/api/upload-runsheet";
+
+  try {
+    console.log("📥 Fetching runsheet...");
+    const res = await fetch(fetchUrl);
+    const rows = await res.json();
+    console.log("📦 Current rows:", rows);
+
+    const headers = Object.keys(rows[0]);
+
+    // Find and mark first unfinished version 1 row
+    const targetRow = rows.find(row => row.version === "1" && !row.finished);
+    if (!targetRow) {
+      console.warn("❌ No available version 1 row to mark as finished.");
+      return;
+    }
+
+    targetRow.finished = "1";
+    console.log("✅ Marked row as finished:", targetRow);
+
+    // Convert back to CSV
+    const csv = [headers.join(",")].concat(
+      rows.map(row =>
+        headers.map(h => `"${(row[h] || "").replace(/"/g, '""')}"`).join(",")
+      )
+    ).join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const formData = new FormData();
+    formData.append("file", blob, "runsheet.csv");
+
+    const uploadRes = await fetch(uploadUrl, {
+      method: "POST",
+      body: formData
+    });
+
+    if (!uploadRes.ok) {
+      const errText = await uploadRes.text();
+      console.error("❌ Upload failed:", errText);
+    } else {
+      console.log("✅ Runsheet updated and uploaded.");
+    }
+
+  } catch (err) {
+    console.error("💥 Unexpected error:", err);
+  }
+}
+
+
 function generateRandomIdentifier() {
     const now = new Date();
     const hour = now.getHours().toString().padStart(2, '0');
