@@ -999,6 +999,9 @@ var strategies = 0
 var easier = 0 
 var similar = 0 
 var comments = 0 
+var currentstate = 0
+var otherstate = 0
+var testedstates = []
 
 //
 // final thank you
