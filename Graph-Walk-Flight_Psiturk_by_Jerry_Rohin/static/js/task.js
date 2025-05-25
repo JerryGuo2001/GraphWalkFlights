@@ -114,32 +114,90 @@ let left_images = learn_left.map(path => path.replace("../static/images/", ""));
 let right_images = learn_right.map(path => path.replace("../static/images/", ""));
 
 //Instruction page
-function createinstruct(instruct_1,number){
-  var intro={
-    type: 'html-keyboard-response',
-    choices: ['space'],
-    stimulus: instruct_1,
+function create_instruct(instruct,instructnames,instruction_number,prac_attentioncheck_blackplus,a=''){
+  var intro_learn={
+    type: 'html-button-response',
+    button_html: '<button class="jspsych-btn" style="padding: 12px 24px; font-size: 18px; border-radius: 10px; background-color: #4CAF50; color: white; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 0 10px;">%choice%</button>',
+    choices: ['Next'],
+    stimulus: instruct[`instruct_`+a+`${instruction_number}`],
     on_finish: function (data) {
-      data.trial_type = 'intro_'+number;
-      data.stimulus='instruct'
+      data.trial_type = 'intro_'+instruction_number;
+      data.stimulus='instruct';
+      // Check which button was pressed
+      if (instructnames.length==1){
+        if (data.button_pressed == 0) {
+          data.response = 'Start';
+          jsPsych.addNodeToEndOfTimeline({
+              timeline: [prac_attentioncheck_blackplus],
+            }, jsPsych.resumeExperiment)
+        }
+      }else if (instruction_number>=instructnames.length){
+        if (data.button_pressed == 0) {
+          intro_learn.choices=['Previous','Next']
+          instruction_number-=1
+          intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
+          data.response = 'Previous';
+          jsPsych.addNodeToEndOfTimeline({
+              timeline: [intro_learn],
+            }, jsPsych.resumeExperiment)
+        } else if (data.button_pressed == 1) {
+          console.log('nextphase')
+          data.response = 'Next';
+          jsPsych.addNodeToEndOfTimeline({
+              timeline: [prac_attentioncheck_blackplus],
+            }, jsPsych.resumeExperiment)
+        }
+      }else if (instruction_number==1){
+        instruction_number+=1
+        intro_learn.choices=['Previous','Next']
+        intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [intro_learn],
+        }, jsPsych.resumeExperiment)
+      }else if (instruction_number==instructnames.length-1){
+        if (data.button_pressed == 0) {
+          if (instruction_number==2){
+            intro_learn.choices=['Next']
+          }
+          instruction_number-=1
+          intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
+          data.response = 'Previous';
+          jsPsych.addNodeToEndOfTimeline({
+              timeline: [intro_learn],
+            }, jsPsych.resumeExperiment)
+          } else if (data.button_pressed == 1) {
+            intro_learn.choices=['Previous','Start']
+            instruction_number+=1
+            intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
+            data.response = 'Next';
+            jsPsych.addNodeToEndOfTimeline({
+                timeline: [intro_learn],
+              }, jsPsych.resumeExperiment)
+          }
+      }else{
+      if (data.button_pressed == 0) {
+        if (instruction_number==2){
+          intro_learn.choices=['Next']
+        }
+        instruction_number-=1
+        intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
+        data.response = 'Previous';
+        jsPsych.addNodeToEndOfTimeline({
+            timeline: [intro_learn],
+          }, jsPsych.resumeExperiment)
+        } else if (data.button_pressed == 1) {
+          instruction_number+=1
+          intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
+          data.response = 'Next';
+          jsPsych.addNodeToEndOfTimeline({
+              timeline: [intro_learn],
+            }, jsPsych.resumeExperiment)
+        }
+      }
     }
   }
-  return intro
+  return intro_learn
 }
-
-function createfulintro(instruct,instructnames){
-  intro={}
-for (let i = 0; i < instructnames.length; i++) {
-  instructname=instructnames[i]
-  intro[i] = createinstruct(instruct[instructname],i)
-}return intro
-}
-
-
-intro_learn=createfulintro(instruct,instructnames)
-intro_mem=createfulintro(mem_instruct,mem_instructnames)
-intro_dir=createfulintro(dir_instruct,dir_instructnames)
-intro_short=createfulintro(short_instruct,short_instructnames)
 
 //Instruction page end
 
@@ -545,7 +603,7 @@ function learnphaseone(){
       learn_phase.stimulus_duration=2500
       thecrossant_black.stimulus=create_memory_ten('black')
       thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
-      attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+      attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,intro_dir,thecrossant,thecrossant_black,thecrossant_break)
       
     }
   }
@@ -787,7 +845,7 @@ var shortestpath_phase = {
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
-    attentioncheck(shortestpath_phase,a=1,curr_shortest_trial,n_shortest_trial,dir_break)
+    attentioncheck(shortestpath_phase,a=1,curr_shortest_trial,n_shortest_trial,intro_mem)
   }
 }
 //Shortest Path memory end
@@ -878,9 +936,14 @@ function createPhase3(numberoftrial){
 
 
 phase3=createPhase3(n_goaldir_trial)
-learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
-short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
-dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
+let dir_instruction_number=1
+let intro_dir=create_instruct(dir_instruct,dir_instructnames,dir_instruction_number,directmemory_phase,a='dir_')
+
+let short_instruction_number=1
+let intro_short=create_instruct(short_instruct,short_instructnames,short_instruction_number,shortestpath_phase,a='short_')
+
+let mem_instruction_number=1
+let intro_mem=create_instruct(mem_instruct,mem_instructnames,mem_instruction_number,phase3[0],a='mem_')
 //Goal directed planning end
 
 //Semantic US map
@@ -1083,15 +1146,21 @@ waitUntilBase64Ready().then(() => {
     return match ? match.stimulus : null; 
   });
 
-  //debug mode on phase3
-  // timeline.push(semantic_phase3)
-  // timeline.push(phase3[0])
-  //delete this section when done
-  timeline.push(welcome,enterFullscreen)
-  timelinepushintro(intro_learn,instructnames)
+
+
+  let instruction_number=1
+  intro_learn=create_instruct(instruct,instructnames,instruction_number,prac_attentioncheck_blackplus,a='')
+
 
 
   learnphaseone()
+
+  //timeline
+  timeline.push(welcome,enterFullscreen)
+  timeline.push(intro_learn)
+  //timeline end
+
+
   directmemory_phase.stimulus = create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
 
   shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
