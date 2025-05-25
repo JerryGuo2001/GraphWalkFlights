@@ -910,7 +910,7 @@ var semantic_phase3 = {
       const pos = semanticImagePositions[key];
       parts.push(`${key}:x=${pos.x.toFixed(2)},y=${pos.y.toFixed(2)}`);
     }
-    data.image_position = parts.join(',');
+    data.image_position = parts.join("; ");
     console.log(data.image_position)
   }  
 };
