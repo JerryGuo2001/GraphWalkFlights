@@ -28,8 +28,7 @@ function initiatesemanticMap() {
     "<div id='semanticMain' style='display: flex; flex-direction: column; align-items: center;'>" +
   
       // Unknown box ABOVE city list
-      "<div id='unknownZone' style='width: 1000px; min-height: 60px; border: 2px dashed #555; background: #f9f9f9; font-size: 12px; display: flex; flex-wrap: wrap; align-items: center; padding: 8px; margin-bottom: 10px;'>" +
-      "<strong style='font-size: 14px; width: 100%; text-align: center;'>No Idea – Drop Here</strong>" +
+    "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px; margin-bottom: 10px;' ondrop='dropUnknown(event)' ondragover='event.preventDefault()'><div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div></div>"
       "</div>" +
   
       // City list
@@ -57,48 +56,38 @@ function initiatesemanticMap() {
     wrapper.id = 'semanticWrapper';
     wrapper.innerHTML = semanticHTML;
 
-    const unknownZone = document.createElement('div');
-    unknownZone.id = 'unknownZone';
-    unknownZone.style.width = '120px';
-    unknownZone.style.height = '120px';
-    unknownZone.style.border = '2px dashed #555';
-    unknownZone.style.display = 'flex';
-    unknownZone.style.flexDirection = 'column';
-    unknownZone.style.justifyContent = 'center';
-    unknownZone.style.alignItems = 'center';
-    unknownZone.style.fontSize = '12px';
-    unknownZone.style.padding = '8px';
-    unknownZone.style.backgroundColor = '#f9f9f9';
 
-    unknownZone.innerHTML = "<strong style='font-size: 14px;'>No Idea</strong><div style='margin-top: 5px;'>Drop Here</div>";
-
-    unknownZone.addEventListener('dragover', ev => ev.preventDefault());
-
-    unknownZone.addEventListener('drop', function (ev) {
-        ev.preventDefault();
-        const id = ev.dataTransfer.getData("text/plain");
-        const city = ev.dataTransfer.getData("text/city");
-        const img = document.getElementById(id);
-        if (!img) return;
-
-        img.remove(); // Remove from original location if exists
-        const label = document.createElement('span');
-        label.textContent = city + " ";
-        unknownZone.appendChild(label);
-        
-        droppedImages.add(id);
-        unknownImages.add(city); // previously: unknownImages.add(id);
-
-        if (droppedImages.size === 13) {
-            activateSemanticSubmitButton();
-        }
-    });
-
-    const mainContainer = document.getElementById("semanticMain");
     mainContainer.insertBefore(unknownZone, mainContainer.firstChild);
 
 
     document.body.appendChild(wrapper);
+
+    // Add drop event for "No Idea" box
+    document.getElementById('unknownZone').addEventListener('drop', function (ev) {
+    ev.preventDefault();
+    const id = ev.dataTransfer.getData("text/plain");
+    const city = ev.dataTransfer.getData("text/city");
+    const img = document.getElementById(id);
+    if (!img) return;
+
+    img.remove(); // Remove from original list
+
+    const label = document.createElement('div');
+    label.textContent = city;
+    label.style.fontSize = '12px';
+    label.style.padding = '4px 8px';
+    label.style.border = '1px solid #ccc';
+    label.style.borderRadius = '4px';
+    label.style.background = '#f1f1f1';
+
+    document.getElementById('unknownZone').appendChild(label);
+    droppedImages.add(id);
+    unknownImages.add(city);
+
+    if (droppedImages.size === 13) {
+        activateSemanticSubmitButton();
+    }
+    });
 
     document.getElementById('semanticInstructions').style.display = 'block';
     const startBtn = document.getElementById("launchMap");
