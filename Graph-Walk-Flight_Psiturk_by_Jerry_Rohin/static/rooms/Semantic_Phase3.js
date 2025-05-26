@@ -25,36 +25,35 @@ let unknownImages = new Set();
 function initiatesemanticMap() {
     console.log(generated_stimuli[0])
     semanticHTML =
-    // Instructions block that was missing
-    "<div id='semanticWrapper'>" +  // Added wrapper for clarity and DOM grouping
+    "<div id='semanticWrapper'>" +
   
+      // Instructions block
       "<div id='semanticInstructions' style='display: none; margin: 20px auto; max-width: 900px; text-align: center;'>" +
         "<p>Drag the city object towards what you think it belonged to on this US map. When finished, the submit button will appear at the bottom.</p>" +
       "</div>" +
   
       "<div id='cityMapWrapper' style='display: none;'>" +
   
-        // Semantic main (column layout)
         "<div id='semanticMain' style='display: flex; flex-direction: column; align-items: center;'>" +
   
-          // Unknown zone
-          "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px dashed #aaa; padding: 10px; gap: 10px; margin-bottom: 10px;'>" +
+          // City list (top)
+          "<div id='cityList' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px; margin-bottom: 20px;'></div>" +
+  
+          // Map drop zone (middle)
+          "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 0 auto; position: relative; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
+            "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
+          "</div>" +
+  
+          // Unknown zone (bottom)
+          "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px dashed #aaa; background-color: #f9f9f9; padding: 10px; gap: 10px; margin: 20px auto 10px auto;'>" +
             "<div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div>" +
           "</div>" +
   
-          // City list
-          "<div id='cityList' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px;'></div>" +
-  
         "</div>" +  // close semanticMain
-  
-        // Drop map
-        "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 30px auto 0; position: relative; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
-          "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
-        "</div>" +
   
       "</div>" +  // close cityMapWrapper
   
-      // Submit button
+      // Submit button (very bottom)
       "<button id='confirmsemantic' style='display: none; margin: 30px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button>" +
   
     "</div>";  // close semanticWrapper
