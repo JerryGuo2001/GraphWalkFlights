@@ -44,14 +44,14 @@ function initiatesemanticMap() {
             "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
           "</div>" +
   
-          // Unknown zone (bottom)
-          "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px dashed #aaa; background-color: #f9f9f9; padding: 10px; gap: 10px; margin: 20px auto 10px auto;'>" +
-            "<div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div>" +
-          "</div>" +
   
         "</div>" +  // close semanticMain
   
       "</div>" +  // close cityMapWrapper
+        // Unknown zone (bottom)
+        "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px dashed #aaa; background-color: #f9f9f9; padding: 10px; gap: 10px; margin: 20px auto 10px auto;'>" +
+        "<div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div>" +
+        "</div>" +
   
       // Submit button (very bottom)
       "<button id='confirmsemantic' style='display: none; margin: 30px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button>" +
