@@ -8,6 +8,18 @@ let save_final_deter;
 var normal_exit = false;
 var window_height = window.screen.height;
 
+document.addEventListener("keydown", function (event) {
+  // F5 key or Ctrl+R
+  if (event.key === "F5" || (event.ctrlKey && event.key === "r")) {
+      event.preventDefault();
+      alert("Page refresh is disabled.");
+  }
+});
+
+window.addEventListener("beforeunload", function (event) {
+  event.preventDefault();
+  event.returnValue = ""; // Some browsers need this line
+});
 
 
 //this is to test if the user leave the webpage
