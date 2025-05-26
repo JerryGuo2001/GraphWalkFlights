@@ -57,9 +57,6 @@ function initiatesemanticMap() {
     wrapper.innerHTML = semanticHTML;
 
 
-    mainContainer.insertBefore(unknownZone, mainContainer.firstChild);
-
-
     document.body.appendChild(wrapper);
 
     // Add drop event for "No Idea" box
