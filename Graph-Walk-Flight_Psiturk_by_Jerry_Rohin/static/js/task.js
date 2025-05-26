@@ -132,7 +132,11 @@ function create_instruct(instruct,instructnames,instruction_number,next_phase,a=
         }
       }else if (instruction_number>=instructnames.length){
         if (data.button_pressed == 0) {
-          intro_learn.choices=['Previous','Next']
+          if (instruction_number==2){
+            intro_learn.choices=['Next']
+          }else{
+            intro_learn.choices=['Previous','Next']
+          }
           instruction_number-=1
           intro_learn.stimulus=instruct[`instruct_`+a+`${instruction_number}`],
           data.response = 'Previous';
