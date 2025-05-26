@@ -24,20 +24,22 @@ function initiatesemanticMap() {
     semanticHTML =
     "<div id='semanticInstructions' style='display:none'><br><p>Drag the city object towards what you think it belonged to on this US map. When finished, the submit button will appear at the bottom.</p>" +
     "<div id='cityMapWrapper' style='display: none;'>" +
-    
     "<div id='semanticMain' style='display: flex; flex-direction: column; align-items: center;'>" +
   
-      // Unknown box ABOVE city list
-    "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px; margin-bottom: 10px;' ondrop='dropUnknown(event)' ondragover='event.preventDefault()'><div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div></div></div>" +
-      // City list
+      // No Idea box
+      "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px; margin-bottom: 10px;' ondrop='dropUnknown(event)' ondragover='event.preventDefault()'>" +
+      "<div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div>" +
+      "</div>" +
+  
+      // City image list
       "<div id='cityList' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px;'></div>" +
   
-    "</div>" + // close #semanticMain
+    "</div>" +  // ✅ now closes #semanticMain after both unknownZone and cityList
   
-    // Map zone
+    // Drop map
     "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 30px auto 0; position: relative; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
-      "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
-    "</div>" + // close map zone
+    "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
+    "</div>" +
   
     "</div>" + // close cityMapWrapper
   
