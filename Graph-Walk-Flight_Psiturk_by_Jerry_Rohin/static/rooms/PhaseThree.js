@@ -32,16 +32,6 @@ function isOverlapping(el1, el2) {
              r2.bottom < r1.top);
 }
 
-// Check for overlaps
-const placedImages = Array.from(container.children)
-    .filter(el => el.tagName === 'IMG' && el !== element);
-
-for (let otherImg of placedImages) {
-    if (isOverlapping(element, otherImg)) {
-        showWarning("You can't place cities on top of each other.");
-        return;
-    }
-}
 
 
 function showWarning(messageText) {
@@ -345,6 +335,16 @@ function drawLine(img1,img2) {
 }
 
 function dragLine(img1) {
+    // Check for overlaps
+    const placedImages = Array.from(container.children)
+    .filter(el => el.tagName === 'IMG' && el !== element);
+
+    for (let otherImg of placedImages) {
+    if (isOverlapping(element, otherImg)) {
+        showWarning("You can't place cities on top of each other.");
+        return;
+    }
+}
     // Create a new canvas element
     for (i=0;i<=linecounter;i++){
         if (specificline[i]){
