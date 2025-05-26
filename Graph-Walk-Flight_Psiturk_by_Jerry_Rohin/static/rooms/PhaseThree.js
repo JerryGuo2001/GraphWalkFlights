@@ -394,16 +394,6 @@ function clearCanvas(canvasId) {
 
 // Make the IMG element draggable only if it's inside div1
 function dragElement(elmnt) {
-        // Check for overlaps
-        const placedImages = Array.from(container.children)
-        .filter(el => el.tagName === 'IMG' && el !== element);
-    
-        for (let otherImg of placedImages) {
-        if (isOverlapping(element, otherImg)) {
-            showWarning("You can't place cities on top of each other.");
-            return;
-        }
-    }
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
 
