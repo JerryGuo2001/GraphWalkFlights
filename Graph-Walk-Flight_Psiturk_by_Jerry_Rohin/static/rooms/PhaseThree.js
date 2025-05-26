@@ -610,21 +610,48 @@ function drop(ev) {
     var element = document.getElementById(data);
     var container = document.getElementById("div1");
 
-    // Append the element to the drop area
-    container.appendChild(element);
-
-    // Calculate the drop position
+    // Calculate intended drop position
     var containerRect = container.getBoundingClientRect();
     var dropX = ev.clientX - containerRect.left - (element.offsetWidth / 2);
     var dropY = ev.clientY - containerRect.top - (element.offsetHeight / 2);
 
-    // Ensure the element stays within the container
+    // Clamp position within container
     if (dropX < 0) dropX = 0;
     if (dropY < 0) dropY = 0;
     if (dropX + element.offsetWidth > containerRect.width) dropX = containerRect.width - element.offsetWidth;
     if (dropY + element.offsetHeight > containerRect.height) dropY = containerRect.height - element.offsetHeight;
 
-    // Set the element's position to where the mouse dropped it
+    // Create a mock rectangle for the new position
+    const newRect = {
+        left: dropX,
+        top: dropY,
+        right: dropX + element.offsetWidth,
+        bottom: dropY + element.offsetHeight
+    };
+
+    // Check for overlaps with existing images
+    const otherImages = Array.from(container.children)
+        .filter(el => el.tagName === 'IMG' && el !== element);
+
+    const isOverlapping = otherImages.some(img => {
+        const r = {
+            left: img.offsetLeft,
+            top: img.offsetTop,
+            right: img.offsetLeft + img.offsetWidth,
+            bottom: img.offsetTop + img.offsetHeight
+        };
+
+        return !(newRect.right < r.left || newRect.left > r.right ||
+                 newRect.bottom < r.top || newRect.top > r.bottom);
+    });
+
+    if (isOverlapping) {
+        showWarning("Do not drop a city on top of another city.");
+        return;
+    }
+
+    // Append and position the element if no overlap
+    container.appendChild(element);
     element.style.position = "absolute";
     element.style.left = dropX + "px";
     element.style.top = dropY + "px";
