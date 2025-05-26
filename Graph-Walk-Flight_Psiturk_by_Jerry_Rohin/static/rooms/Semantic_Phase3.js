@@ -1,7 +1,7 @@
 let semanticHTML =
     "<div id='semanticInstructions' style='display:none'><br><p>For each location, click and drag each city image onto a map. The image will convert to a point so you can precisely place the point onto the map provided. When you have placed all locations onto the map, you can finish the experiment.</p>" +
     "<div id='cityMapWrapper' style='display: none;'>" +
-    "<div id='semanticMain'><br><div id='cityList' style='width: 900px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
+    "<div id='semanticMain'><br><div id='cityList' style='width: 1300px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
     [...Array(13)].map((_, i) => {
     const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
     const city = [
@@ -11,8 +11,8 @@ let semanticHTML =
     return `<img id='${id}' src='../static/images/${city}.png' alt='${city}' width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>`;
     }).join("") +
     "</div>" +  // closes #cityList
-    "<div id='semanticZone' style='width: 1400px; height: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
-    "<div id='cityOverlay' style='width: 1400px; height: 700px; margin: 0 auto; position: relative;'></div>" +
+    "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
+    "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
     "</div></div></div>" +
     "<button id='confirmsemantic' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>";
 
@@ -23,7 +23,7 @@ function initiatesemanticMap() {
     semanticHTML =
     "<div id='semanticInstructions' style='display:none'><br><p>Drag the city object towards what you think it belonged to on this US map. When finished, submit button will appear at the bottom.</p>" +
     "<div id='cityMapWrapper' style='display: none;'>" +
-    "<div id='semanticMain'><br><div id='cityList' style='width: 900px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
+    "<div id='semanticMain'><br><div id='cityList' style='width: 1300px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
     [...Array(13)].map((_, i) => {
     const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
     const city = [
@@ -33,8 +33,8 @@ function initiatesemanticMap() {
     return `<img id='${id}' src='${generated_stimuli[i]['stimulus']}' alt='${generated_stimuli[i]['label']}' width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>`;
     }).join("") +
     "</div>" +  // closes #cityList
-    "<div id='semanticZone' style='width: 1400px; height: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
-    "<div id='cityOverlay' style='width: 1400px; height: 700px; margin: 0 auto; position: relative;'></div>" +
+    "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
+    "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
     "</div></div></div>" +
     "<button id='confirmsemantic' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>";
 
@@ -66,8 +66,8 @@ function initiatesemanticMap() {
         img.src = generated_stimuli[i]['stimulus'];
         img.alt = city;
         img.draggable = true;
-        img.style.width = '100px';
-        img.style.height = '120px';
+        img.style.width = '80px';
+        img.style.height = '100px';
         img.style.margin = '8px';
     
         img.addEventListener('dragstart', function (ev) {
