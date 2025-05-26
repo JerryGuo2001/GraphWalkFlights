@@ -63,23 +63,60 @@ function gdp_init(){
 }
 
 
-function continueButton() {
-    const droppedImages = Array.from(document.getElementById('div1').children)
-        .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
+function getUniquePathBetween(start, end) {
+    const graph = {};
 
-    const connectedIds = new Set();
     for (let key in specificline) {
         if (specificline[key] && specificline[key].name && specificline[key].name[0]) {
             const match = specificline[key].name[0].match(/(imgL|imgR|drag\d{2})/g);
-            if (match) {
-                match.forEach(id => connectedIds.add(id));
-            }
+            if (!match || match.length !== 2) continue;
+            const [a, b] = match;
+            if (!graph[a]) graph[a] = [];
+            if (!graph[b]) graph[b] = [];
+            graph[a].push(b);
+            graph[b].push(a);
         }
     }
 
-    const anyUnconnected = droppedImages.some(img => !connectedIds.has(img.id));
+    const visited = new Set();
+    const path = [];
 
-    if (anyUnconnected) {
+    function dfs(node) {
+        if (node === end) return true;
+        visited.add(node);
+        for (const neighbor of graph[node] || []) {
+            if (!visited.has(neighbor)) {
+                path.push(neighbor);
+                if (dfs(neighbor)) return true;
+                path.pop();
+            }
+        }
+        return false;
+    }
+
+    path.push(start);
+    const found = dfs(start);
+    return found ? path : null;
+}
+
+
+function continueButton() {
+    const droppedImages = Array.from(document.getElementById('div1').children)
+    .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
+
+    // Step 1: Get the one valid path from imgL to imgR
+    const route = getUniquePathBetween("imgL", "imgR");
+
+    // Step 2: If no path, or some images are not in it — show warning
+    if (!route || route.length === 0) {
+        showWarning("No valid route found between the left and right cities.");
+        return;
+    }
+
+    // Step 3: Check if all dropped images are part of the path
+    const anyOutOfRoute = droppedImages.some(img => !route.includes(img.id));
+
+    if (anyOutOfRoute) {
         showWarning("There is an unconnected image on the route. Either return it or connect it.");
         document.getElementById('nextButton').style.display = 'none';
         return;
@@ -370,15 +407,13 @@ function clearCanvas(canvasId) {
 // draw the line end
 
 
-// Make the IMG element draggable only if it's inside div1
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
-        if (elmnt.parentElement.id !== "div1"){
-            return;
-        }
+        if (elmnt.parentElement.id !== "div1") return;
+
         e = e || window.event;
         e.preventDefault();
         pos3 = e.clientX;
@@ -389,6 +424,37 @@ function dragElement(elmnt) {
         document.onmousemove = elementDrag;
     }
 
+    function isOverlappingWithOthers(newLeft, newTop) {
+        const elmntRect = {
+            left: newLeft,
+            top: newTop,
+            right: newLeft + elmnt.offsetWidth,
+            bottom: newTop + elmnt.offsetHeight,
+        };
+
+        const others = Array.from(document.getElementById("div1").children)
+            .filter(el => el.tagName === 'IMG' && el !== elmnt);
+
+        for (let other of others) {
+            const rect = other.getBoundingClientRect();
+            const containerRect = document.getElementById("div1").getBoundingClientRect();
+            const otherRect = {
+                left: other.offsetLeft,
+                top: other.offsetTop,
+                right: other.offsetLeft + other.offsetWidth,
+                bottom: other.offsetTop + other.offsetHeight,
+            };
+
+            if (!(elmntRect.right < otherRect.left ||
+                  elmntRect.left > otherRect.right ||
+                  elmntRect.bottom < otherRect.top ||
+                  elmntRect.top > otherRect.bottom)) {
+                return true; // overlapping
+            }
+        }
+        return false;
+    }
+
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
@@ -396,73 +462,76 @@ function dragElement(elmnt) {
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
-        // Calculate new position
+
         var newTop = elmnt.offsetTop - pos2;
         var newLeft = elmnt.offsetLeft - pos1;
 
-        // Get boundaries of the container
-        var container = document.getElementById("div1");
-        var rect = container.getBoundingClientRect();
+        // Get container bounds
+        const container = document.getElementById("div1");
+        const rect = container.getBoundingClientRect();
 
-        // Ensure the element stays within the container
+        // Stay within bounds
         if (newTop < 0) newTop = 0;
         if (newLeft < 0) newLeft = 0;
         if (newTop + elmnt.offsetHeight > rect.height) newTop = rect.height - elmnt.offsetHeight;
         if (newLeft + elmnt.offsetWidth > rect.width) newLeft = rect.width - elmnt.offsetWidth;
 
-        // Set the element's new position
-        elmnt.style.top = newTop + "px";
-        elmnt.style.left = newLeft + "px";
-        dragLine(elmnt)
+        // Only move if not overlapping
+        if (!isOverlappingWithOthers(newLeft, newTop)) {
+            elmnt.style.top = newTop + "px";
+            elmnt.style.left = newLeft + "px";
+            dragLine(elmnt);
+        }
     }
 
     function closeDragElement() {
         document.onmouseup = null;
         document.onmousemove = null;
-        // Check if the position has changed
+
         if (elmnt.offsetLeft === initialX && elmnt.offsetTop === initialY) {
-            if (attention==1&&selected==elmnt){
-                selected.style.border = null
-                selected=1
-                attention=0
-            }else if(attention==1 &&selected!=elmnt){
-                var optionone=elmnt.id+selected.id
-                var optiontwo=selected.id+elmnt.id
-                var checkline=0
-                for (i=0;i<=linecounter;i++){
-                    if (specificline[i]){
-                        if (specificline[i].name==optionone){
-                        clearCanvas(optionone)
-                        checkline=1
-                        removeObjectByKey(specificline,i)
-                        }else if(specificline[i].name==optiontwo){
-                        clearCanvas(optiontwo)
-                        checkline=1
-                        removeObjectByKey(specificline,i)
+            if (attention == 1 && selected == elmnt) {
+                selected.style.border = null;
+                selected = 1;
+                attention = 0;
+            } else if (attention == 1 && selected != elmnt) {
+                var optionone = elmnt.id + selected.id;
+                var optiontwo = selected.id + elmnt.id;
+                var checkline = 0;
+                for (let i = 0; i <= linecounter; i++) {
+                    if (specificline[i]) {
+                        if (specificline[i].name == optionone) {
+                            clearCanvas(optionone);
+                            checkline = 1;
+                            removeObjectByKey(specificline, i);
+                        } else if (specificline[i].name == optiontwo) {
+                            clearCanvas(optiontwo);
+                            checkline = 1;
+                            removeObjectByKey(specificline, i);
                         }
                     }
                 }
-                if (checkline==0){
-                    drawLine(selected,elmnt)
+                if (checkline == 0) {
+                    drawLine(selected, elmnt);
                 }
-                selected.style.border = null
-                selected=1
-                attention=0
-            }else{
-                if(selected!=1){
-                    selected.style.border = null; // Add black stroke
+                selected.style.border = null;
+                selected = 1;
+                attention = 0;
+            } else {
+                if (selected != 1) {
+                    selected.style.border = null;
                     elmnt.style.border = null;
-                    attention=0
-                    selected= 1
-                }else if(selected==1){
-                    elmnt.style.border = "4px solid black"; // Add black stroke
-                    attention=1
-                    selected= elmnt
+                    attention = 0;
+                    selected = 1;
+                } else {
+                    elmnt.style.border = "4px solid black";
+                    attention = 1;
+                    selected = elmnt;
                 }
             }
         }
     }
 }
+
 
 // Make the side images be able to have lines but not drag
 function sideElement(elmnt) { 
