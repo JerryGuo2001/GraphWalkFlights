@@ -19,6 +19,35 @@ let semanticHTML =
 let semanticImagePositions = {};  // Global store
 let unknownImages = new Set();
 
+
+window.dropUnknown = function (ev) {
+    ev.preventDefault();
+    const id = ev.dataTransfer.getData("text/plain");
+    const city = ev.dataTransfer.getData("text/city");
+    const img = document.getElementById(id);
+    if (!img) return;
+  
+    img.remove(); // Remove image from the list
+  
+    const label = document.createElement('div');
+    label.textContent = city;
+    label.style.fontSize = '12px';
+    label.style.padding = '4px 8px';
+    label.style.border = '1px solid #ccc';
+    label.style.borderRadius = '4px';
+    label.style.background = '#f1f1f1';
+  
+    document.getElementById('unknownZone').appendChild(label);
+    droppedImages.add(id);
+    unknownImages.add(city);
+  
+    if (droppedImages.size === 13) {
+      activateSemanticSubmitButton();
+    }
+  };
+  
+
+
 function initiatesemanticMap() {
     console.log(generated_stimuli[0])
     semanticHTML =
