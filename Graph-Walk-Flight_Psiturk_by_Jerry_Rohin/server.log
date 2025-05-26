@@ -224,3 +224,83 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
     raise TemplateNotFound(template)
 jinja2.exceptions.TemplateNotFound: apple-touch-icon.png
+[2025-05-23 13:57:49 -0700] [65469] [CRITICAL] WORKER TIMEOUT (pid:65473)
+2025-05-23 18:53:43,570 Exception on /apple-touch-icon-precomposed.png [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 747, in regularpage
+    return render_template(pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: apple-touch-icon-precomposed.png
+2025-05-23 18:53:43,571 Exception on /apple-touch-icon.png [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 747, in regularpage
+    return render_template(pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: apple-touch-icon.png
+[2025-05-24 23:23:35 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68094)
+[2025-05-24 23:30:18 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68097)
+[2025-05-24 23:32:31 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68099)
+[2025-05-24 23:33:07 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68102)
+[2025-05-24 23:36:56 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68095)
+[2025-05-24 23:36:56 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68098)
+[2025-05-24 23:40:18 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68101)
+[2025-05-24 23:40:18 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68280)
+[2025-05-24 23:41:17 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68283)
+[2025-05-24 23:41:17 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68373)
+[2025-05-24 23:42:17 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68100)
+[2025-05-24 23:42:17 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68646)
+[2025-05-24 23:43:18 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68096)
+[2025-05-24 23:43:18 -0700] [68091] [CRITICAL] WORKER TIMEOUT (pid:68237)
+[2025-05-25 22:20:52 -0700] [70766] [CRITICAL] WORKER TIMEOUT (pid:70772)
+[2025-05-25 22:33:23 -0700] [71669] [CRITICAL] WORKER TIMEOUT (pid:71680)
+[2025-05-26 11:31:50 -0700] [72905] [CRITICAL] WORKER TIMEOUT (pid:72909)
