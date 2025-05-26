@@ -225,13 +225,16 @@ function drawLine(img1,img2) {
         }
     }
 
+    // Enforce max 1 connection for imgL/imgR, 2 for draggable images
     const idsToCheck = [img1.id, img2.id];
     for (let id of idsToCheck) {
-        if ((connectionCounts[id] || 0) >= 2) {
-            showWarning(`You can't connect ${id} to more than 2 cities. Remove a route or return this image.`);
+        const maxAllowed = (id === 'imgL' || id === 'imgR') ? 1 : 2;
+        if ((connectionCounts[id] || 0) >= maxAllowed) {
+            showWarning(`${id} can only connect to ${maxAllowed} cit${maxAllowed === 1 ? 'y' : 'ies'}.`);
             return;
         }
-    }
+}
+
     
     // Prevent direct connection between imgL and imgR
     if ((img1.id === 'imgL' && img2.id === 'imgR') || (img1.id === 'imgR' && img2.id === 'imgL')) {
