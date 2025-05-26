@@ -1154,7 +1154,7 @@ waitUntilBase64Ready().then(() => {
   learnphaseone()
 
   //timeline
-  timeline.push(welcome,enterFullscreen)
+  timeline.push(welcome,semantic_phase3,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 
