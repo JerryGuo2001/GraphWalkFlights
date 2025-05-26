@@ -978,6 +978,7 @@ var semantic_phase3 = {
       parts.push(`${key}:x=${pos.x.toFixed(2)},y=${pos.y.toFixed(2)}`);
     }
     data.image_position = parts.join("; ");
+    data.unknowncity=unknowncity
     console.log(data.image_position)
   }  
 };

@@ -21,23 +21,40 @@ let semanticImagePositions = {};  // Global store
 function initiatesemanticMap() {
     console.log(generated_stimuli[0])
     semanticHTML =
-    "<div id='semanticInstructions' style='display:none'><br><p>Drag the city object towards what you think it belonged to on this US map. When finished, submit button will appear at the bottom.</p>" +
+    "<div id='semanticInstructions' style='display:none'><br><p>Drag the city object towards what you think it belonged to on this US map. When finished, the submit button will appear at the bottom.</p>" +
+  
     "<div id='cityMapWrapper' style='display: none;'>" +
-    "<div id='semanticMain'><br><div id='cityList' style='width: 1300px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
-    [...Array(13)].map((_, i) => {
-    const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
-    const city = [
-        "Aliance", "Boulder", "Cornwall", "Custer", "DelawareCity", "Medora", "Newport",
-        "ParkCity", "Racine", "Sitka", "WestPalmBeach", "Yukon", "Yukon"
-    ][i];
-    return `<img id='${id}' src='${generated_stimuli[i]['stimulus']}' alt='${generated_stimuli[i]['label']}' width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>`;
-    }).join("") +
-    "</div>" +  // closes #cityList
-    "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
-    "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
-    "</div></div></div>" +
-    "<button id='confirmsemantic' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>";
-
+  
+      // Main container holds image list and "no idea" box side-by-side
+      "<div id='semanticMain' style='display: flex; justify-content: center; gap: 20px; align-items: flex-start;'>" +
+  
+        // Unknown box goes on the left
+        "<div id='unknownZone' style='width: 120px; height: 120px; border: 2px dashed #555; background: #f9f9f9; font-size: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; overflow-y: auto;'>" +
+        "<strong style='font-size: 14px;'>No Idea</strong><div style='margin-top: 5px;'>Drop Here</div></div>" +
+  
+        // City image list
+        "<div id='cityList' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px;'>" +
+        [...Array(13)].map((_, i) => {
+          const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
+          const city = [
+            "Aliance", "Boulder", "Cornwall", "Custer", "DelawareCity", "Medora", "Newport",
+            "ParkCity", "Racine", "Sitka", "WestPalmBeach", "Yukon", "Yukon"
+          ][i];
+          return `<img id='${id}' src='${generated_stimuli[i]['stimulus']}' alt='${generated_stimuli[i]['label']}' width='60' height='80' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id); event.dataTransfer.setData("text/city", "${generated_stimuli[i]['label']}")'>`;
+        }).join("") +
+        "</div>" +  // close #cityList
+  
+      "</div>" + // close #semanticMain (flex container)
+  
+      // Drop zone map
+      "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 30px auto 0; position: relative; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
+        "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
+      "</div>" + // close #semanticZone
+  
+    "</div>" + // close #cityMapWrapper
+  
+    "<button id='confirmsemantic' style='display: none;margin: 30px auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>";
+  
 
     let cityNames = [];
 
@@ -52,13 +69,18 @@ function initiatesemanticMap() {
 
     const unknownZone = document.createElement('div');
     unknownZone.id = 'unknownZone';
-    unknownZone.style.width = '200px';
-    unknownZone.style.minHeight = '500px';
-    unknownZone.style.margin = '20px auto';
+    unknownZone.style.width = '120px';
+    unknownZone.style.height = '120px';
     unknownZone.style.border = '2px dashed #555';
-    unknownZone.style.textAlign = 'center';
-    unknownZone.style.padding = '10px';
-    unknownZone.innerHTML = "<strong>Absolutely No Idea</strong><br><br><span style='font-size:12px;'>Drag unknown cities here</span>";
+    unknownZone.style.display = 'flex';
+    unknownZone.style.flexDirection = 'column';
+    unknownZone.style.justifyContent = 'center';
+    unknownZone.style.alignItems = 'center';
+    unknownZone.style.fontSize = '12px';
+    unknownZone.style.padding = '8px';
+    unknownZone.style.backgroundColor = '#f9f9f9';
+
+    unknownZone.innerHTML = "<strong style='font-size: 14px;'>No Idea</strong><div style='margin-top: 5px;'>Drop Here</div>";
 
     unknownZone.addEventListener('dragover', ev => ev.preventDefault());
 
@@ -87,7 +109,9 @@ function initiatesemanticMap() {
         }
     });
 
-    document.getElementById("semanticMain").prepend(unknownZone);
+    const mainContainer = document.getElementById("semanticMain");
+    mainContainer.insertBefore(unknownZone, mainContainer.firstChild);
+
 
     document.body.appendChild(wrapper);
 
@@ -210,7 +234,7 @@ function initiatesemanticMap() {
     };
 }
 
-
+let unknowncity=[]
 function activateSemanticSubmitButton() {
     const submitBtn = document.getElementById('confirmsemantic');
     if (!submitBtn) return;
@@ -235,7 +259,7 @@ function activateSemanticSubmitButton() {
         if (semanticWrapper) {
             semanticWrapper.remove();
         }
-        semanticImagePositions['unknown'] = Array.from(unknownImages);
+        unknowncity = Array.from(unknownImages);
         jsPsych.finishTrial(); // This ends the trial
     });
 }
