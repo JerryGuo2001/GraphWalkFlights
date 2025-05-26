@@ -123,8 +123,36 @@ function continueButton() {
 
     instructionDiv?.parentNode?.insertBefore(submitBtn, instructionDiv);
 
-    // Add functionality
-    submitBtn.onclick = () => jsPsych.finishTrial();
+    submitBtn.onclick = () => {
+        // Re-check all conditions before allowing finish
+        const droppedImages = Array.from(document.getElementById('div1').children)
+            .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
+    
+        const connectedIds = new Set();
+        for (let key in specificline) {
+            if (specificline[key] && specificline[key].name && specificline[key].name[0]) {
+                const match = specificline[key].name[0].match(/(imgL|imgR|drag\d{2})/g);
+                if (match) {
+                    match.forEach(id => connectedIds.add(id));
+                }
+            }
+        }
+    
+        const anyUnconnected = droppedImages.some(img => !connectedIds.has(img.id));
+        if (anyUnconnected) {
+            showWarning("At least one dragged image is not connected. Please fix before submitting.");
+            return;
+        }
+    
+        if (!leftAndRightAreConnected()) {
+            showWarning("There must be a complete path between the left and right cities.");
+            return;
+        }
+    
+        // Passed all checks
+        jsPsych.finishTrial();
+    };
+    
 }
 
 
@@ -580,6 +608,9 @@ function returndrag(elmnt){
                 }
             }
         }
+    }
+    if(leftAndRightAreConnected()){
+        continueButton()
     }
 }
 function removeObjectByKey(obj, key) {
