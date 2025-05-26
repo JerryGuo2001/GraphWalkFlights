@@ -1,7 +1,7 @@
 let semanticHTML =
     "<div id='semanticInstructions' style='display:none'><br><p>For each location, click and drag each city image onto a map. The image will convert to a point so you can precisely place the point onto the map provided. When you have placed all locations onto the map, you can finish the experiment. We strongly encourage you to make your best guess even if you are unsure of where the city is located, but there is a box at the bottom of the screen if you have no guess for any of the cities.</p>" +
     "<div id='cityMapWrapper' style='display: none;'>" +
-    "<div id='semanticMain'><br><div id='cityList' style='width: 1300px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
+    "<div id='semanticMain'><div id='cityList' style='width: 1300px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
     [...Array(13)].map((_, i) => {
     const id = i + 1 < 10 ? `semantic0${i + 1}` : `semantic${i + 1}`;
     const city = [

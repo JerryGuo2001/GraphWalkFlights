@@ -669,7 +669,7 @@ var curr_direct_trial=0
 var directmemory_phase = {
   type: 'html-keyboard-responsefl',
   choices: ['1','2','3'],
-  response_ends_trial: false,
+  response_ends_trial: true,
   stimulus:create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial),
   stimulus_duration:6500,//5 second for now, we will discuss it 
   trial_duration:6500,//5 second for now 
@@ -750,7 +750,7 @@ var curr_shortest_trial=0
 var shortestpath_phase = {
   type: 'html-keyboard-responsefl',
   choices: ['1','2'],
-  response_ends_trial: false,
+  response_ends_trial: true,
   stimulus:create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial),
   stimulus_duration:7500,
   trial_duration:7500,
