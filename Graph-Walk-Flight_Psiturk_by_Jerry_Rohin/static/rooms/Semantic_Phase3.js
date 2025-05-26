@@ -23,7 +23,7 @@ let unknownImages = new Set();
 
 
 function initiatesemanticMap() {
-    console.log(generated_stimuli[0])
+    
     semanticHTML =
         // Submit button (very top)
         "<button id='confirmsemantic' style='display: none; margin: 30px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button>" +
