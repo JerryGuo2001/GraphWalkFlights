@@ -2,7 +2,7 @@
 //<button id='bighelp' onclick='displayhelp()'>HELP</button>
 var phasethreeroom=["<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans"
 +"<br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'submit' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='../static/images/Aliance.png' alt='Aliance'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='../static/images/Boulder.png' alt='Boulder'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='../static/images/Cornwall.png' alt='Cornwall'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='../static/images/Custer.png' alt='Custer'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag05' src='../static/images/DelawareCity.png' alt='DelawareCity'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='../static/images/Medora.png' alt='Medora'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='../static/images/Newport.png' alt='Newport'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='../static/images/ParkCity.png' alt='ParkCity'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='../static/images/Racine.png' alt='Racine'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/Sitka.png' alt='Sitka'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/WestPalmBeach.png' alt='WestPalmBeach'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/Yukon.png' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'>"
-                    +"<img id='drag13' src='../static/images/Yukon.png' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'><button id='nextButton' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button></div></div></div>"]
+                    +"<img id='drag13' src='../static/images/Yukon.png' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'> <button id='nextButton' style='display: none; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button></div></div></div>"]
 //jspsych-html-button-response-button-0
 //PART THAT NEED TO BE RUN UNDER BUTTON
 var images = []
@@ -23,6 +23,28 @@ function displayhelp() {
     $('#displayhelp').show()
 }
 
+function showWarning(messageText) {
+    const message = document.createElement('div');
+    message.innerText = messageText;
+    message.style.position = 'fixed';
+    message.style.top = '20px';
+    message.style.left = '50%';
+    message.style.transform = 'translateX(-50%)';
+    message.style.backgroundColor = '#f44336';  // red
+    message.style.color = 'white';
+    message.style.padding = '10px 20px';
+    message.style.borderRadius = '8px';
+    message.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.1)';
+    message.style.fontSize = '18px';
+    message.style.zIndex = '1000';
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+        message.remove();
+    }, 5000);
+}
+
+
 
 //function to init all the necessary varibale
 function gdp_init(){
@@ -40,7 +62,29 @@ function gdp_init(){
     linecounter=0
 }
 
+
 function continueButton() {
+    const droppedImages = Array.from(document.getElementById('div1').children)
+        .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
+
+    const connectedIds = new Set();
+    for (let key in specificline) {
+        if (specificline[key] && specificline[key].name && specificline[key].name[0]) {
+            const match = specificline[key].name[0].match(/(imgL|imgR|drag\d{2})/g);
+            if (match) {
+                match.forEach(id => connectedIds.add(id));
+            }
+        }
+    }
+
+    const anyUnconnected = droppedImages.some(img => !connectedIds.has(img.id));
+
+    if (anyUnconnected) {
+        showWarning("There is an unconnected image on the route. Either return it or connect it.");
+        document.getElementById('nextButton').style.display = 'none';
+        return;
+    }
+
     const message = document.createElement('div');
     message.innerText = "You can now continue";
     message.style.position = 'fixed';
@@ -55,17 +99,34 @@ function continueButton() {
     message.style.fontSize = '18px';
     message.style.zIndex = '1000';
     document.body.appendChild(message);
-  
-    // Remove it after 1 second
+
     setTimeout(() => {
       message.remove();
     }, 1000);
-    document.getElementById('nextButton').style.display = 'block'
-    
-    document.getElementById('nextButton').addEventListener('click', function() {
-      jsPsych.finishTrial(); // End trial on button click
-    });
-  }
+
+    // Hide the top instruction
+    const instructionDiv = document.getElementById('displayhelp');
+    if (instructionDiv) instructionDiv.style.display = 'none';
+
+    // Move the Submit button up to that position
+    const submitBtn = document.getElementById('nextButton');
+    submitBtn.style.display = 'block';
+    submitBtn.style.margin = '20px auto';
+    submitBtn.style.position = 'static'; // remove any relative offsets
+    submitBtn.style.display = 'block';
+
+    // Insert Submit button into the position of #displayhelp
+    const bottomArea = document.getElementById('div1');
+    if (bottomArea && bottomArea.contains(submitBtn)) {
+    bottomArea.removeChild(submitBtn);
+    }
+
+    instructionDiv?.parentNode?.insertBefore(submitBtn, instructionDiv);
+
+    // Add functionality
+    submitBtn.onclick = () => jsPsych.finishTrial();
+}
+
 
 function makeVisible() {
     document.getElementById("spiderman").style.display = "block";
@@ -117,6 +178,33 @@ function initiatep3(){
 //PART THAT NEED TO BE RUN UNDER BUTTON END
 
 function drawLine(img1,img2) {
+    // Prevent direct connection between imgL and imgR
+    if ((img1.id === 'imgL' && img2.id === 'imgR') || (img1.id === 'imgR' && img2.id === 'imgL')) {
+        showWarning("There is no direct flight between these cities. Pick at least one in-between city to start with.");
+        return;
+    }
+
+    // Count connections
+    const connectionCounts = {};
+    for (let key in specificline) {
+        const line = specificline[key];
+        if (line && line.name && line.name[0]) {
+            const match = line.name[0].match(/(imgL|imgR|drag\d{2})/g);
+            if (!match) continue;
+            match.forEach(id => {
+                connectionCounts[id] = (connectionCounts[id] || 0) + 1;
+            });
+        }
+    }
+
+    const idsToCheck = [img1.id, img2.id];
+    for (let id of idsToCheck) {
+        if ((connectionCounts[id] || 0) >= 2) {
+            showWarning(`You can't connect ${id} to more than 2 cities. Remove a route or return this image.`);
+            return;
+        }
+    }
+    
     // Prevent direct connection between imgL and imgR
     if ((img1.id === 'imgL' && img2.id === 'imgR') || (img1.id === 'imgR' && img2.id === 'imgL')) {
         const message = document.createElement('div');

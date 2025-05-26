@@ -48,6 +48,47 @@ function initiatesemanticMap() {
     let wrapper = document.createElement('div');
     wrapper.id = 'semanticWrapper';
     wrapper.innerHTML = semanticHTML;
+    let unknownImages = new Set();
+
+    const unknownZone = document.createElement('div');
+    unknownZone.id = 'unknownZone';
+    unknownZone.style.width = '200px';
+    unknownZone.style.minHeight = '500px';
+    unknownZone.style.margin = '20px auto';
+    unknownZone.style.border = '2px dashed #555';
+    unknownZone.style.textAlign = 'center';
+    unknownZone.style.padding = '10px';
+    unknownZone.innerHTML = "<strong>Absolutely No Idea</strong><br><br><span style='font-size:12px;'>Drag unknown cities here</span>";
+
+    unknownZone.addEventListener('dragover', ev => ev.preventDefault());
+
+    unknownZone.addEventListener('drop', function (ev) {
+        ev.preventDefault();
+        const id = ev.dataTransfer.getData("text/plain");
+        const city = ev.dataTransfer.getData("text/city");
+        const img = document.getElementById(id);
+        if (!img) return;
+
+        img.remove(); // Remove from original location if exists
+
+        const label = document.createElement('div');
+        label.textContent = city;
+        label.style.margin = '8px';
+        label.style.fontSize = '12px';
+        label.style.fontWeight = 'bold';
+        label.id = id;
+
+        unknownZone.appendChild(label);
+        droppedImages.add(id);
+        unknownImages.add(id);
+
+        if (droppedImages.size === 13) {
+            activateSemanticSubmitButton();
+        }
+    });
+
+    document.getElementById("semanticMain").prepend(unknownZone);
+
     document.body.appendChild(wrapper);
 
     document.getElementById('semanticInstructions').style.display = 'block';
@@ -66,8 +107,8 @@ function initiatesemanticMap() {
         img.src = generated_stimuli[i]['stimulus'];
         img.alt = city;
         img.draggable = true;
-        img.style.width = '80px';
-        img.style.height = '100px';
+        img.style.width = '40px';
+        img.style.height = '60px';
         img.style.margin = '8px';
     
         img.addEventListener('dragstart', function (ev) {
@@ -194,7 +235,7 @@ function activateSemanticSubmitButton() {
         if (semanticWrapper) {
             semanticWrapper.remove();
         }
-
+        semanticImagePositions['unknown'] = Array.from(unknownImages);
         jsPsych.finishTrial(); // This ends the trial
     });
 }
