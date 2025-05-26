@@ -23,6 +23,27 @@ function displayhelp() {
     $('#displayhelp').show()
 }
 
+function isOverlapping(el1, el2) {
+    const r1 = el1.getBoundingClientRect();
+    const r2 = el2.getBoundingClientRect();
+    return !(r2.left > r1.right || 
+             r2.right < r1.left || 
+             r2.top > r1.bottom || 
+             r2.bottom < r1.top);
+}
+
+// Check for overlaps
+const placedImages = Array.from(container.children)
+    .filter(el => el.tagName === 'IMG' && el !== element);
+
+for (let otherImg of placedImages) {
+    if (isOverlapping(element, otherImg)) {
+        showWarning("You can't place cities on top of each other.");
+        return;
+    }
+}
+
+
 function showWarning(messageText) {
     const message = document.createElement('div');
     message.innerText = messageText;
@@ -64,6 +85,20 @@ function gdp_init(){
 
 
 function continueButton() {
+    const validRoute = getUniquePathBetween("imgL", "imgR");
+    if (!validRoute || validRoute.length === 0) {
+        showWarning("There must be a complete route between the left and right cities.");
+        return;
+    }
+
+    // Verify all dropped images are part of this route
+    const allInRoute = droppedImages.every(img => validRoute.includes(img.id));
+    if (!allInRoute) {
+        showWarning("All placed cities must be part of the single route between left and right.");
+        return;
+    }
+
+    
     const droppedImages = Array.from(document.getElementById('div1').children)
         .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
 
@@ -663,4 +698,44 @@ function leftAndRightAreConnected() {
     }
 
     return false;
+}
+
+
+function getUniquePathBetween(start, end) {
+    const graph = {};
+
+    // Build the graph
+    for (let key in specificline) {
+        if (specificline[key] && specificline[key].name[0]) {
+            const matches = specificline[key].name[0].match(/(imgL|imgR|drag\d{2})/g);
+            if (!matches || matches.length !== 2) continue;
+
+            const [a, b] = matches;
+            if (!graph[a]) graph[a] = [];
+            if (!graph[b]) graph[b] = [];
+            graph[a].push(b);
+            graph[b].push(a);
+        }
+    }
+
+    // Perform DFS to find a single path
+    const visited = new Set();
+    const path = [];
+
+    function dfs(current) {
+        if (current === end) return true;
+        visited.add(current);
+        for (let neighbor of graph[current] || []) {
+            if (!visited.has(neighbor)) {
+                path.push(neighbor);
+                if (dfs(neighbor)) return true;
+                path.pop();
+            }
+        }
+        return false;
+    }
+
+    path.push(start);
+    const found = dfs(start);
+    return found ? path : null;
 }
