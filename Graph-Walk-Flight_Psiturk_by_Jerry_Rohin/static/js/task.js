@@ -109,12 +109,11 @@ shortest_base64_up = []
 shortest_base64_left = []
 shortest_base64_right = []
 
-
 let left_images = learn_left.map(path => path.replace("../static/images/", ""));
 let right_images = learn_right.map(path => path.replace("../static/images/", ""));
 
 //Instruction page
-function create_instruct(instruct,instructnames,instruction_number,prac_attentioncheck_blackplus,a=''){
+function create_instruct(instruct,instructnames,instruction_number,next_phase,a=''){
   var intro_learn={
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="padding: 12px 24px; font-size: 18px; border-radius: 10px; background-color: #4CAF50; color: white; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 0 10px;">%choice%</button>',
@@ -128,7 +127,7 @@ function create_instruct(instruct,instructnames,instruction_number,prac_attentio
         if (data.button_pressed == 0) {
           data.response = 'Start';
           jsPsych.addNodeToEndOfTimeline({
-              timeline: [prac_attentioncheck_blackplus],
+              timeline: [next_phase],
             }, jsPsych.resumeExperiment)
         }
       }else if (instruction_number>=instructnames.length){
@@ -143,8 +142,9 @@ function create_instruct(instruct,instructnames,instruction_number,prac_attentio
         } else if (data.button_pressed == 1) {
           console.log('nextphase')
           data.response = 'Next';
+          console.log('Nesmith')
           jsPsych.addNodeToEndOfTimeline({
-              timeline: [prac_attentioncheck_blackplus],
+              timeline: [next_phase],
             }, jsPsych.resumeExperiment)
         }
       }else if (instruction_number==1){
@@ -265,203 +265,205 @@ var prac_attentioncheck_blackplus = {}
 var prac_attentioncheck_colorchange = {}
 var prac_attentioncheck_thethird = {}
 var helpofattentioncheck = {}
+prac_attentioncheck_blackplus={
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: ac_colorprepare,
+  trial_duration: ac_colorprepare,
+  response_ends_trial: false,
+  stimulus:create_memory_ten(),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type='prac_atten_color_black'
+    data.stimulus='black_plus_sign'
+    prac_attentioncheck_colorchange.stimulus=create_color_list(ac_colorlist[ac_colornumber])
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [prac_attentioncheck_colorchange],
+    }, jsPsych.resumeExperiment)
+  }
+}
+csfa=[]
+
+//attention check color cross
+function create_color_list(color) {
+  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: %s;'>\u002B</p>"
+  ,color)
+}
+
+prac_attentioncheck_colorchange={
+  type: 'html-keyboard-responsefl',
+  choices: ['1','2'],
+  response_ends_trial: false,
+  stimulus:create_color_list(ac_colorlist[ac_colornumber]),
+  stimulus_duration:ac_colorstop,
+  trial_duration:ac_colorstop,
+  on_finish: function(data) {
+    data.trial_type = 'prac_atten_color';
+    data.stimulus = 'prac_stop_color'
+    csfa=data.key_press
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [prac_attentioncheck_thethird],
+    }, jsPsych.resumeExperiment)
+  }
+}
+
+prac_attentioncheck_thethird={
+  type: 'html-keyboard-response',
+  choices: ['1','2'],
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 2000,
+  trial_duration: 2000,
+  response_ends_trial: false,
+  stimulus:create_memory_ten(),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type='prac_atten_color_black'
+    data.stimulus='black_plus_sign'
+    if(ac_colornumber<ac_colortotal){
+      if (csfa==49&&ac_colorlist[ac_colornumber]=='blue'){
+        correct_ac += 1
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+      }else if (csfa==50&&ac_colorlist[ac_colornumber]=='green'){
+        correct_ac += 1
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+      }else if (data.key_press==49&&ac_colorlist[ac_colornumber]=='blue'){
+        correct_ac += 1
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+      }else if (data.key_press==50&&ac_colorlist[ac_colornumber]=='green'){
+        correct_ac += 1
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+      }else{
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [helpofattentioncheck,prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+      }
+    }else{
+      if (csfa==49&&ac_colorlist[ac_colornumber]=='blue' || csfa==50&&ac_colorlist[ac_colornumber]=='green' || data.key_press==49&&ac_colorlist[ac_colornumber]=='blue' || data.key_press==49&&ac_colorlist[ac_colornumber]=='green') {
+        correct_ac += 1
+      }
+      total_ac += 1
+      getACvalues()
+      if (kickout_record>kickout_total){
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [TaskEarlyFail],
+          }, jsPsych.resumeExperiment)
+      }else{
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [ac_feedback],
+          }, jsPsych.resumeExperiment)
+      }
+  }
+    ac_colornumber+=1
+    total_ac +=1
+    csfa=[]
+    ac_colorprepare=colorStart()
+    ac_colorstop=colorStop(ac_colorprepare)
+    prac_attentioncheck_blackplus.stimulus_duration=ac_colorprepare
+    prac_attentioncheck_blackplus.trial_duration=ac_colorprepare
+    prac_attentioncheck_colorchange.stimulus_duration=ac_colorstop
+    prac_attentioncheck_colorchange.trial_duration=ac_colorstop
+  }
+}
+
+function getACvalues() {
+  if (correct_ac/total_ac<0.7){
+  kickout_record+=1
+  ac_feedback = {
+    type: 'html-button-response',
+    stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                <p style='font-size: 30px; line-height:1.5'>
+                  Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
+                  <br><br> 
+                  Please try to respond to each color change as accurately as possible during the task. 
+                  To continue this experiment, please make sure to get at least 7 of the 10 trials correct. When you are ready press 'Try Again'. 
+                </p><br>
+              </div>`,
+    choices: ['Try Again'],
+    button_html: [
+      '<button id="retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
+    ],
+    response_ends_trial: true, 
+    on_load: function() {
+      document.getElementById("retry-button").addEventListener("click", function() {
+        ac_colornumber = 0
+        total_ac = 0
+        correct_ac = 0
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+        console.log("Try Again button clicked!");
+      });
+    },
+    on_finish: function(data) {
+      data.trial_type = 'attentioncheck_feedback';
+      data.stimulus = 'cross_check_feedback';
+      data.failed_practice = kickout_record
+    }
+  };
+}else{
+  ac_feedback = {
+    type: 'html-button-response',
+    stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                <p style='font-size: 30px; line-height:1.5'>
+                  Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
+                  <br><br> 
+                  Please try to respond to each color change as accurately as possible during the task. 
+                  If you are ready to continue to the next practice, press 'Continue'.
+                </p><br>
+              </div>`,
+    choices: ['Continue'],
+    button_html: [
+      '<button id="continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
+    ],
+    response_ends_trial: true, 
+    on_load: function() {
+      document.getElementById("continue-button").addEventListener("click", function() {
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_lastonebefore_practice,learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break],
+        }, jsPsych.resumeExperiment)
+      });
+    },
+    on_finish: function(data) {
+      data.trial_type = 'attentioncheck_feedback';
+      data.stimulus = 'cross_check_feedback';
+    }
+  };
+}
+}
+
+
+
+helpofattentioncheck={
+  type: 'html-keyboard-response',
+  choices: ['spacebar'],
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>It seems you got one wrong. Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+  on_finish: function (data) {
+    data.trial_type = 'attentioncheck_help';
+    data.stimulus='instruct'
+  }
+}
+
+//practice attention check end
+let instruction_number = 1
+intro_learn=create_instruct(instruct,instructnames,instruction_number,prac_attentioncheck_blackplus,a='')
+
 
 function learnphaseone(){
 
   //practice attention check
   // 1: The black plus sign, the color change, the black plus sign for response
 
-
-  prac_attentioncheck_blackplus={
-    type: 'html-keyboard-response',
-    choices: jsPsych.NO_KEYS,
-    stimulus_height: 100,
-    stimulus_width: 100,
-    stimulus_duration: ac_colorprepare,
-    trial_duration: ac_colorprepare,
-    response_ends_trial: false,
-    stimulus:create_memory_ten(),
-    prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
-    on_finish: function(data) {
-      data.trial_type='prac_atten_color_black'
-      data.stimulus='black_plus_sign'
-      prac_attentioncheck_colorchange.stimulus=create_color_list(ac_colorlist[ac_colornumber])
-      jsPsych.addNodeToEndOfTimeline({
-        timeline: [prac_attentioncheck_colorchange],
-      }, jsPsych.resumeExperiment)
-    }
-  }
-  csfa=[]
-
-  //attention check color cross
-  function create_color_list(color) {
-    return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: %s;'>\u002B</p>"
-    ,color)
-  }
-
-  prac_attentioncheck_colorchange={
-    type: 'html-keyboard-responsefl',
-    choices: ['1','2'],
-    response_ends_trial: false,
-    stimulus:create_color_list(ac_colorlist[ac_colornumber]),
-    stimulus_duration:ac_colorstop,
-    trial_duration:ac_colorstop,
-    on_finish: function(data) {
-      data.trial_type = 'prac_atten_color';
-      data.stimulus = 'prac_stop_color'
-      csfa=data.key_press
-      jsPsych.addNodeToEndOfTimeline({
-        timeline: [prac_attentioncheck_thethird],
-      }, jsPsych.resumeExperiment)
-    }
-  }
-
-  prac_attentioncheck_thethird={
-    type: 'html-keyboard-response',
-    choices: ['1','2'],
-    stimulus_height: 100,
-    stimulus_width: 100,
-    stimulus_duration: 2000,
-    trial_duration: 2000,
-    response_ends_trial: false,
-    stimulus:create_memory_ten(),
-    prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
-    on_finish: function(data) {
-      data.trial_type='prac_atten_color_black'
-      data.stimulus='black_plus_sign'
-      if(ac_colornumber<ac_colortotal){
-        if (csfa==49&&ac_colorlist[ac_colornumber]=='blue'){
-          correct_ac += 1
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [prac_attentioncheck_blackplus],
-          }, jsPsych.resumeExperiment)
-        }else if (csfa==50&&ac_colorlist[ac_colornumber]=='green'){
-          correct_ac += 1
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [prac_attentioncheck_blackplus],
-          }, jsPsych.resumeExperiment)
-        }else if (data.key_press==49&&ac_colorlist[ac_colornumber]=='blue'){
-          correct_ac += 1
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [prac_attentioncheck_blackplus],
-          }, jsPsych.resumeExperiment)
-        }else if (data.key_press==50&&ac_colorlist[ac_colornumber]=='green'){
-          correct_ac += 1
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [prac_attentioncheck_blackplus],
-          }, jsPsych.resumeExperiment)
-        }else{
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [helpofattentioncheck,prac_attentioncheck_blackplus],
-          }, jsPsych.resumeExperiment)
-        }
-      }else{
-        if (csfa==49&&ac_colorlist[ac_colornumber]=='blue' || csfa==50&&ac_colorlist[ac_colornumber]=='green' || data.key_press==49&&ac_colorlist[ac_colornumber]=='blue' || data.key_press==49&&ac_colorlist[ac_colornumber]=='green') {
-          correct_ac += 1
-        }
-        total_ac += 1
-        getACvalues()
-        if (kickout_record>kickout_total){
-            jsPsych.addNodeToEndOfTimeline({
-              timeline: [TaskEarlyFail],
-            }, jsPsych.resumeExperiment)
-        }else{
-            jsPsych.addNodeToEndOfTimeline({
-              timeline: [ac_feedback],
-            }, jsPsych.resumeExperiment)
-        }
-    }
-      ac_colornumber+=1
-      total_ac +=1
-      csfa=[]
-      ac_colorprepare=colorStart()
-      ac_colorstop=colorStop(ac_colorprepare)
-      prac_attentioncheck_blackplus.stimulus_duration=ac_colorprepare
-      prac_attentioncheck_blackplus.trial_duration=ac_colorprepare
-      prac_attentioncheck_colorchange.stimulus_duration=ac_colorstop
-      prac_attentioncheck_colorchange.trial_duration=ac_colorstop
-    }
-  }
-
-  function getACvalues() {
-    if (correct_ac/total_ac<0.7){
-    kickout_record+=1
-    ac_feedback = {
-      type: 'html-button-response',
-      stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
-                  <p style='font-size: 30px; line-height:1.5'>
-                    Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
-                    <br><br> 
-                    Please try to respond to each color change as accurately as possible during the task. 
-                    To continue this experiment, please make sure to get at least 7 of the 10 trials correct. When you are ready press 'Try Again'. 
-                  </p><br>
-                </div>`,
-      choices: ['Try Again'],
-      button_html: [
-        '<button id="retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
-      ],
-      response_ends_trial: true, 
-      on_load: function() {
-        document.getElementById("retry-button").addEventListener("click", function() {
-          ac_colornumber = 0
-          total_ac = 0
-          correct_ac = 0
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [prac_attentioncheck_blackplus],
-          }, jsPsych.resumeExperiment)
-          console.log("Try Again button clicked!");
-        });
-      },
-      on_finish: function(data) {
-        data.trial_type = 'attentioncheck_feedback';
-        data.stimulus = 'cross_check_feedback';
-        data.failed_practice = kickout_record
-      }
-    };
-  }else{
-    ac_feedback = {
-      type: 'html-button-response',
-      stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
-                  <p style='font-size: 30px; line-height:1.5'>
-                    Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
-                    <br><br> 
-                    Please try to respond to each color change as accurately as possible during the task. 
-                    If you are ready to continue to the next practice, press 'Continue'.
-                  </p><br>
-                </div>`,
-      choices: ['Continue'],
-      button_html: [
-        '<button id="continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
-      ],
-      response_ends_trial: true, 
-      on_load: function() {
-        document.getElementById("continue-button").addEventListener("click", function() {
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [instruct_lastonebefore_practice,learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break],
-          }, jsPsych.resumeExperiment)
-        });
-      },
-      on_finish: function(data) {
-        data.trial_type = 'attentioncheck_feedback';
-        data.stimulus = 'cross_check_feedback';
-      }
-    };
-  }
-  }
-
-
-
-  helpofattentioncheck={
-    type: 'html-keyboard-response',
-    choices: ['spacebar'],
-    stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>It seems you got one wrong. Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-    on_finish: function (data) {
-      data.trial_type = 'attentioncheck_help';
-      data.stimulus='instruct'
-    }
-  }
-
-  //practice attention check end
 
 
 
@@ -640,7 +642,6 @@ function learnphaseone(){
     }
   }
  
-  timeline.push(prac_attentioncheck_blackplus)
   // timeline.push(learn_phase)
   // timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
 }
@@ -734,7 +735,7 @@ var directmemory_phase = {
     sfa=data.key_press,
     curr_direct_trial=curr_direct_trial+1,
     directmemory_phase.stimulus=create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
-    attentioncheck(directmemory_phase,a=1,curr_direct_trial,n_direct_trial,short_break)
+    attentioncheck(directmemory_phase,a=1,curr_direct_trial,n_direct_trial,intro_short)
   }
 }
 //Direct Memory test end
@@ -932,7 +933,6 @@ function createPhase3(numberoftrial){
   }
   return phase3
 }
-
 
 
 phase3=createPhase3(n_goaldir_trial)
@@ -1148,10 +1148,8 @@ waitUntilBase64Ready().then(() => {
 
 
 
-  let instruction_number=1
-  intro_learn=create_instruct(instruct,instructnames,instruction_number,prac_attentioncheck_blackplus,a='')
 
-
+  console.log(instructnames)
 
   learnphaseone()
 
