@@ -37,7 +37,6 @@ var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
 var condition = psiturk.taskdata.get('condition') + 1; // they do zero-indexing
 
 var timeline = []
-console.log(`${cityNameList.join("; ")}`)
 //welcome page
 var welcome = {
   type: 'survey-html-form',
@@ -144,9 +143,7 @@ function create_instruct(instruct,instructnames,instruction_number,next_phase,a=
               timeline: [intro_learn],
             }, jsPsych.resumeExperiment)
         } else if (data.button_pressed == 1) {
-          console.log('nextphase')
           data.response = 'Next';
-          console.log('Nesmith')
           jsPsych.addNodeToEndOfTimeline({
               timeline: [next_phase],
             }, jsPsych.resumeExperiment)
@@ -406,7 +403,6 @@ function getACvalues() {
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
-        console.log("Try Again button clicked!");
       });
     },
     on_finish: function(data) {
@@ -487,7 +483,6 @@ function learnphaseone(){
       data.stimulus_left=left_images[curr_learning_trial]
       data.stimulus_right=right_images[curr_learning_trial]
       data.trial_type='rt_plussign_withcolor'
-      console.log(colordetretime)
       kp=data.key_press
     }
   }
@@ -828,13 +823,10 @@ var shortestpath_phase = {
       data.specific_pairs = 'Two Edge Six Edge'
     }
 
-    console.log(data.condition)
-    console.log(data.specific_pairs)
     let sum = 0;
     correctness.forEach(function(value) {
       sum += value;
     });
-    console.log(data.accuracy)
     data.cumulative_accuracy = sum / correctness.length;
 
 
@@ -970,7 +962,6 @@ var semantic_phase3 = {
     }
     data.image_position = parts.join("; ");
     data.unknowncity=unknowncity
-    console.log(data.image_position)
   }  
 };
 
@@ -1028,7 +1019,6 @@ var end_questions = {
     data.easier = easier
     data.similar = similar
     data.comments = comments
-    console.log(problems,smooth,distraction,strategies,easier,similar,comments)
   }
 };
 
@@ -1086,7 +1076,6 @@ var thank_you = {
 
 waitUntilBase64Ready().then(() => {
 
-  console.log(generated_stimuli)
   // Learning
   learn_base64_left = learn_left.map(filename => {
     let match = generated_stimuli.find(item => item.filename === filename);
@@ -1142,10 +1131,6 @@ waitUntilBase64Ready().then(() => {
     return match ? match.stimulus : null; 
   });
 
-
-
-
-  console.log(instructnames)
 
   learnphaseone()
 
