@@ -829,7 +829,9 @@ var shortestpath_phase = {
     });
     data.cumulative_accuracy = sum / correctness.length;
 
-
+    if (curr_shortest_trial>=n_shortest_trial){
+      save_data()
+    }
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
