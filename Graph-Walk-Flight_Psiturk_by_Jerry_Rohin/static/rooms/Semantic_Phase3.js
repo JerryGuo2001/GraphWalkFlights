@@ -61,6 +61,10 @@ function initiatesemanticMap() {
     let wrapper = document.createElement('div');
     wrapper.id = 'semanticWrapper';
     wrapper.innerHTML = semanticHTML;
+
+    document.body.appendChild(wrapper);
+
+    
     document.getElementById('unknownZone').addEventListener('dragover', ev => ev.preventDefault());
 
     document.getElementById('unknownZone').addEventListener('drop', function (ev) {
@@ -89,9 +93,6 @@ function initiatesemanticMap() {
     }
     });
 
-
-
-    document.body.appendChild(wrapper);
 
     // Add drop event for "No Idea" box
     document.getElementById('unknownZone').addEventListener('drop', function (ev) {
