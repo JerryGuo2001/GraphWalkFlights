@@ -267,7 +267,7 @@ function drawLine(img1,img2) {
     for (let id of idsToCheck) {
         const maxAllowed = (id === 'imgL' || id === 'imgR') ? 1 : 2;
         if ((connectionCounts[id] || 0) >= maxAllowed) {
-            showWarning(`${id} can only connect to ${maxAllowed} cit${maxAllowed === 1 ? 'y' : 'ies'}.`);
+            showWarning(`This is a invalid move. You can not connect extra city to a route`);
             return;
         }
 }
