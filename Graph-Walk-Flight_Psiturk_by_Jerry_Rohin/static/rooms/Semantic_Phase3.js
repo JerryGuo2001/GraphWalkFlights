@@ -66,10 +66,12 @@ function initiatesemanticMap() {
         cityNames.push(generated_stimuli[i]['label'])
     }
     let droppedImages = new Set();
-    let wrapper = document.createElement('div');
+    let wrapper = document.getElementById('semanticWrapper');
+    if (wrapper) wrapper.remove();  // Remove old if exists
+    
+    wrapper = document.createElement('div');
     wrapper.id = 'semanticWrapper';
     wrapper.innerHTML = semanticHTML;
-
     document.body.appendChild(wrapper);
 
     
