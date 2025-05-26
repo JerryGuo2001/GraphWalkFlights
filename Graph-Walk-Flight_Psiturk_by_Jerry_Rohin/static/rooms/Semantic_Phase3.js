@@ -28,9 +28,7 @@ function initiatesemanticMap() {
     "<div id='semanticMain' style='display: flex; flex-direction: column; align-items: center;'>" +
   
       // Unknown box ABOVE city list
-    "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px; margin-bottom: 10px;' ondrop='dropUnknown(event)' ondragover='event.preventDefault()'><div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div></div>"
-      "</div>" +
-  
+    "<div id='unknownZone' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px; margin-bottom: 10px;' ondrop='dropUnknown(event)' ondragover='event.preventDefault()'><div style='width: 100%; text-align: center; font-weight: bold; font-size: 14px;'>No Idea <br>Drop Here</div></div></div>" +
       // City list
       "<div id='cityList' style='width: 1000px; display: flex; flex-wrap: wrap; border: 1px solid #aaaaaa; padding: 10px; gap: 10px;'></div>" +
   
