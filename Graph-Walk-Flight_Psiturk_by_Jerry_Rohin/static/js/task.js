@@ -1134,10 +1134,7 @@ waitUntilBase64Ready().then(() => {
 
   learnphaseone()
 
-  //timeline
-  timeline.push(welcome,enterFullscreen)
-  timeline.push(intro_learn)
-  //timeline end
+
 
 
   directmemory_phase.stimulus = create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
@@ -1153,6 +1150,11 @@ waitUntilBase64Ready().then(() => {
     <img id='drag05' src='${generated_stimuli[4]['stimulus']}' alt='${generated_stimuli[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]['stimulus']}' alt='${generated_stimuli[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]['stimulus']}' alt='${generated_stimuli[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]['stimulus']}' alt='${generated_stimuli[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]['stimulus']}' alt='${generated_stimuli[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${generated_stimuli[9]['stimulus']}' alt='${generated_stimuli[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]['stimulus']}' alt='${generated_stimuli[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]['stimulus']}' alt='${generated_stimuli[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
      <img id='drag13' src='${generated_stimuli[12]['stimulus']}' alt='${generated_stimuli[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'><button id='nextButton' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button></div></div></div>`
    
+
+    //timeline
+    timeline.push(welcome,phase3[0],enterFullscreen)
+    timeline.push(intro_learn)
+    //timeline end
   jsPsych.init({
     timeline: timeline,
     preload_images: all_images,
