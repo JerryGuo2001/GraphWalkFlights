@@ -978,7 +978,8 @@ var semantic_phase3 = {
       const pos = semanticImagePositions[key];
       parts.push(`${key}:x=${pos.x.toFixed(2)},y=${pos.y.toFixed(2)}`);
     }
-    data.image_position = parts.join("; ");
+    data.image_position = parts.join("; ").replace(',',' ');
+    console.log(data.image_position)
     data.unknowncity=unknowncity
   }  
 };
@@ -1027,16 +1028,17 @@ var end_questions = {
   on_finish: function(data) {
     data.trial_type = "survey"
     data.stimulus = "survey-questions"
-    data.testedstates = testedstates
-    data.currentstate = currentstate
-    data.otherstate = otherstate
+    data.testedstates = testedstates.join("; ")
+    data.currentstate = currentstate.replace(/,/g, ';');
+    data.otherstate = otherstate.replace(/,/g, ';');
     data.problems = problems
     data.smooth = smooth
-    data.distraction = distraction
-    data.strategies = strategies
-    data.easier = easier
-    data.similar = similar
-    data.comments = comments
+    data.distraction = distraction.replace(/,/g, ';');
+    data.strategies = strategies.replace(/,/g, ';');
+    data.easier = easier.replace(/,/g, ';');
+    data.similar = similar.replace(/,/g, ';');
+    data.comments = comments.replace(/,/g, ';');
+    console.log(data.testedstates,data.currentstate,data.comments)
   }
 };
 
@@ -1157,7 +1159,7 @@ waitUntilBase64Ready().then(() => {
 
 
   //timeline
-  timeline.push(welcome,enterFullscreen)
+  timeline.push(welcome,end_questions,semantic_phase3,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 
