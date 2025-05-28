@@ -979,7 +979,6 @@ var semantic_phase3 = {
       parts.push(`${key}:x=${pos.x.toFixed(2)},y=${pos.y.toFixed(2)}`);
     }
     data.image_position = parts.join("; ").replace(',',' ');
-    console.log(data.image_position)
     data.unknowncity=unknowncity
   }  
 };
@@ -1038,7 +1037,6 @@ var end_questions = {
     data.easier = easier.replace(/,/g, ';');
     data.similar = similar.replace(/,/g, ';');
     data.comments = comments.replace(/,/g, ';');
-    console.log(data.testedstates,data.currentstate,data.comments)
   }
 };
 
