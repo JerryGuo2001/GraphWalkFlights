@@ -1051,12 +1051,6 @@ function validateForm() {
       field.style.border = "";
     }
   });
-
-  if (!allFilled) {
-    alert("Please fill out all required fields.");
-    return false;
-  }
-
   return true;
 }
 var problems = []
