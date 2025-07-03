@@ -16,6 +16,10 @@ var specificline={};
 var specificlinenew={};// Variable to hold the specific line
 var canvas=[]
 var linecounter=0
+var specificline_detour = {};  // new connections after airport is closed
+var specificlinenew_detour = {};
+var linecounter_detour = 0;
+
 
 //function to display the help instruction
 function displayhelp() {
@@ -161,6 +165,79 @@ function continueButton() {
     instructionDiv?.parentNode?.insertBefore(submitBtn, instructionDiv);
 
     submitBtn.onclick = () => {
+        //speical detor usage submit button
+        if (goal_detor_deter === true) {
+            // Step 1: Save original
+            specificline_saved = JSON.parse(JSON.stringify(specificline));
+            linecounter_saved = linecounter;
+        
+            // Step 2: Reset everything for detour
+            specificline = {};
+            specificlinenew = {};
+            linecounter = 0;
+        
+            // Step 3: Hide task UI
+            document.getElementById('div1').style.display = 'none';
+            document.getElementById('div2').style.display = 'none';
+            document.getElementById('displayhelp').style.display = 'none';
+        
+            // Step 4: Show detour instruction div
+            const detourDiv = document.createElement('div');
+            detourDiv.id = 'detour-warning';
+            detourDiv.style.textAlign = 'center';
+            detourDiv.style.marginTop = '50px';
+        
+            const closedCityName = leftName; // or rightName
+            const warningText = document.createElement('p');
+            warningText.innerText = `The airport at ${closedCityName} is closed. Please choose a new route.`;
+        
+            const placeholderImg = document.createElement('img');
+            placeholderImg.src = '../static/images/placeholder.png'; // optional visual
+            placeholderImg.style.width = '100px';
+            placeholderImg.style.height = '120px';
+            placeholderImg.style.margin = '10px';
+        
+            const continueBtn = document.createElement('button');
+            continueBtn.innerText = 'Continue';
+            continueBtn.style.padding = '10px 20px';
+            continueBtn.style.backgroundColor = '#4CAF50';
+            continueBtn.style.color = 'black';
+            continueBtn.style.border = 'none';
+            continueBtn.style.borderRadius = '8px';
+            continueBtn.style.fontSize = '16px';
+            continueBtn.style.cursor = 'pointer';
+            continueBtn.style.marginTop = '20px';
+        
+            continueBtn.onclick = () => {
+                // Step 5: Hide detour message
+                detourDiv.remove();
+        
+                // Step 6: Re-show task UI
+                document.getElementById('div1').style.display = 'block';
+                document.getElementById('div2').style.display = 'block';
+                document.getElementById('displayhelp').style.display = 'block';
+        
+                // Step 7: Hide the closed city image (in draggable top box)
+                const closedCityIndex = room_goaldir_left[goalIndex - 1]; // or right
+                const closedImgId = closedCityIndex < 10 ? `drag0${closedCityIndex}` : `drag${closedCityIndex}`;
+                const closedImg = document.getElementById(closedImgId);
+                if (closedImg) {
+                    closedImg.style.display = 'none';
+                }
+        
+                // Step 8: Allow next submission
+                goal_detor_deter = false;
+            };
+        
+            detourDiv.appendChild(warningText);
+            detourDiv.appendChild(placeholderImg);
+            detourDiv.appendChild(document.createElement('br'));
+            detourDiv.appendChild(continueBtn);
+            document.body.appendChild(detourDiv);
+        
+            return; // Prevent jsPsych.finishTrial() until next round
+        }
+        
         // Re-check all conditions before allowing finish
         const droppedImages = Array.from(document.getElementById('div1').children)
             .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
@@ -201,44 +278,87 @@ goalIndex = 0
 let rightName = ''
 let leftName = ''
 
+let goal_detor_deter
 function initiatep3(){
-    makeVisible()
-    $('#displayhelp').show()
-    for (let i = 1; i <= 13; i++) {
-        if (i<10){
-            images[i-1] = document.getElementById(`drag0${i}`);
-        }else{
-            images[i-1] = document.getElementById(`drag${i}`)
+    if(goalIndex==1){
+        goal_detor_deter=true
+        makeVisible()
+        $('#displayhelp').show()
+        for (let i = 1; i <= 13; i++) {
+            if (i<10){
+                images[i-1] = document.getElementById(`drag0${i}`);
+            }else{
+                images[i-1] = document.getElementById(`drag${i}`)
+            }
         }
+        // LeftSRC = images[Math.floor(Math.random()* images.length)].src
+        // RightSRC = images[Math.floor(Math.random()* images.length)].src
+        // while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
+        //     var RightSRC = images[Math.floor(Math.random()* images.length)].src
+        // }
+        container = document.getElementById('div1');
+        document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
+        rightName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
+        document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
+        leftName = generated_stimuli[room_goaldir_left[goalIndex]-1]['label']
+        for (let i = 1; i <= 13; i++) {
+            if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
+                images[i-1].style="display: none;" // Make them disappear in the top box
+            }
+        }   
+        document.getElementById("batman").style.display = "none"
+        //do not need to copy things below there
+        for (let i = 1; i <= 13; i++) {
+            if (i<10){
+                dragElement(document.getElementById(`drag0${i}`));
+            }else{
+                dragElement(document.getElementById(`drag${i}`));
+            }
+            }
+        returndrag(document.getElementById('return'))
+        sideElement(document.getElementById('imgL'))
+        sideElement(document.getElementById('imgR'))
+        goalIndex++
+    }else{
+        goal_detor_deter=false
+        makeVisible()
+        $('#displayhelp').show()
+        for (let i = 1; i <= 13; i++) {
+            if (i<10){
+                images[i-1] = document.getElementById(`drag0${i}`);
+            }else{
+                images[i-1] = document.getElementById(`drag${i}`)
+            }
+        }
+        // LeftSRC = images[Math.floor(Math.random()* images.length)].src
+        // RightSRC = images[Math.floor(Math.random()* images.length)].src
+        // while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
+        //     var RightSRC = images[Math.floor(Math.random()* images.length)].src
+        // }
+        container = document.getElementById('div1');
+        document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
+        rightName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
+        document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
+        leftName = generated_stimuli[room_goaldir_left[goalIndex]-1]['label']
+        for (let i = 1; i <= 13; i++) {
+            if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
+                images[i-1].style="display: none;" // Make them disappear in the top box
+            }
+        }   
+        document.getElementById("batman").style.display = "none"
+        //do not need to copy things below there
+        for (let i = 1; i <= 13; i++) {
+            if (i<10){
+                dragElement(document.getElementById(`drag0${i}`));
+            }else{
+                dragElement(document.getElementById(`drag${i}`));
+            }
+            }
+        returndrag(document.getElementById('return'))
+        sideElement(document.getElementById('imgL'))
+        sideElement(document.getElementById('imgR'))
+        goalIndex++
     }
-    // LeftSRC = images[Math.floor(Math.random()* images.length)].src
-    // RightSRC = images[Math.floor(Math.random()* images.length)].src
-    // while(LeftSRC == RightSRC){ // Making sure the random L and R images are not the same
-    //     var RightSRC = images[Math.floor(Math.random()* images.length)].src
-    // }
-    container = document.getElementById('div1');
-    document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
-    rightName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
-    document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
-    leftName = generated_stimuli[room_goaldir_left[goalIndex]-1]['label']
-    for (let i = 1; i <= 13; i++) {
-        if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
-            images[i-1].style="display: none;" // Make them disappear in the top box
-        }
-    }   
-    document.getElementById("batman").style.display = "none"
-    //do not need to copy things below there
-    for (let i = 1; i <= 13; i++) {
-        if (i<10){
-            dragElement(document.getElementById(`drag0${i}`));
-        }else{
-            dragElement(document.getElementById(`drag${i}`));
-        }
-        }
-    returndrag(document.getElementById('return'))
-    sideElement(document.getElementById('imgL'))
-    sideElement(document.getElementById('imgR'))
-    goalIndex++
 } 
 //PART THAT NEED TO BE RUN UNDER BUTTON END
 
