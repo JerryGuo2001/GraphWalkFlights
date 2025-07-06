@@ -58,6 +58,7 @@ var welcome = {
   type: 'survey-html-form',
   html: "<label for='worker_id'>Enter your Prolific Worker ID. Please make sure this is correct! </label><br><input type='text' id='worker_id' name='worker_id' required><br><br>",
   on_finish: function (data) {
+    data.condition = condition
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
@@ -476,14 +477,8 @@ intro_learn=create_instruct(instruct,instructnames,instruction_number,prac_atten
 
 
 function learnphaseone(){
-
   //practice attention check
   // 1: The black plus sign, the color change, the black plus sign for response
-
-
-
-
-
   thecrossant= {
     type: 'html-keyboard-response',
     choices: ['1','2'],
@@ -616,8 +611,8 @@ function learnphaseone(){
       thecrossant_black.trial_duration=2000-removecolor
       curr_learning_trial=curr_learning_trial+1,
       learn_phase.stimulus=create_learning_trial(learn_base64_left,learn_base64_right,curr_learning_trial)
-      learn_phase.trial_duration=2500
-      learn_phase.stimulus_duration=2500
+      learn_phase.trial_duration=3000
+      learn_phase.stimulus_duration=3000
       thecrossant_black.stimulus=create_memory_ten('black')
       thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
       attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,intro_dir,thecrossant,thecrossant_black,thecrossant_break)
@@ -630,8 +625,8 @@ function learnphaseone(){
     choices: jsPsych.NO_KEYS,
     response_ends_trial: false,
     stimulus:create_learning_trial(learn_base64_left,learn_base64_right,curr_learning_trial),
-    stimulus_duration:2000,
-    trial_duration:2000,
+    stimulus_duration:3000,
+    trial_duration:3000,
     on_finish: function(data) {
       data.trial_type = 'learn_phase(without_color)';
       data.stimulus='black_plus_sign'
