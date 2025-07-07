@@ -165,79 +165,6 @@ function continueButton() {
     instructionDiv?.parentNode?.insertBefore(submitBtn, instructionDiv);
 
     submitBtn.onclick = () => {
-        //speical detor usage submit button
-        if (goal_detor_deter === true) {
-            // Step 1: Save original
-            specificline_saved = JSON.parse(JSON.stringify(specificline));
-            linecounter_saved = linecounter;
-        
-            // Step 2: Reset everything for detour
-            specificline = {};
-            specificlinenew = {};
-            linecounter = 0;
-        
-            // Step 3: Hide task UI
-            document.getElementById('div1').style.display = 'none';
-            document.getElementById('div2').style.display = 'none';
-            document.getElementById('displayhelp').style.display = 'none';
-        
-            // Step 4: Show detour instruction div
-            const detourDiv = document.createElement('div');
-            detourDiv.id = 'detour-warning';
-            detourDiv.style.textAlign = 'center';
-            detourDiv.style.marginTop = '50px';
-        
-            const closedCityName = leftName; // or rightName
-            const warningText = document.createElement('p');
-            warningText.innerText = `The airport at ${closedCityName} is closed. Please choose a new route.`;
-        
-            const placeholderImg = document.createElement('img');
-            placeholderImg.src = '../static/images/placeholder.png'; // optional visual
-            placeholderImg.style.width = '100px';
-            placeholderImg.style.height = '120px';
-            placeholderImg.style.margin = '10px';
-        
-            const continueBtn = document.createElement('button');
-            continueBtn.innerText = 'Continue';
-            continueBtn.style.padding = '10px 20px';
-            continueBtn.style.backgroundColor = '#4CAF50';
-            continueBtn.style.color = 'black';
-            continueBtn.style.border = 'none';
-            continueBtn.style.borderRadius = '8px';
-            continueBtn.style.fontSize = '16px';
-            continueBtn.style.cursor = 'pointer';
-            continueBtn.style.marginTop = '20px';
-        
-            continueBtn.onclick = () => {
-                // Step 5: Hide detour message
-                detourDiv.remove();
-        
-                // Step 6: Re-show task UI
-                document.getElementById('div1').style.display = 'block';
-                document.getElementById('div2').style.display = 'block';
-                document.getElementById('displayhelp').style.display = 'block';
-        
-                // Step 7: Hide the closed city image (in draggable top box)
-                const closedCityIndex = room_goaldir_left[goalIndex - 1]; // or right
-                const closedImgId = closedCityIndex < 10 ? `drag0${closedCityIndex}` : `drag${closedCityIndex}`;
-                const closedImg = document.getElementById(closedImgId);
-                if (closedImg) {
-                    closedImg.style.display = 'none';
-                }
-        
-                // Step 8: Allow next submission
-                goal_detor_deter = false;
-            };
-        
-            detourDiv.appendChild(warningText);
-            detourDiv.appendChild(placeholderImg);
-            detourDiv.appendChild(document.createElement('br'));
-            detourDiv.appendChild(continueBtn);
-            document.body.appendChild(detourDiv);
-        
-            return; // Prevent jsPsych.finishTrial() until next round
-        }
-        
         // Re-check all conditions before allowing finish
         const droppedImages = Array.from(document.getElementById('div1').children)
             .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
@@ -262,11 +189,110 @@ function continueButton() {
             showWarning("There must be a complete path between the left and right cities.");
             return;
         }
-    
+        if (goal_detor_deter === true) {
+            chooseMiddleImageForMemory();
+            // Hide the Submit button
+            submitBtn.style.display = 'none';
+            clearAllCanvases();
+        
+            const div1 = document.getElementById('div1');
+            const div2 = document.getElementById('div2');
+        
+            const draggedCities = Array.from(div1.children)
+                .filter(el => el.tagName === 'IMG' && el.id.startsWith('drag'));
+        
+            draggedCities.forEach(img => {
+                img.style.position = 'relative';
+                img.style.left = '0px';
+                img.style.top = '0px';
+                img.style.border = '';
+                div2.appendChild(img);
+            });
+        
+            // Step 1: Save original
+            specificline_saved = specificline
+            linecounter_saved = linecounter;
+        
+            // Step 2: Reset everything for detour
+            specificline = {};
+            specificlinenew = {};
+            linecounter = 0;
+        
+            // Step 3: Hide task UI
+            document.getElementById('div1').style.display = 'none';
+            document.getElementById('div2').style.display = 'none';
+            document.getElementById('displayhelp').style.display = 'none';
+        
+            // Step 4: Show detour instruction div
+            const detourDiv = document.createElement('div');
+            detourDiv.id = 'detour-warning';
+            detourDiv.style.position = 'fixed';
+            detourDiv.style.top = '0';
+            detourDiv.style.left = '50%';
+            detourDiv.style.transform = 'translateX(-50%)';
+            detourDiv.style.backgroundColor = '#fff';
+            detourDiv.style.border = '2px solid #ccc';
+            detourDiv.style.padding = '20px';
+            detourDiv.style.zIndex = '9999';
+            detourDiv.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.2)';
+            detourDiv.style.textAlign = 'center';
+        
+            const closedCityName = leftName; // or rightName
+            const warningText = document.createElement('p');
+            warningText.innerText = `The airport at ${closedCityName} is closed. Please choose a new route.`;
+        
+            const placeholderImg = document.createElement('img');
+            placeholderImg.src = images[selected_middle_image_index-1].src  //this is the hidden image, changes will only make to this one src
+            placeholderImg.style.width = '100px';
+            placeholderImg.style.height = '120px';
+            placeholderImg.style.margin = '10px';
+        
+            const continueBtn = document.createElement('button');
+            continueBtn.innerText = 'Continue';
+            continueBtn.style.padding = '10px 20px';
+            continueBtn.style.backgroundColor = '#4CAF50';
+            continueBtn.style.color = 'black';
+            continueBtn.style.border = 'none';
+            continueBtn.style.borderRadius = '8px';
+            continueBtn.style.fontSize = '16px';
+            continueBtn.style.cursor = 'pointer';
+            continueBtn.style.marginTop = '20px';
+        
+            continueBtn.onclick = () => {
+                // Step 5: Hide detour message
+                detourDiv.remove();
+        
+                // Step 6: Re-show task UI
+                document.getElementById('div1').style.display = 'block';
+                document.getElementById('div2').style.display = 'block';
+                document.getElementById('displayhelp').style.display = 'block';
+        
+                // Step 7: Hide the closed city image
+                const closedCityIndex = selected_middle_image_index //this is the index of the chosen hidden city
+                const closedImgId = closedCityIndex < 10 ? `drag0${closedCityIndex}` : `drag${closedCityIndex}`;
+                const closedImg = document.getElementById(closedImgId);
+                if (closedImg) {
+                    closedImg.style.display = 'none';
+                }
+        
+                // Step 8: Allow next submission
+                goal_detor_deter = false;
+            };
+        
+            detourDiv.appendChild(warningText);
+            detourDiv.appendChild(placeholderImg);
+            detourDiv.appendChild(document.createElement('br'));
+            detourDiv.appendChild(continueBtn);
+        
+            // Place above the task
+            const phase3Body = document.getElementById('Phase3Body');
+            phase3Body.parentNode.insertBefore(detourDiv, phase3Body);
+        
+            return;
+        }
         // Passed all checks
         jsPsych.finishTrial();
     };
-    
 }
 
 
@@ -280,7 +306,7 @@ let leftName = ''
 
 let goal_detor_deter
 function initiatep3(){
-    if(goalIndex==1){
+    if(goalIndex==0){
         goal_detor_deter=true
         makeVisible()
         $('#displayhelp').show()
@@ -466,6 +492,8 @@ function drawLine(img1,img2) {
     }
 }
 
+
+
 function dragLine(img1) {
     if(leftAndRightAreConnected()){
         continueButton()
@@ -522,6 +550,12 @@ function clearCanvas(canvasId) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.remove(); // This will remove the canvas element from the DOM
     }
+}
+
+function clearAllCanvases() {
+    const container = document.getElementById('div3');
+    const canvases = container.querySelectorAll('canvas');
+    canvases.forEach(c => clearCanvas(c.id));
 }
 
 // draw the line end
@@ -882,4 +916,125 @@ function leftAndRightAreConnected() {
     }
 
     return false;
+}
+
+function chooseMiddleImageForMemory() {
+    const trueEdges = graph.getEdges().map(pair => {
+        const a = pair[0] < 10 ? `drag0${pair[0]}` : `drag${pair[0]}`;
+        const b = pair[1] < 10 ? `drag0${pair[1]}` : `drag${pair[1]}`;
+        return new Set([a, b]);
+    });
+
+    const isTrueConnection = (a, b) => {
+        return trueEdges.some(edge => edge.has(a) && edge.has(b));
+    };
+
+    const validConnections = [];
+    const allDrawnNodes = new Set();
+
+    for (let key in specificline) {
+        const entry = specificline[key];
+        if (!entry || !entry.name || !entry.name[0]) continue;
+
+        const match = entry.name[0].match(/(drag\d{2}|imgL|imgR)/g);
+        if (!match || match.length !== 2) continue;
+
+        const [a, b] = match;
+        if (!a || !b) continue;
+
+        // Only store nodes that are not imgL/imgR
+        if (a !== "imgL" && a !== "imgR") allDrawnNodes.add(a);
+        if (b !== "imgL" && b !== "imgR") allDrawnNodes.add(b);
+
+        if (a === "imgL" || a === "imgR" || b === "imgL" || b === "imgR") continue;
+
+        const connection = [a, b];
+        if (isTrueConnection(a, b)) {
+            validConnections.push(connection);
+        }
+    }
+
+    let selectedImageID = null;
+    let sourceType = null;
+
+    if (validConnections.length > 0) {
+        const selectedPair = validConnections[Math.floor(Math.random() * validConnections.length)];
+        selectedImageID = selectedPair[Math.floor(Math.random() * 2)];
+        sourceType = "correct_connection";
+    } else if (allDrawnNodes.size > 0) {
+        const fallbackArray = Array.from(allDrawnNodes);
+        selectedImageID = fallbackArray[Math.floor(Math.random() * fallbackArray.length)];
+        sourceType = "random_fallback_node";
+    }
+
+    // Store results globally
+    window.selected_middle_image = selectedImageID;
+    window.selected_middle_image_index = null;
+    window.selected_middle_image_type = sourceType;
+
+    if (selectedImageID) {
+        const match = selectedImageID.match(/drag(\d{2})/);
+        if (match) {
+            window.selected_middle_image_index = parseInt(match[1], 10);
+        }
+    }
+
+    console.log("Selected image from connection:", window.selected_middle_image);
+    console.log("Selected image index:", window.selected_middle_image_index);
+    console.log("Connection type:", window.selected_middle_image_type);
+
+    if (!window.selected_middle_image) {
+        console.warn("No image could be selected. (This should never happen if user drew anything)");
+    }
+}
+
+
+
+
+
+// === Helper: Build adjacency list from specificline object ===
+function buildGraphFromSpecificLine(sline) {
+    const graph = {};
+
+    for (let key in sline) {
+        if (sline[key] && sline[key].name && sline[key].name[0]) {
+            const match = sline[key].name[0].match(/(imgL|imgR|drag\d{2})/g);
+            if (!match || match.length !== 2) continue;
+            const [a, b] = match;
+
+            if (!graph[a]) graph[a] = [];
+            if (!graph[b]) graph[b] = [];
+
+            graph[a].push(b);
+            graph[b].push(a);
+        }
+    }
+
+    return graph;
+}
+
+
+// === Helper: Find path using DFS from start to end ===
+function findPath(graph, start, end) {
+    const visited = new Set();
+    const path = [];
+
+    function dfs(node) {
+        if (node === end) return true;
+        visited.add(node);
+
+        for (const neighbor of graph[node] || []) {
+            if (!visited.has(neighbor)) {
+                path.push(neighbor);
+                if (dfs(neighbor)) return true;
+                path.pop();
+            }
+        }
+
+        return false;
+    }
+
+    path.push(start);
+    const found = dfs(start);
+    return found ? path : null;
 }
