@@ -939,7 +939,6 @@ function createPhase3(numberoftrial){
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
           }, jsPsych.resumeExperiment)
-          save_data()
         }
       }
     }
@@ -1160,9 +1159,8 @@ waitUntilBase64Ready().then(() => {
 
   //timeline
   timeline.push(welcome,enterFullscreen)
-  // timeline.push(intro_learn)
+  timeline.push(intro_learn)
   //timeline end
-  timeline.push(phase3[0])
 
 
   directmemory_phase.stimulus = create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
