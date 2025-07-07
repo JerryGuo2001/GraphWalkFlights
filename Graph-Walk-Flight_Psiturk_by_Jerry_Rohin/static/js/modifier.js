@@ -1170,6 +1170,38 @@ function getShortestPath(graph, start, goal) {
     return null;
 }
 
+//randomly generate index for detour task
+function getRandomSample(array, n) {
+  const copy = [...array];
+  const result = [];
+
+  for (let i = 0; i < n; i++) {
+    const index = Math.floor(Math.random() * copy.length);
+    result.push(copy.splice(index, 1)[0]);
+  }
+
+  return result;
+}
+
+function generateSequence() {
+  const group1 = [...Array(9).keys()];         // 0–8
+  const group2 = [...Array(9).keys()].map(i => i + 9);   // 9–17
+  const group3 = [...Array(6).keys()].map(i => i + 18);  // 18–23
+  const group4 = [...Array(6).keys()].map(i => i + 24);  // 24–29
+  const group5 = [...Array(3).keys()].map(i => i + 30);  // 30–32
+
+  const sample1 = getRandomSample(group1, 3);
+  const sample2 = getRandomSample(group2, 3);
+  const sample3 = getRandomSample(group3, 2);
+  const sample4 = getRandomSample(group4, 2);
+  const sample5 = getRandomSample(group5, 1);
+
+  const finalSequence = [...sample1, ...sample2, ...sample3, ...sample4, ...sample5];
+  return finalSequence;
+}
+
+var detour_Sequence= generateSequence()
+
 
 // Select 4 unique pairs for distances 2–5, and 3 for distance 6
 let selectedPairs = {
@@ -1228,3 +1260,15 @@ function colorStop(colordetretime){
 
 //randomDelay for Direct Memory Test and Shortest Path Judgement
 var randomDelay = Math.floor(Math.random() * (1500 - 100 + 1)) + 100;
+
+
+const detourLocationMap = {};
+
+goaldirIndex.forEach(index => {
+  const pos = detour_Sequence.indexOf(index);
+  if (pos !== -1) {
+    detourLocationMap[index] = pos;
+  } else {
+    detourLocationMap[index] = null; // or -1 if you prefer
+  }
+});

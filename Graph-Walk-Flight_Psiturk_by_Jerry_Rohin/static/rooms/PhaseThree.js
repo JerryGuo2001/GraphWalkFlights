@@ -20,6 +20,7 @@ var specificline_detour = {};  // new connections after airport is closed
 var specificlinenew_detour = {};
 var linecounter_detour = 0;
 var specificline_saved={}
+var detourcity_name=[]
 
 //function to display the help instruction
 function displayhelp() {
@@ -236,9 +237,10 @@ function continueButton() {
             detourDiv.style.zIndex = '9999';
             detourDiv.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.2)';
             detourDiv.style.textAlign = 'center';
-        
-            const closedCityName = leftName; // or rightName
+            const closedCityName = generated_stimuli[selected_middle_image_index-1]['label']; // or rightName
+            detourcity_name=closedCityName
             const warningText = document.createElement('p');
+            
             warningText.innerText = `The airport at ${closedCityName} is closed. Please choose a new route.`;
         
             const placeholderImg = document.createElement('img');
@@ -293,6 +295,7 @@ function continueButton() {
         // Passed all checks
         jsPsych.finishTrial();
         specificline_saved={};
+        detourcity_name=[];
     };
 }
 
@@ -307,7 +310,7 @@ let leftName = ''
 
 let goal_detor_deter
 function initiatep3(){
-    if(goalIndex % 3 === 0){
+    if(detourLocationMap[goalIndex]){
         goal_detor_deter=true
         makeVisible()
         $('#displayhelp').show()
