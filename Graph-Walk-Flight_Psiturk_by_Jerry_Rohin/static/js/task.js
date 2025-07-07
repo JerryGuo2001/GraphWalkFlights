@@ -872,6 +872,40 @@ function createPhase3(numberoftrial){
           data.imgL_ID = leftName
           data.imgR_ID = rightName
           data.linedress=''
+          for (var key in specificline) {
+            data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+          }
+          if (goaldirIndex[numberoftrial] < twoEdgePair.length){
+            data.condition = 'Three Edge Diff'
+          } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
+            data.condition = 'Four Edge Diff'
+          } else if (goaldirIndex[numberoftrial] >=twoEdgePair.length + threeEdgePair.length &&  goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length){
+            data.condition = 'Five Edge Diff'
+          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+twoEdgePair.length){
+            data.condition = 'Six Edge Diff'
+          }
+          gdp_init(),
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [semantic_instructions,semantic_phase3,end_questions,thank_you],
+          }, jsPsych.resumeExperiment)
+        }
+      }
+    }else{
+      phase3[i] = {
+        type: 'html-keyboard-response',
+        stimulus: phasethreeroom[0],
+        choices: jsPsych.NO_KEYS, // Disable keyboard responses
+        // on_load: function() {
+        //   document.getElementById('nextButton').addEventListener('click', function() {
+        //     jsPsych.finishTrial(); // End trial on button click
+        //   });
+        // },
+        on_finish: function (data) {
+          data.trial_type='Goal Directed Planning'
+          data.stimulus = `GDP-${i}`
+          data.imgL_ID = leftName
+          data.imgR_ID = rightName
+          data.linedress=''
           if (i % 3 === 0) {
             for (const key in specificline_saved) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
@@ -897,41 +931,6 @@ function createPhase3(numberoftrial){
             data.condition = 'Six Edge Diff'
           }
           gdp_init(),
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [semantic_instructions,semantic_phase3,end_questions,thank_you],
-          }, jsPsych.resumeExperiment)
-          save_data()
-        }
-      }
-    }else{
-      phase3[i] = {
-        type: 'html-keyboard-response',
-        stimulus: phasethreeroom[0],
-        choices: jsPsych.NO_KEYS, // Disable keyboard responses
-        // on_load: function() {
-        //   document.getElementById('nextButton').addEventListener('click', function() {
-        //     jsPsych.finishTrial(); // End trial on button click
-        //   });
-        // },
-        on_finish: function (data) {
-          data.trial_type='Goal Directed Planning'
-          data.stimulus = `GDP-${i}`
-          data.imgL_ID = leftName
-          data.imgR_ID = rightName
-          data.linedress=''
-          for (var key in specificline) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
-          }
-          if (goaldirIndex[numberoftrial] < twoEdgePair.length){
-            data.condition = 'Three Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
-            data.condition = 'Four Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >=twoEdgePair.length + threeEdgePair.length &&  goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length){
-            data.condition = 'Five Edge Diff'
-          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+twoEdgePair.length){
-            data.condition = 'Six Edge Diff'
-          }
-          gdp_init(),
           phase3[i+1].stimulus = `<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans
           <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${generated_stimuli[0]['stimulus']}' alt='${generated_stimuli[0]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${generated_stimuli[1]['stimulus']}' alt='${generated_stimuli[1]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='${generated_stimuli[2]['stimulus']}' alt='${generated_stimuli[2]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${generated_stimuli[3]['stimulus']}' alt='${generated_stimuli[3]['label']}' alt='Custer' width='100' height='120' draggable='true' ondragstart='drag(event)'>
             <img id='drag05' src='${generated_stimuli[4]['stimulus']}' alt='${generated_stimuli[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]['stimulus']}' alt='${generated_stimuli[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]['stimulus']}' alt='${generated_stimuli[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]['stimulus']}' alt='${generated_stimuli[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]['stimulus']}' alt='${generated_stimuli[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${generated_stimuli[9]['stimulus']}' alt='${generated_stimuli[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]['stimulus']}' alt='${generated_stimuli[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]['stimulus']}' alt='${generated_stimuli[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
@@ -940,6 +939,7 @@ function createPhase3(numberoftrial){
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
           }, jsPsych.resumeExperiment)
+          save_data()
         }
       }
     }
