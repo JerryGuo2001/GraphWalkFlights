@@ -19,7 +19,7 @@ var linecounter=0
 var specificline_detour = {};  // new connections after airport is closed
 var specificlinenew_detour = {};
 var linecounter_detour = 0;
-
+var specificline_saved={}
 
 //function to display the help instruction
 function displayhelp() {
@@ -292,6 +292,7 @@ function continueButton() {
         }
         // Passed all checks
         jsPsych.finishTrial();
+        specificline_saved={};
     };
 }
 
@@ -306,7 +307,7 @@ let leftName = ''
 
 let goal_detor_deter
 function initiatep3(){
-    if(goalIndex==0){
+    if(goalIndex % 3 === 0){
         goal_detor_deter=true
         makeVisible()
         $('#displayhelp').show()

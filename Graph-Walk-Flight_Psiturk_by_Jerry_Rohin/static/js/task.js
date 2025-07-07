@@ -872,8 +872,20 @@ function createPhase3(numberoftrial){
           data.imgL_ID = leftName
           data.imgR_ID = rightName
           data.linedress=''
-          for (const key in specificline) {
+          if (i % 3 === 0) {
+            for (const key in specificline_saved) {
               data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            }
+            for (const key in specificline) {
+              data.linedressed_detor += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            }
+            data.detour_trial = true;
+            console.log(`Trial ${i} is a detour trial`);
+          } else {
+            for (const key in specificline) {
+                data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            }
+            data.detour_trial = false;
           }
           if (goaldirIndex[numberoftrial] < twoEdgePair.length){
             data.condition = 'Three Edge Diff'
@@ -888,6 +900,7 @@ function createPhase3(numberoftrial){
           jsPsych.addNodeToEndOfTimeline({
             timeline: [semantic_instructions,semantic_phase3,end_questions,thank_you],
           }, jsPsych.resumeExperiment)
+          save_data()
         }
       }
     }else{
