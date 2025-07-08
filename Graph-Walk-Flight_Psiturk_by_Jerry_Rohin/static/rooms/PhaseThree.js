@@ -294,8 +294,6 @@ function continueButton() {
         }
         // Passed all checks
         jsPsych.finishTrial();
-        specificline_saved={};
-        detourcity_name=[];
     };
 }
 

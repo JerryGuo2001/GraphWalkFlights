@@ -873,19 +873,49 @@ function createPhase3(numberoftrial){
           data.imgR_ID = rightName
           data.linedress=''
           if (detourLocationMap[i]) {
-            for (const key in specificline_saved) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            // Safely check and log for specificline_saved
+            if (specificline_saved && Object.keys(specificline_saved).length > 0) {
+              for (const key in specificline_saved) {
+                data.linedressed += specificline_saved[key].name + 
+                  ':[x1:' + specificline_saved[key].location.x1 + 
+                  ' x2:' + specificline_saved[key].location.x2 + 
+                  ' y1:' + specificline_saved[key].location.y1 + 
+                  ' y2:' + specificline_saved[key].location.y2 + ']';
+              }
+            } else {
+              console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
-            for (const key in specificline) {
-              data.linedressed_detor += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+          
+            // Safely check and log for specificline
+            if (specificline && Object.keys(specificline).length > 0) {
+              for (const key in specificline) {
+                data.linedressed_detor += specificline[key].name + 
+                  ':[x1:' + specificline[key].location.x1 + 
+                  ' x2:' + specificline[key].location.x2 + 
+                  ' y1:' + specificline[key].location.y1 + 
+                  ' y2:' + specificline[key].location.y2 + ']';
+              }
+            } else {
+              console.log(`specificline is empty or undefined in trial ${i}`);
             }
-            data.DetourCityName=detourcity_name
+          
             data.detour_trial = true;
             console.log(`Trial ${i} is a detour trial`);
+            
           } else {
-            for (const key in specificline) {
-                data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            // Safely check and log for specificline
+            if (specificline && Object.keys(specificline).length > 0) {
+              for (const key in specificline) {
+                data.linedressed += specificline[key].name + 
+                  ':[x1:' + specificline[key].location.x1 + 
+                  ' x2:' + specificline[key].location.x2 + 
+                  ' y1:' + specificline[key].location.y1 + 
+                  ' y2:' + specificline[key].location.y2 + ']';
+              }
+            } else {
+              console.log(`specificline is empty or undefined in trial ${i}`);
             }
+          
             data.detour_trial = false;
           }
           if (goaldirIndex[numberoftrial] < twoEdgePair.length){
@@ -901,6 +931,8 @@ function createPhase3(numberoftrial){
           jsPsych.addNodeToEndOfTimeline({
             timeline: [semantic_instructions,semantic_phase3,end_questions,thank_you],
           }, jsPsych.resumeExperiment)
+          specificline_saved={};
+          detourcity_name=[];
         }
       }
     }else{
@@ -920,20 +952,52 @@ function createPhase3(numberoftrial){
           data.imgR_ID = rightName
           data.linedress=''
           if (detourLocationMap[i]) {
-            for (const key in specificline_saved) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            // Safely check and log for specificline_saved
+            if (specificline_saved && Object.keys(specificline_saved).length > 0) {
+              for (const key in specificline_saved) {
+                data.linedressed += specificline_saved[key].name + 
+                  ':[x1:' + specificline_saved[key].location.x1 + 
+                  ' x2:' + specificline_saved[key].location.x2 + 
+                  ' y1:' + specificline_saved[key].location.y1 + 
+                  ' y2:' + specificline_saved[key].location.y2 + ']';
+              }
+            } else {
+              console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
-            for (const key in specificline) {
-              data.linedressed_detor += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+          
+            // Safely check and log for specificline
+            if (specificline && Object.keys(specificline).length > 0) {
+              for (const key in specificline) {
+                data.linedressed_detor += specificline[key].name + 
+                  ':[x1:' + specificline[key].location.x1 + 
+                  ' x2:' + specificline[key].location.x2 + 
+                  ' y1:' + specificline[key].location.y1 + 
+                  ' y2:' + specificline[key].location.y2 + ']';
+              }
+            } else {
+              console.log(`specificline is empty or undefined in trial ${i}`);
             }
+          
             data.detour_trial = true;
             console.log(`Trial ${i} is a detour trial`);
+            
           } else {
-            for (const key in specificline) {
-                data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+            // Safely check and log for specificline
+            if (specificline && Object.keys(specificline).length > 0) {
+              for (const key in specificline) {
+                data.linedressed += specificline[key].name + 
+                  ':[x1:' + specificline[key].location.x1 + 
+                  ' x2:' + specificline[key].location.x2 + 
+                  ' y1:' + specificline[key].location.y1 + 
+                  ' y2:' + specificline[key].location.y2 + ']';
+              }
+            } else {
+              console.log(`specificline is empty or undefined in trial ${i}`);
             }
+          
             data.detour_trial = false;
           }
+          
           if (goaldirIndex[numberoftrial] < twoEdgePair.length){
             data.condition = 'Three Edge Diff'
           } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
@@ -952,6 +1016,8 @@ function createPhase3(numberoftrial){
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
           }, jsPsych.resumeExperiment)
+          specificline_saved={};
+          detourcity_name=[];
         }
       }
     }
