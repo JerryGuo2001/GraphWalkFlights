@@ -1037,11 +1037,7 @@ var end_questions = {
       easier = document.getElementById('easier').value
       similar = document.getElementById('similar').value
       comments = document.getElementById('comments').value
-      let checked = validateForm()
-      if (checked){
-        jsPsych.finishTrial()
-      }
-  
+      jsPsych.finishTrial()
   });
   },
   on_finish: function(data) {
