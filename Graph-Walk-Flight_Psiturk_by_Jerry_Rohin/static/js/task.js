@@ -929,7 +929,7 @@ function createPhase3(numberoftrial){
           }
           gdp_init(),
           jsPsych.addNodeToEndOfTimeline({
-            timeline: [semantic_instructions,semantic_phase3,end_questions,thank_you],
+            timeline: [recon_phase3[0]],
           }, jsPsych.resumeExperiment)
           specificline_saved={};
           detourcity_name=[];
@@ -1036,6 +1036,77 @@ let intro_short=create_instruct(short_instruct,short_instructnames,short_instruc
 let mem_instruction_number=1
 let intro_mem=create_instruct(mem_instruct,mem_instructnames,mem_instruction_number,phase3[0],a='mem_')
 //Goal directed planning end
+
+
+//recon phase
+function recon_createPhase3(numberoftrial){
+  var recon_phase3 = {}
+  for (let i = 0; i < numberoftrial; i++){
+    if (i==numberoftrial-1){
+      recon_phase3[i] = {
+        type: 'html-keyboard-response',
+        stimulus: recon_phasethreeroom[0],
+        choices: jsPsych.NO_KEYS, // Disable keyboard responses
+        // on_load: function() {
+        //   document.getElementById('nextButton').style.display = 'block'
+        //   document.getElementById('nextButton').addEventListener('click', function() {
+        //     jsPsych.finishTrial(); // End trial on button click
+        //   });
+        // },
+        on_start:function(){
+          save_data()
+        },
+        on_finish: function (data) {
+          data.trial_type='Graph Reconstruction'
+          data.linedress=''
+          for (const key in specificline) {
+              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+          }
+          // if (goaldirIndex[numberoftrial] < threeEdgePair.length){
+          //   data.condition = 'Three Edge Diff'
+          // } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length && goaldirIndex[numberoftrial] < threeEdgePair.length + fourEdgePair.length){
+          //   data.condition = 'Four Edge Diff'
+          // } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
+          //   data.condition = 'Five Edge Diff'
+          // }
+          recon_init(),
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [end_questions,thank_you],
+          }, jsPsych.resumeExperiment)
+        }
+      }
+    }else{
+      recon_phase3[i] = {
+        type: 'html-keyboard-response',
+        stimulus: recon_phasethreeroom[0],
+        choices: jsPsych.NO_KEYS, // Disable keyboard responses
+        // on_load: function() {
+        //   document.getElementById('nextButton').addEventListener('click', function() {
+        //     jsPsych.finishTrial(); // End trial on button click
+        //   });
+        // },
+        on_finish: function (data) {
+          data.trial_type='Goal Directed Planning'
+          data.linedress=''
+          for (const key in specificline) {
+              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
+          }
+          recon_init(),
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [recon_phase3[i+1]],
+          }, jsPsych.resumeExperiment)
+        }
+      }
+    }
+  }
+  return recon_phase3
+}
+
+var recon_phase3=recon_createPhase3(1)
+
+//recon phase end
+
+
 
 //Semantic US map
 var semantic_instructions = {
@@ -1234,7 +1305,8 @@ waitUntilBase64Ready().then(() => {
 
   //timeline
   timeline.push(welcome,enterFullscreen)
-  timeline.push(intro_learn)
+  timeline.push(recon_phase3[0])
+  //timeline.push(intro_learn)
   //timeline end
 
 
@@ -1251,6 +1323,14 @@ waitUntilBase64Ready().then(() => {
     <img id='drag05' src='${generated_stimuli[4]['stimulus']}' alt='${generated_stimuli[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]['stimulus']}' alt='${generated_stimuli[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]['stimulus']}' alt='${generated_stimuli[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]['stimulus']}' alt='${generated_stimuli[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]['stimulus']}' alt='${generated_stimuli[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${generated_stimuli[9]['stimulus']}' alt='${generated_stimuli[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]['stimulus']}' alt='${generated_stimuli[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]['stimulus']}' alt='${generated_stimuli[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
      <img id='drag13' src='${generated_stimuli[12]['stimulus']}' alt='${generated_stimuli[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'><button id='nextButton' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button></div></div></div>`
 
+  recon_phase3[0].stimulus=["<div id='displayhelp' style='display:none'><p>Click and drag the objects to the gray box"
+  +"<br /> You can connect the images by clicking the two images in order <br> You can remove an object by clicking on it and then clicking the return arrow on the bottom right of the gray box <br> once all the objects are in the grey box and have <b>at least one line connecting them</b>, press the 'submit' button that will appear</p><button id='nextButton' style='display:none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>"
+  +`</div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='recon_initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${generated_stimuli[0]['stimulus']}' alt='Aliance' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${generated_stimuli[1]['stimulus']}' alt='Boulder' width='100' height='100' draggable='true' ondragstart='drag(event)'>
+  <img id='drag03' src='${generated_stimuli[2]['stimulus']}' alt='Cornwall' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${generated_stimuli[3]['stimulus']}' alt='Custer' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag05' src='${generated_stimuli[4]['stimulus']}' alt='DelawareCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]['stimulus']}' alt='Medora' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]['stimulus']}' alt='Newport' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]['stimulus']}' alt='ParkCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]['stimulus']}' alt='Racine' width='100' height='100' draggable='true' ondragstart='drag(event)'>
+  <img id='drag10' src='${generated_stimuli[9]['stimulus']}' alt='Sitka' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]['stimulus']}' alt='WestPalmBeach' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]['stimulus']}' alt='Yukon' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag13' src='${generated_stimuli[12]['stimulus']}' alt='img13' width='100' height='100' draggable='true' ondragstart='drag(event)'></div>`
+                      +"<div id='div1' style='width: 1200px; height: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='recon_drop(event)' ondragover='recon_allowDrop(event) '><div id='div3' style='width: 1200px; height: 700px; margin: 0 auto; position: relative; '></div><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>"]
+  //jspsych-html-button-response-button-0
+  
   jsPsych.init({
     timeline: timeline,
     preload_images: all_images,
