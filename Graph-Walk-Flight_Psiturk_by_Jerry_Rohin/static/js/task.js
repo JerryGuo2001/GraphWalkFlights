@@ -1180,16 +1180,16 @@ var end_questions = {
   on_finish: function(data) {
     data.trial_type = "survey"
     data.stimulus = "survey-questions"
-    data.testedstates = testedstates.join("; ")
-    data.currentstate = currentstate.replace(/,/g, ';');
-    data.otherstate = otherstate.replace(/,/g, ';');
-    data.problems = problems
-    data.smooth = smooth
-    data.distraction = distraction.replace(/,/g, ';');
-    data.strategies = strategies.replace(/,/g, ';');
-    data.easier = easier.replace(/,/g, ';');
-    data.similar = similar.replace(/,/g, ';');
-    data.comments = comments.replace(/,/g, ';');
+    data.testedstates = (testedstates || "").join("; ")
+    data.currentstate = (currentstate || "").replace(/,/g, ';');
+    data.otherstate   = (otherstate   || "").replace(/,/g, ';');
+    data.problems     = problems;
+    data.smooth       = smooth;
+    data.distraction  = (distraction  || "").replace(/,/g, ';');
+    data.strategies   = (strategies   || "").replace(/,/g, ';');
+    data.easier       = (easier       || "").replace(/,/g, ';');
+    data.similar      = (similar      || "").replace(/,/g, ';');
+    data.comments     = (comments     || "").replace(/,/g, ';');
   }
 };
 
@@ -1304,7 +1304,7 @@ waitUntilBase64Ready().then(() => {
 
 
   //timeline
-  timeline.push(welcome,enterFullscreen)
+  timeline.push(welcome,end_questions,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 
