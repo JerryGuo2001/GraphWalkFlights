@@ -8,14 +8,28 @@ function shuffle(array) {
 
 // === CONFIG ===
 generated_stimuli = []
-noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
+let unshuffled_imageList,unshuffled_cityNameList,prefix
 
-let unshuffled_imageList = noprefix_imageList.map(filename => {
-let prefix = Math.random() < 0.5 ? 'US_Cities_List/mm_' : 'US_Cities_List/nat_';
-return prefix + filename;
-});
+let fictionalorreal='nope'
+if (fictionalorreal=='real'){
+  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
 
-let unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
+  unshuffled_imageList = noprefix_imageList.map(filename => {
+  prefix = Math.random() < 0.5 ? 'US_Cities_List/mm_' : 'US_Cities_List/nat_';
+  return prefix + filename;
+  });
+
+  unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
+}else{
+  noprefix_imageList=['barrel.png', 'basket.png', 'camera.png', 'dustpan.png', 'globe.png', 'gong.png', 'hat.png', 'jukebox.png', 'paint.png', 'snail.png', 'soldier.png', 'teeth.png', 'wheelchair.png']// change last one
+
+  unshuffled_imageList = noprefix_imageList.map(filename => {
+  prefix = Math.random() < 0.5 ? 'US_Cities_List/' : 'US_Cities_List/';
+  return prefix+filename;
+  });
+
+  unshuffled_cityNameList=['Riverlyn', 'North Arroya', 'Claywater', 'Orchard Bend', 'Juniper Creek', 'Hawthorne Bluffs', 'Sunmere', 'Hollendale', 'Cedarwyn', 'New Verdan', 'Baymarsh', 'Delaro Park', 'Granton Ridge']
+}
 
 let city_arr = [];
 for (let i = 0;i<unshuffled_cityNameList.length;i++){
