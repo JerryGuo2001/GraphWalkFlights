@@ -2614,3 +2614,36 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
     raise TemplateNotFound(template)
 jinja2.exceptions.TemplateNotFound: undefined
+2025-07-08 12:32:32,911 hit_assign_worker_id_not_set_in_mturk (1001) {}
+[2025-07-08 12:33:59 -0700] [15572] [CRITICAL] WORKER TIMEOUT (pid:15580)
+2025-07-08 13:01:28,922 Exception on /undefined [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.7/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.7/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/psiturk/Library/Python/3.7/lib/python/site-packages/psiturk/experiment.py", line 747, in regularpage
+    return render_template(pagename)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 134, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/local/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/local/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 58, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.7/site-packages/flask/templating.py", line 86, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: undefined
