@@ -850,6 +850,7 @@ var shortestpath_phase = {
   }
 }
 //Shortest Path memory end
+
 var phase3 = {}
 //Goal directed planning
 function createPhase3(numberoftrial){
