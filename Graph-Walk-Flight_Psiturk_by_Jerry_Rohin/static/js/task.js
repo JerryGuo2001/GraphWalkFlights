@@ -1305,8 +1305,9 @@ waitUntilBase64Ready().then(() => {
 
 
   //timeline
-  timeline.push(welcome,end_questions,enterFullscreen)
-  timeline.push(intro_learn)
+  timeline.push(welcome,enterFullscreen)
+  // timeline.push(intro_learn)
+  timeline.push(intro_short)
   //timeline end
 
 
