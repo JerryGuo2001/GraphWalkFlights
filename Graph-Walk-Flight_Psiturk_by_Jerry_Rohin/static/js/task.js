@@ -1220,6 +1220,7 @@ var testedstates = []
 
 
 //graph reconstruction instruction start
+let graph_instruction_number=1
 let intro_graph=create_instruct(graph_instruct,graph_instructnames,graph_instruction_number,recon_phase3[0],a='graph_')
 //graph reconstruction instruction finish
 
