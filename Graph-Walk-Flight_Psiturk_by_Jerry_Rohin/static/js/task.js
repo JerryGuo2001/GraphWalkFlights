@@ -930,7 +930,7 @@ function createPhase3(numberoftrial){
           }
           gdp_init(),
           jsPsych.addNodeToEndOfTimeline({
-            timeline: [recon_phase3[0]],
+            timeline: [intro_graph],
           }, jsPsych.resumeExperiment)
           specificline_saved={};
           detourcity_name=[];
@@ -1218,6 +1218,11 @@ var currentstate = 0
 var otherstate = 0
 var testedstates = []
 
+
+//graph reconstruction instruction start
+let intro_graph=create_instruct(graph_instruct,graph_instructnames,graph_instruction_number,recon_phase3[0],a='graph_')
+//graph reconstruction instruction finish
+
 //
 // final thank you
 var thank_you = {
@@ -1306,8 +1311,7 @@ waitUntilBase64Ready().then(() => {
 
   //timeline
   timeline.push(welcome,enterFullscreen)
-  // timeline.push(intro_learn)
-  timeline.push(intro_short)
+  timeline.push(intro_learn)
   //timeline end
 
 

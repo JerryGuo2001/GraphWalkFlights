@@ -96,6 +96,13 @@ instruct_mem_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify
 mem_instructnames = ["instruct_mem_1","instruct_mem_2","instruct_mem_3","instruct_mem_4","instruct_mem_5","instruct_mem_6"]
 mem_instruct={instruct_mem_1,instruct_mem_2,instruct_mem_3,instruct_mem_4,instruct_mem_5,instruct_mem_6} 
 
+//Graph Reconstruction
+instruct_graph_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>In this part of the task, you will be shown all the images that you have studied earlier. There will NOT be any novel images that you have not already seen.<br>We will ask you to arrange the images on the screen in a way you think is best reflective of the pair arrangement you saw in the learning part (remember that the same object can appear in multiple pairs). You can move the images on the screen by clicking on them with your mouse, one at the time, and dragging them to whatever you think is a suitable position within the white rectangular area. Make sure you don't place any images on top of each other (no overlap). </p><br><p style= 'font-size:25px;margin-top:100px'></p><br>",
+instruct_graph_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>After placing the images on the screen, <strong>you will connect the images based on whether or not they were directly paired together during the learning phase.</strong> You can link the images together by first clicking on one image, followed by the image you want to connect it to. You don't need to drag/draw the line, just click on the two images you'd like to connect - and the line will appear. Note that if you want to make a new connection using the same object you had connected previously, you must click on that object again in order to draw a new line to another object. If you would like to remove a connection, use the same process&mdash;click one image followed by the image it is linked to, and the existing line will be removed.</p><p style= 'font-size:25px;margin-top:100px'></p><br>",
+instruct_graph_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>When you are satisfied with the position of all the images and their connections, click the 'Submit' button to finish the task!</p><p style= 'font-size:25px;margin-top:100px'></p>",
+graph_instructnames = ["instruct_graph_1","instruct_graph_2","instruct_graph_3"]
+graph_instruct={instruct_graph_1,instruct_graph_2,instruct_graph_3} 
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
