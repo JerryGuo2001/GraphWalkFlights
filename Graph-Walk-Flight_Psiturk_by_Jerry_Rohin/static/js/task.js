@@ -471,9 +471,41 @@ helpofattentioncheck={
   }
 }
 
-//practice attention check end
-let instruction_number = 1
-intro_learn=create_instruct(instruct,instructnames,instruction_number,prac_attentioncheck_blackplus,a='')
+// Learn prac 1
+var prac1_num=1
+var intro_prac1_learn=create_instruct(instructprac1,instructprac1names,prac1_num,learn_prac2_phase,a='prac_')
+var prac2_num=1
+
+var learn_prac1_phase = {
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_learning_trial(['../static/images/story_example_01.png'],['../static/images/story_example_02.png'],0),
+  stimulus_duration:3000,
+  trial_duration:3000,
+  on_load: function(){
+    timeline.push(intro_prac1_learn)  
+  },
+  on_finish: function(data) {
+    data.trial_type = 'learn_prac_1';
+    data.stimulus='lean_prac_1'
+    attentioncheck(intro_prac1_learn,a=1,1,0,intro_prac1_learn)
+  }
+}
+
+var learn_prac2_phase = {
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_learning_trial(['../static/images/LosAngeles.png'],['../static/images/story_example_04.png'],0),
+  stimulus_duration:3000,
+  trial_duration:3000,
+  on_finish: function(data) {
+    data.trial_type = 'learn_prac_2';
+    data.stimulus='lean_prac_2'
+    attentioncheck(intro_prac2_learn,a=1,1,0,intro_prac2_learn)
+  }
+}
 
 
 function learnphaseone(){
@@ -1247,6 +1279,10 @@ var thank_you = {
 
 
 //time line here
+  var prac1_num=1
+  var intro_prac1_learn=create_instruct(instructprac1,instructprac1names,prac1_num,learn_prac2_phase,a='prac_')
+  var prac2_num=1
+  var intro_prac2_learn=create_instruct(instructprac2,instructprac2names,prac2_num,prac_attentioncheck_blackplus,a='prac2_')
 
 
 waitUntilBase64Ready().then(() => {
@@ -1308,7 +1344,9 @@ waitUntilBase64Ready().then(() => {
 
 
   learnphaseone()
-
+  //instruction section
+  var instruction_number=1
+  var intro_learn=create_instruct(instruct,instructnames,instruction_number,learn_prac1_phase)
 
   //timeline
   timeline.push(welcome,enterFullscreen)
