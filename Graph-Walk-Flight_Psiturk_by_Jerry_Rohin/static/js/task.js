@@ -306,10 +306,11 @@ csfa=[]
 
 //attention check color cross
 function create_color_list(color) {
-  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color: %s;'>\u002B</p>"
-  ,color)
+  return parse("<p style='position:absolute;top:50%;right:50%;transform:translate(50%, -50%);font-size:125px;color:" + color + ";text-shadow:\
+  -2px -2px 0 #000, 0 -2px 0 #000, 2px -2px 0 #000,\
+  -2px 0 0 #000, 2px 0 0 #000,\
+  -2px 2px 0 #000, 0 2px 0 #000, 2px 2px 0 #000;'>+</p>");
 }
-
 prac_attentioncheck_colorchange={
   type: 'html-keyboard-responsefl',
   choices: ['1','2'],

@@ -10,7 +10,7 @@ function shuffle(array) {
 generated_stimuli = []
 let unshuffled_imageList,unshuffled_cityNameList,prefix
 
-let fictionalorreal='nope'
+let fictionalorreal='real'
 if (fictionalorreal=='real'){
   noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
 
