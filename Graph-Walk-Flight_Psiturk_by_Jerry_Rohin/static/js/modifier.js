@@ -17,7 +17,7 @@ if (debugmode==true){
 
 //warningpage
 warning=0 //this is to start the counter of total warning
-warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you see a blue cross flash and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>",
+warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you see a blue cross flash and '2' when you see a yellow one. If you keep missing trials you will be disqualified.</p>",
 checkfail=0 //this is to start the attentioncheck
 checkthreshold=2 //this is to add the threshold for attentioncheck
 
@@ -66,7 +66,7 @@ instructprac1={instruct_prac_1,instruct_prac_2} // IF you want to add or decreas
 
 instruct_prac2_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Were you able to come up with a story or image connecting these items?<br><br>Once you think of one, press next to continue.</p><br>",
 instruct_prac2_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Great! Please continue to come up with a story or image for each trial.<br><br>For example, you could imagine the tiger getting its own star on Hollywood Blvd.</p><br /><p style ='font-size: 30px;line-height:1.5'></p></div>",
-instruct_prac2_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the flight pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>To make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the cities. If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get enough of the color check trials correct.<br><br>",
+instruct_prac2_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the flight pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>To make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the cities. If the cross flashes <span style='color: blue;text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px  1px 0 #000,1px  1px 0 #000'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: yellow;text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px  1px 0 #000,1px  1px 0 #000'>yellow,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get enough of the color check trials correct.<br><br>",
 
 instructprac2names = ["instruct_prac2_1","instruct_prac2_2","instruct_prac2_3"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
 instructprac2={instruct_prac2_1,instruct_prac2_2,instruct_prac2_3} // IF you want to add or decrease number of page for instruct, just delete or add var here.
@@ -1259,7 +1259,7 @@ for (let i = 0; i<allSelectedPairs.length; i++){
 }
 
 //color for the plus sign
-atcheckcolor=['blue','green']
+atcheckcolor=['blue','yellow']
 
 //determinant for the time for the flash color
 function colorStart(){

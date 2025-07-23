@@ -255,7 +255,7 @@ var instruct_lastonebefore_practice={
   stimulus: `
   <div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>
   Now we will begin showing you flights to study. Make sure to remember the two cities as a pair, and additionally respond '1' when the cross flashes blue,
-  and '2' when it flashes green. Please respond as quickly and as accurately as possible.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>
+  and '2' when it flashes yellow. Please respond as quickly and as accurately as possible.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>
    `,
   on_finish: function (data) {
     data.trial_type = 'last_instruct';
@@ -273,7 +273,7 @@ var learn_phase_color = {}
 
 var ac_colorprepare=colorStart()
 var ac_colorstop=colorStop(ac_colorprepare)
-var ac_colorlist=['blue','green','green','blue','green','green','blue','green','blue','blue']
+var ac_colorlist=['blue','yellow','yellow','blue','yellow','yellow','blue','yellow','blue','blue']
 var ac_colornumber=0
 var total_ac = 0
 var correct_ac = 0
@@ -347,7 +347,7 @@ prac_attentioncheck_thethird={
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
-      }else if (csfa==50&&ac_colorlist[ac_colornumber]=='green'){
+      }else if (csfa==50&&ac_colorlist[ac_colornumber]=='yellow'){
         correct_ac += 1
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
@@ -357,7 +357,7 @@ prac_attentioncheck_thethird={
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
-      }else if (data.key_press==50&&ac_colorlist[ac_colornumber]=='green'){
+      }else if (data.key_press==50&&ac_colorlist[ac_colornumber]=='yellow'){
         correct_ac += 1
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
@@ -368,7 +368,7 @@ prac_attentioncheck_thethird={
         }, jsPsych.resumeExperiment)
       }
     }else{
-      if (csfa==49&&ac_colorlist[ac_colornumber]=='blue' || csfa==50&&ac_colorlist[ac_colornumber]=='green' || data.key_press==49&&ac_colorlist[ac_colornumber]=='blue' || data.key_press==49&&ac_colorlist[ac_colornumber]=='green') {
+      if (csfa==49&&ac_colorlist[ac_colornumber]=='blue' || csfa==50&&ac_colorlist[ac_colornumber]=='yellow' || data.key_press==49&&ac_colorlist[ac_colornumber]=='blue' || data.key_press==49&&ac_colorlist[ac_colornumber]=='yellow') {
         correct_ac += 1
       }
       total_ac += 1
@@ -465,7 +465,7 @@ function getACvalues() {
 helpofattentioncheck={
   type: 'html-keyboard-response',
   choices: ['spacebar'],
-  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>It seems you got one wrong. Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>It seems you got one wrong. Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px  1px 0 #000,1px  1px 0 #000'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: yellow;text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px  1px 0 #000,1px  1px 0 #000'>yellow,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
   on_finish: function (data) {
     data.trial_type = 'attentioncheck_help';
     data.stimulus='instruct'
