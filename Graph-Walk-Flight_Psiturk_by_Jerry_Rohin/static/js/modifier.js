@@ -4,7 +4,7 @@ sequence = "blocked"
 //debug moode on/off
 debugmode= true
 if (debugmode==true){
-  n_learning_trial=5 //This determine the number of learning trial you want in total
+  n_learning_trial=6 //This determine the number of learning trial you want in total
   n_direct_trial=5 //how many direct trial you want
   n_shortest_trial=5 //how many shortest path you want
   n_goaldir_trial=3 //how many goal directed planning you want
@@ -14,6 +14,9 @@ if (debugmode==true){
   n_shortest_trial=84 //how many shortest path you want
   n_goaldir_trial=33 //how many goal directed planning you want
 }
+
+const num_breaks = 1
+const breaks = [];
 
 //warningpage
 warning=0 //this is to start the counter of total warning

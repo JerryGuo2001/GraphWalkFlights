@@ -70,13 +70,26 @@ function add_room(room,room_timeline) {
 
 //function for attentioncheck
 function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak,thecrossant,thecrossant_black,thecrossant_break){
+  if (num_breaks > 0) {
+    trials_between_breaks = n_blue_rounds / (num_breaks + 1);
+    for (let i = 0; i < num_breaks; i++) {
+      breaks.push(Math.floor(trials_between_breaks * (i + 1)));
+    }
+  }
   if(sfa && curr_blue_trial<n_blue_rounds) {
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break],
-    }, jsPsych.resumeExperiment)
+    if (sfa && breaks.includes(curr_blue_trial)) {
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [learn_phase_break, learn_phase, learn_phase_color, thecrossant, thecrossant_black, thecrossant_break],
+      }, jsPsych.resumeExperiment);
+    } else {
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [learn_phase, learn_phase_color, thecrossant, thecrossant_black, thecrossant_break],
+      }, jsPsych.resumeExperiment);
+    }
+
   }else if(sfa&& curr_blue_trial>=n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
-      timeline: [thebreak],
+      timeline: [learn_phase_end_break,thebreak],
     }, jsPsych.resumeExperiment)
   }
 }

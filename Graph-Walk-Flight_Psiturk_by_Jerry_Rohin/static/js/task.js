@@ -685,6 +685,44 @@ function learnphaseone(){
     }
   }
  
+  learn_phase_break = {
+    type: 'html-keyboard-response',
+        stimulus: `
+          <div style="font-size: 24px; max-width: 800px; margin: auto; text-align: center;">
+            <p><strong>Please take a short (up to 60 seconds) break.</strong></p>
+            <p>Use this time to stretch and reset. After the break, you will continue to learn more flights.</p>
+            <p>If you would like to resume without a break, press the <strong>spacebar</strong>.</p>
+            <p>Otherwise, the screen will advance automatically after 60 seconds.</p>
+          </div>
+        `,
+        choices: ['spacebar'],
+        trial_duration: 60000, // 60 seconds
+        response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus='learn_break'
+      data.trial_type = 'learn_break';
+    }
+  }
+
+  learn_phase_end_break = {
+    type: 'html-keyboard-response',
+        stimulus: `
+          <div style="font-size: 24px; max-width: 800px; margin: auto; text-align: center;">
+            <p><strong>Thank you for completing the first part of your job. Please take a short (up to 60 seconds) break.</strong></p>
+            <p>Use this time to stretch and reset. After the break, you will continue to the next part of your job.</p>
+            <p>If you would like to resume without a break, press the <strong>spacebar</strong>.</p>
+            <p>Otherwise, the screen will advance automatically after 60 seconds.</p>
+          </div>
+        `,
+        choices: ['spacebar'],
+        trial_duration: 60000, // 60 seconds
+        response_ends_trial: true,
+    on_finish: function(data) {
+      data.stimulus='learn_break'
+      data.trial_type = 'learn_break';
+    }
+  }
+
   // timeline.push(learn_phase)
   // timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
 }
@@ -1350,7 +1388,7 @@ waitUntilBase64Ready().then(() => {
   var intro_learn=create_instruct(instruct,instructnames,instruction_number,learn_prac1_phase)
 
   //timeline
-  timeline.push(welcome,enterFullscreen)
+  timeline.push(welcome,learn_phase_break,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 
