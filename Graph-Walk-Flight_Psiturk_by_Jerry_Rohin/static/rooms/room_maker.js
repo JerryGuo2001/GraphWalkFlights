@@ -79,7 +79,7 @@ function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rou
   if(sfa && curr_blue_trial<n_blue_rounds) {
     if (sfa && breaks.includes(curr_blue_trial)) {
       jsPsych.addNodeToEndOfTimeline({
-        timeline: [learn_phase_break, learn_phase, learn_phase_color, thecrossant, thecrossant_black, thecrossant_break],
+        timeline: [learn_phase_break,directmem_break, learn_phase, learn_phase_color, thecrossant, thecrossant_black, thecrossant_break],
       }, jsPsych.resumeExperiment);
     } else {
       jsPsych.addNodeToEndOfTimeline({
@@ -94,7 +94,7 @@ function attentioncheck_learningphase(learn_phase,sfa,curr_blue_trial,n_blue_rou
   }
 }
 
-function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
+function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak,phase='learn'){
   if(sfa && curr_blue_trial<n_blue_rounds) {
     jsPsych.addNodeToEndOfTimeline({
       timeline: [directmem_break,learn_phase],
@@ -103,18 +103,52 @@ function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
     jsPsych.addNodeToEndOfTimeline({
       timeline: [directmem_break,thebreak],
     }, jsPsych.resumeExperiment)
-  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,learn_phase],
-    }, jsPsych.resumeExperiment)
-  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page,thebreak],
-    }, jsPsych.resumeExperiment)
-  }else if(warning>2){
-    jsPsych.addNodeToEndOfTimeline({
-      timeline: [warning_page],
-    }, jsPsych.resumeExperiment)
+  }
+  else if (!sfa && phase =='direct'){
+    if(direct_warning<1&& curr_blue_trial<n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [directmem_break,learn_phase],
+      }, jsPsych.resumeExperiment)
+    }else if(direct_warning>=1 && direct_warning<=4 && curr_blue_trial<n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [warning_page,directmem_break,learn_phase],
+      }, jsPsych.resumeExperiment)
+    }else if(direct_warning<1&& curr_blue_trial>=n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [directmem_break,thebreak],
+      }, jsPsych.resumeExperiment)
+    }else if(direct_warning>=1 && direct_warning<=4&& curr_blue_trial>=n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [warning_page,directmem_break,thebreak],
+      }, jsPsych.resumeExperiment)
+    }else if(direct_warning>4){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [TaskFailed],
+      }, jsPsych.resumeExperiment)
+    }
+  }
+  else if (!sfa && phase =='short'){
+    if(short_warning<1&& curr_blue_trial<n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [directmem_break,learn_phase],
+      }, jsPsych.resumeExperiment)
+    }else if(short_warning>=1 && short_warning<8&& curr_blue_trial<n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [warning_page,directmem_break,learn_phase],
+      }, jsPsych.resumeExperiment)
+    }else if(short_warning<1&& curr_blue_trial>=n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [directmem_break,thebreak],
+      }, jsPsych.resumeExperiment)
+    }else if(short_warning>=1 && short_warning<8&& curr_blue_trial>=n_blue_rounds){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [warning_page,directmem_break,thebreak],
+      }, jsPsych.resumeExperiment)
+    }else if(short_warning>=8){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [TaskFailed],
+      }, jsPsych.resumeExperiment)
+    }
   }
 }
 

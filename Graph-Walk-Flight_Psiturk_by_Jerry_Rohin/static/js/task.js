@@ -1,8 +1,10 @@
 var debug_mode = 0; // debug mode determines how long the blocks are, 5 sec in debug mode, 5 minutes in actual experiment
 //var data_save_method = 'csv_server_py';
 var data_save_method = 'csv_server_py';
-
+var part2_sfa= NaN
 let save_final_deter;
+var direct_warning = 0
+var short_warning = 0
 
 // Will be set to true when experiment is exiting fullscreen normally, to prevent above end experiment code
 var normal_exit = false;
@@ -813,12 +815,17 @@ var directmemory_phase = {
     });
 
     data.cumulative_accuracy = directsum / directcorrectness.length;
-    sfa=data.key_press,
-    curr_direct_trial=curr_direct_trial+1,
+    part2_sfa=data.key_press
+
+    if (!part2_sfa){
+      direct_warning +=1
+    }
+    curr_direct_trial=curr_direct_trial+1
     directmemory_phase.stimulus=create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
-    attentioncheck(directmemory_phase,a=1,curr_direct_trial,n_direct_trial,intro_short)
+    attentioncheck(directmemory_phase,part2_sfa,curr_direct_trial,n_direct_trial,intro_short,phase='direct')
   }
 }
+
 //Direct Memory test end
 
 var directmem_break= {
@@ -914,10 +921,13 @@ var shortestpath_phase = {
     if (curr_shortest_trial>=n_shortest_trial){
       save_data()
     }
-    sfa=data.key_press,
-    curr_shortest_trial=curr_shortest_trial+1,
+    part2_sfa=data.key_press
+    if (!part2_sfa){
+      short_warning +=1
+    }
+    curr_shortest_trial=curr_shortest_trial+1
     shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
-    attentioncheck(shortestpath_phase,a=1,curr_shortest_trial,n_shortest_trial,intro_mem)
+    attentioncheck(shortestpath_phase,part2_sfa,curr_shortest_trial,n_shortest_trial,intro_mem,phase='short')
   }
 }
 //Shortest Path memory end
@@ -1388,7 +1398,7 @@ waitUntilBase64Ready().then(() => {
   var intro_learn=create_instruct(instruct,instructnames,instruction_number,learn_prac1_phase)
 
   //timeline
-  timeline.push(welcome,learn_phase_break,enterFullscreen)
+  timeline.push(welcome,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 
