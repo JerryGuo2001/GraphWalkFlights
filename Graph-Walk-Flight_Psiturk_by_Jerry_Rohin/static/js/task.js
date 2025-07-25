@@ -1492,7 +1492,6 @@ waitUntilBase64Ready().then(() => {
 
   //timeline
   timeline.push(welcome,enterFullscreen)
-  // timeline.push(recon_phase3[0])
   timeline.push(intro_learn)
   //timeline end
 

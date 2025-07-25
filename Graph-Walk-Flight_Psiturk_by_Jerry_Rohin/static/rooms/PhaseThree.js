@@ -245,6 +245,7 @@ function continueButton() {
                 document.getElementById('div1').style.display = 'block';
                 document.getElementById('div2').style.display = 'block';
                 document.getElementById('displayhelp').style.display = 'block';
+                document.getElementById('spiderman').style.display = 'block';
         
                 // Step 7: Hide the closed city image
                 const closedCityIndex = selected_middle_image_index //this is the index of the chosen hidden city
