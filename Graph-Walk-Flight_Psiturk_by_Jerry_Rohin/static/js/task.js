@@ -5,7 +5,9 @@ var part2_sfa= NaN
 let save_final_deter;
 var direct_warning = 0
 var short_warning = 0
-
+var quickKP = 0;
+var infKP = 0;
+var timer = 0;
 // Will be set to true when experiment is exiting fullscreen normally, to prevent above end experiment code
 var normal_exit = false;
 var window_height = window.screen.height;
@@ -72,6 +74,20 @@ var welcome = {
   }
 }
 //welcome page end
+
+var too_quick={
+  type: 'html-keyboard-response',
+  stimulus: '<h1 style="color: red;font-size: 50px">Your response was too quick. Please take your time to carefully consider your answer before responding.</h1>' +
+            '<p style="color: red;font-size: 50px">The experiment will continue in 10 seconds.</p>',
+  choices: jsPsych.NO_KEYS, // Prevent responses
+  trial_duration: 10000, // Stay on screen for 10 seconds
+  on_finish: function(data) {
+    data.trial_type='slowdown_page'
+    data.stimulus='too_quick'
+    quickKP +=1
+  }
+}
+
 
 //Fullscreen start
 var enterFullscreen = {
@@ -828,6 +844,34 @@ var directmemory_phase = {
       data.missedtrial = 'closer'
       data.weighted_accuracy = 0.5
     }
+
+    infKP += 1
+    if (infKP==1){
+      // Start the timer
+      timer = 0;
+      infINT = setInterval(() => {
+          timer++;;
+      }, 1000);
+    }
+    if (infKP == 4 && timer < 4) {
+      clearInterval(infINT)
+      jsPsych.addNodeToEndOfTimeline({
+      timeline: [too_quick],
+      }, jsPsych.resumeExperiment)
+      infKP = -1
+      timer = 0;
+      data.tooquick = 1
+    } else if ((infKP <= 4 && timer >= 4)){
+      infKP = 0
+      clearInterval(infINT);
+      timer = 0
+    }
+
+    if (data.rt < 300) {
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [too_quick],
+        }, jsPsych.resumeExperiment)
+    }
     
     let directsum = 0;
     directcorrectness.forEach(function(value) {
@@ -930,6 +974,35 @@ var shortestpath_phase = {
 
     else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength + threedifflength){
       data.specific_pairs = 'Two Edge Six Edge'
+    }
+
+
+    infKP += 1
+    if (infKP==1){
+      // Start the timer
+      timer = 0;
+      infINT = setInterval(() => {
+          timer++;;
+      }, 1000);
+    }
+    if (infKP == 4 && timer < 4) {
+      clearInterval(infINT)
+      jsPsych.addNodeToEndOfTimeline({
+      timeline: [too_quick],
+      }, jsPsych.resumeExperiment)
+      infKP = -1
+      timer = 0;
+      data.tooquick = 1
+    } else if ((infKP <= 4 && timer >= 4)){
+      infKP = 0
+      clearInterval(infINT);
+      timer = 0
+    }
+
+    if (data.rt < 300) {
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [too_quick],
+        }, jsPsych.resumeExperiment)
     }
 
     let sum = 0;
