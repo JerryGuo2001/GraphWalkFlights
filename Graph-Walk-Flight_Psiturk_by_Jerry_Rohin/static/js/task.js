@@ -689,17 +689,27 @@ function learnphaseone(){
  
   learn_phase_break = {
     type: 'html-keyboard-response',
-        stimulus: `
-          <div style="font-size: 24px; max-width: 800px; margin: auto; text-align: center;">
+        stimulus:  `
+          <div id="break-container" style="font-size: 24px; max-width: 800px; margin: auto; text-align: center;">
             <p><strong>Please take a short (up to 60 seconds) break.</strong></p>
             <p>Use this time to stretch and reset. After the break, you will continue to learn more flights.</p>
             <p>If you would like to resume without a break, press the <strong>spacebar</strong>.</p>
-            <p>Otherwise, the screen will advance automatically after 60 seconds.</p>
+            <p>Otherwise, the screen will advance automatically after 60 seconds.</p><br><br><br>
+            <p><strong>Time remaining: <span id="countdown">60</span> seconds</strong></p>
           </div>
         `,
         choices: ['spacebar'],
         trial_duration: 60000, // 60 seconds
         response_ends_trial: true,
+    on_load: function() {
+      let countdown = 60;
+      const countdownEl = document.getElementById('countdown');
+      const interval = setInterval(() => {
+        countdown--;
+        if (countdownEl) countdownEl.textContent = countdown;
+        if (countdown <= 0) clearInterval(interval);
+      }, 1000);
+    },
     on_finish: function(data) {
       data.stimulus='learn_break'
       data.trial_type = 'learn_break';
@@ -713,12 +723,22 @@ function learnphaseone(){
             <p><strong>Thank you for completing the first part of your job. Please take a short (up to 60 seconds) break.</strong></p>
             <p>Use this time to stretch and reset. After the break, you will continue to the next part of your job.</p>
             <p>If you would like to resume without a break, press the <strong>spacebar</strong>.</p>
-            <p>Otherwise, the screen will advance automatically after 60 seconds.</p>
+            <p>Otherwise, the screen will advance automatically after 60 seconds.</p><br><br><br>
+            <p><strong>Time remaining: <span id="countdown2">60</span> seconds</strong></p>
           </div>
         `,
         choices: ['spacebar'],
         trial_duration: 60000, // 60 seconds
         response_ends_trial: true,
+    on_load: function() {
+      let countdown = 60;
+      const countdownEl = document.getElementById('countdown2');
+      const interval = setInterval(() => {
+        countdown--;
+        if (countdownEl) countdownEl.textContent = countdown;
+        if (countdown <= 0) clearInterval(interval);
+      }, 1000);
+    },
     on_finish: function(data) {
       data.stimulus='learn_break'
       data.trial_type = 'learn_break';
@@ -1399,8 +1419,8 @@ waitUntilBase64Ready().then(() => {
 
   //timeline
   timeline.push(welcome,enterFullscreen)
-  timeline.push(recon_phase3[0])
-  // timeline.push(intro_learn)
+  // timeline.push(recon_phase3[0])
+  timeline.push(intro_learn)
   //timeline end
 
 
