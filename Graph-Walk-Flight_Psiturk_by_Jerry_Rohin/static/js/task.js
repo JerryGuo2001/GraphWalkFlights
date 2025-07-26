@@ -520,7 +520,7 @@ var learn_prac2_phase = {
   type: 'html-keyboard-response',
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
-  stimulus:create_learning_trial(['../static/images/LosAngeles.png'],['../static/images/story_example_04.png'],0),
+  stimulus:create_learning_trial(['../static/images/story_example_03.png'],['../static/images/story_example_04.png'],0),
   stimulus_duration:3000,
   trial_duration:3000,
   on_finish: function(data) {
