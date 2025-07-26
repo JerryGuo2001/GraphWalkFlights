@@ -332,6 +332,7 @@ function create_color_list(color) {
   -2px 0 0 #000, 2px 0 0 #000,\
   -2px 2px 0 #000, 0 2px 0 #000, 2px 2px 0 #000;'>+</p>");
 }
+
 prac_attentioncheck_colorchange={
   type: 'html-keyboard-responsefl',
   choices: ['1','2'],

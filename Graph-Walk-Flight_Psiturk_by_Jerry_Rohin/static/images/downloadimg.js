@@ -17,7 +17,7 @@ if (Math.random() >= 0.5){
 
 
 if (fictionalorreal=='real'){
-  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
+  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] 
 
   unshuffled_imageList = noprefix_imageList.map(filename => {
   prefix = 'US_Cities_List/'
@@ -26,7 +26,7 @@ if (fictionalorreal=='real'){
 
   unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
 }else{
-  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
+  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png']
 
   unshuffled_imageList = noprefix_imageList.map(filename => {
   prefix = 'US_Cities_List/';
