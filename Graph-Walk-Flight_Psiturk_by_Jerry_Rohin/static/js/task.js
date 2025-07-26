@@ -7,7 +7,9 @@ var direct_warning = 0
 var short_warning = 0
 var quickKP = 0;
 var infKP = 0;
-var timer = 0;
+let timer = null;
+let infINT = null
+let intervalId = null
 // Will be set to true when experiment is exiting fullscreen normally, to prevent above end experiment code
 var normal_exit = false;
 var window_height = window.screen.height;
@@ -867,7 +869,7 @@ var directmemory_phase = {
       timer = 0
     }
 
-    if (data.rt < 300) {
+    if (data.rt && data.rt < 300) {
       jsPsych.addNodeToEndOfTimeline({
         timeline: [too_quick],
         }, jsPsych.resumeExperiment)
@@ -977,29 +979,31 @@ var shortestpath_phase = {
     }
 
 
-    infKP += 1
-    if (infKP==1){
-      // Start the timer
-      timer = 0;
-      infINT = setInterval(() => {
-          timer++;;
-      }, 1000);
-    }
-    if (infKP == 4 && timer < 4) {
-      clearInterval(infINT)
-      jsPsych.addNodeToEndOfTimeline({
-      timeline: [too_quick],
-      }, jsPsych.resumeExperiment)
-      infKP = -1
-      timer = 0;
-      data.tooquick = 1
-    } else if ((infKP <= 4 && timer >= 4)){
-      infKP = 0
-      clearInterval(infINT);
-      timer = 0
-    }
+      // Check if the RT is too quick
+      quickKP += 1
+      if (quickKP==1){
+        // Start the timer
+        timer = 0;
+        intervalId = setInterval(() => {
+            timer++;;
+        }, 1000);
+      }
 
-    if (data.rt < 300) {
+      if (quickKP == 4 && timer < 4) {
+        clearInterval(intervalId)
+        jsPsych.addNodeToEndOfTimeline({
+        timeline: [too_quick],
+        }, jsPsych.resumeExperiment)
+        quickKP = -1
+        timer = 0;
+        data.tooquick = 1
+      } else if ((quickKP <= 4 && timer >= 4)){
+        quickKP = 0
+        clearInterval(intervalId);
+        timer = 0
+      }
+
+    if (data.rt && data.rt < 300) {
       jsPsych.addNodeToEndOfTimeline({
         timeline: [too_quick],
         }, jsPsych.resumeExperiment)
