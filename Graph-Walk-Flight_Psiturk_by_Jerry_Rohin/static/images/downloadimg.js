@@ -9,8 +9,13 @@ function shuffle(array) {
 // === CONFIG ===
 generated_stimuli = []
 let unshuffled_imageList,unshuffled_cityNameList,prefix
+let fictionalorreal = 'none'
+if (Math.random() >= 0.5){
+  fictionalorreal='real'
+}else{fictionalorreal='fictional'}
 
-let fictionalorreal='real'
+
+
 if (fictionalorreal=='real'){
   noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
 

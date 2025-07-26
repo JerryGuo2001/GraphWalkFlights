@@ -1,8 +1,10 @@
 // Either "blocked" or "interleaved"
-sequence = "blocked"
+if (Math.random() >= 0.5){
+  sequence = "blocked"
+}else{sequence = 'interleaved'}
 
 //debug moode on/off
-debugmode= true
+debugmode= false
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=15 //how many direct trial you want
