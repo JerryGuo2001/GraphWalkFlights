@@ -18,14 +18,33 @@ function shuffle(array) {
 
     // === CONFIG ===
     generated_stimuli = []
-    noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] // change last one
+    let unshuffled_imageList,unshuffled_cityNameList,prefix
+    let fictionalorreal = 'none'
+    if (Math.random() >= 0.5){
+      fictionalorreal='real'
+    }else{fictionalorreal='fictional'}
 
-    let unshuffled_imageList = noprefix_imageList.map(filename => {
-    let prefix = Math.random() < 0.5 ? 'US_Cities_List/mm_' : 'US_Cities_List/nat_';
-    return prefix + filename;
-    });
 
-    let unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
+
+    if (fictionalorreal=='real'){
+      noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] 
+
+      unshuffled_imageList = noprefix_imageList.map(filename => {
+      prefix = 'US_Cities_List/'
+      return prefix + filename;
+      });
+
+      unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
+    }else{
+      noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png']
+
+      unshuffled_imageList = noprefix_imageList.map(filename => {
+      prefix = 'US_Cities_List/';
+      return prefix+filename;
+      });
+
+      unshuffled_cityNameList=['Riverlyn', 'North Arroya', 'Claywater', 'Orchard Bend', 'Juniper Creek', 'Hawthorne Bluffs', 'Sunmere', 'Hollendale', 'Cedarwyn', 'New Verdan', 'Baymarsh', 'Delaro Park', 'Granton Ridge']
+    }
 
     let city_arr = [];
     for (let i = 0;i<unshuffled_cityNameList.length;i++){
@@ -33,13 +52,17 @@ function shuffle(array) {
     }
     let list_images = []
     let cityNameList = []
-    shuffle(city_arr)
+    if (fictionalorreal!='real'){
+      shuffle(city_arr)
+    }
     for (let i = 0;i<unshuffled_cityNameList.length;i++){
-    list_images.push(unshuffled_imageList[city_arr[i]])
+    list_images.push('../images/' + unshuffled_imageList[city_arr[i]])
     cityNameList.push(unshuffled_cityNameList[city_arr[i]])
     }
     let imageFiles = list_images
     let labels = cityNameList
+    let image_city_names = list_images.map(path => path.replace("../images/", ""));
+
     const prefixOptions = ['', ''];
 
     // === MAIN ===
