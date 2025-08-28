@@ -6,10 +6,10 @@ sequence = 'interleaved'
 //debug moode on/off
 debugmode= false
 if (debugmode==true){
-  n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=15 //how many direct trial you want
-  n_shortest_trial=15 //how many shortest path you want
-  n_goaldir_trial=3 //how many goal directed planning you want
+  n_learning_trial=4 //This determine the number of learning trial you want in total
+  n_direct_trial=3 //how many direct trial you want
+  n_shortest_trial=3 //how many shortest path you want
+  n_goaldir_trial=2 //how many goal directed planning you want
 }else{
   n_learning_trial=128 //This determine the number of learning trial you want in total
   n_direct_trial=32 //how many direct trial you want
