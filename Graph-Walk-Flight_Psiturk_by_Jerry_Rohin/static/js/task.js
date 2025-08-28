@@ -1517,7 +1517,7 @@ waitUntilBase64Ready().then(() => {
   var intro_learn=create_instruct(instruct,instructnames,instruction_number,learn_prac1_phase)
 
   //timeline
-  timeline.push(welcome,to_oMST,enterFullscreen)
+  timeline.push(welcome,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 
