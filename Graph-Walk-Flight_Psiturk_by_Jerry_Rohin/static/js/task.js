@@ -1031,6 +1031,26 @@ var shortestpath_phase = {
 }
 //Shortest Path memory end
 
+
+// oMST 
+
+var to_oMST = {
+  type: 'html-button-response',
+  stimulus: `
+    <div style="max-width:800px; margin:auto; text-align:center;line-height:1.6;">
+      <h2>Thank you for your participation on this task! We have one final part for you (5 mins) where you will be looking at different images and deciding if they are indoor or outdoor\n\n<br><br></h2<br><br>
+    </div>
+  `,
+  choices: [
+    '<a href="https://starklab.bio.uci.edu/publix/cZkGRQ8lOGn" target="_blank" style="text-decoration:none; color:inherit;">Start Final Task</a>'
+  ],
+  on_start: function (){
+    save_final_deter='final',
+    save_data()
+  }
+};
+
+
 var phase3 = {}
 //Goal directed planning
 function createPhase3(numberoftrial){
@@ -1252,7 +1272,7 @@ function recon_createPhase3(numberoftrial){
           // }
           recon_init(),
           jsPsych.addNodeToEndOfTimeline({
-            timeline: [end_questions,thank_you],
+            timeline: [to_oMST],
           }, jsPsych.resumeExperiment)
         }
       }
@@ -1497,7 +1517,7 @@ waitUntilBase64Ready().then(() => {
   var intro_learn=create_instruct(instruct,instructnames,instruction_number,learn_prac1_phase)
 
   //timeline
-  timeline.push(welcome,enterFullscreen)
+  timeline.push(welcome,to_oMST,enterFullscreen)
   timeline.push(intro_learn)
   //timeline end
 

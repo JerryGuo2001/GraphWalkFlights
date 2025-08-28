@@ -1,8 +1,8 @@
 // Either "blocked" or "interleaved"
-if (Math.random() >= 0.5){
-  sequence = "blocked"
-}else{sequence = 'interleaved'}
-
+// if (Math.random() >= 0.5){
+//   sequence = "blocked"
+// }else{sequence = 'interleaved'}
+sequence = 'interleaved'
 //debug moode on/off
 debugmode= false
 if (debugmode==true){
