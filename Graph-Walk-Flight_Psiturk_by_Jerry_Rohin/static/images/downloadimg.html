@@ -4,9 +4,14 @@
   <meta charset="UTF-8">
   <title>Overlay Text on Images</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
+  <button id="downloadBtn" style="display:none; font-size:20px; padding:10px 20px;">
+    Download ZIP
+  </button>
+  <p id="status"></p>
+
   <script>
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -16,97 +21,114 @@ function shuffle(array) {
   return array;
 }
 
-    // === CONFIG ===
-    generated_stimuli = []
-    let unshuffled_imageList,unshuffled_cityNameList,prefix
-    let fictionalorreal = 'none'
-    if (Math.random() >= 0.5){
-      fictionalorreal='real'
-    }else{fictionalorreal='fictional'}
+// === CONFIG ===
+let generated_stimuli = [];
+let unshuffled_imageList, unshuffled_cityNameList, prefix;
+let fictionalorreal = 'fictional';
 
+if (fictionalorreal=='real'){
+  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] 
 
+  unshuffled_imageList = noprefix_imageList.map(filename => {
+  prefix = 'US_Cities_List/'
+  return prefix + filename;
+  });
 
-    if (fictionalorreal=='real'){
-      noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png'] 
+  unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
+}else{
+  noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png']
 
-      unshuffled_imageList = noprefix_imageList.map(filename => {
-      prefix = 'US_Cities_List/'
-      return prefix + filename;
-      });
+  unshuffled_imageList = noprefix_imageList.map(filename => {
+  prefix = 'US_Cities_List/';
+  return prefix+filename;
+  });
 
-      unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover']
-    }else{
-      noprefix_imageList=['westpalmbeach.png','newhope.png','boulder.png','peoria.png','gatlinburg.png','shreveport.png','hotsprings.png','carmel.png','huntsville.png','racine.png','leesburg.png','cornwall.png','hanover.png']
+  unshuffled_cityNameList=['Riverlyn', 'North Arroya', 'Claywater', 'Orchard Bend', 'Juniper Creek', 'Hawthorne Bluffs', 'Sunmere', 'Hollendale', 'Cedarwyn', 'New Verdan', 'Baymarsh', 'Delaro Park', 'Granton Ridge']
+}
 
-      unshuffled_imageList = noprefix_imageList.map(filename => {
-      prefix = 'US_Cities_List/';
-      return prefix+filename;
-      });
+let city_arr = [];
+let unshuff_arr = [];
+for (let i = 0;i<unshuffled_cityNameList.length;i++){
+city_arr.push(i)
+unshuff_arr.push(i)
+}
+let list_images = []
+let cityNameList = []
+if (fictionalorreal!='real'){
+  shuffle(city_arr)
+}
+for (let i = 0;i<unshuffled_cityNameList.length;i++){
+list_images.push('../images/' + unshuffled_imageList[city_arr[i]])
+cityNameList.push(unshuffled_cityNameList[unshuff_arr[i]])
+}
+let imageFiles = list_images
+let labels = cityNameList
+let image_city_names = list_images.map(path => path.replace("../images/", ""));
 
-      unshuffled_cityNameList=['Riverlyn', 'North Arroya', 'Claywater', 'Orchard Bend', 'Juniper Creek', 'Hawthorne Bluffs', 'Sunmere', 'Hollendale', 'Cedarwyn', 'New Verdan', 'Baymarsh', 'Delaro Park', 'Granton Ridge']
-    }
+const prefixOptions = ['', ''];
 
-    let city_arr = [];
-    for (let i = 0;i<unshuffled_cityNameList.length;i++){
-    city_arr.push(i)
-    }
-    let list_images = []
-    let cityNameList = []
-    if (fictionalorreal!='real'){
-      shuffle(city_arr)
-    }
-    for (let i = 0;i<unshuffled_cityNameList.length;i++){
-    list_images.push('../images/' + unshuffled_imageList[city_arr[i]])
-    cityNameList.push(unshuffled_cityNameList[city_arr[i]])
-    }
-    let imageFiles = list_images
-    let labels = cityNameList
-    let image_city_names = list_images.map(path => path.replace("../images/", ""));
+const zip = new JSZip();
+let completed = 0;
 
-    const prefixOptions = ['', ''];
+imageFiles.forEach((filename, i) => {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.src = filename;
 
-    // === MAIN ===
-    const zip = new JSZip();
-    let completed = 0;
+  img.onload = function() {
+    const targetWidth = 550;
+    const targetHeight = 550;
+    const topPadding = 200;
 
-    imageFiles.forEach((filename, i) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = filename;
+    // Canvas with label + resized image
+    const canvas = document.createElement('canvas');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight + topPadding;
 
-    img.onload = function() {
-        const topPadding = 200;
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height + topPadding;
+    const ctx = canvas.getContext('2d');
 
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // White background
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw label
-        ctx.font = 'bold 150px Arial';
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'center';
-        ctx.fillText(labels[i], canvas.width / 2, 130);
+    // Draw label text
+    ctx.font = '70px Arial';
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'center';
+    ctx.fillText(labels[i], canvas.width / 2, 130);
 
-        // Draw image
-        ctx.drawImage(img, 0, topPadding);
+    // Draw resized image
+    ctx.drawImage(img, 0, topPadding, targetWidth, targetHeight);
 
-        const base64 = canvas.toDataURL('image/png');
-        generated_stimuli.push({
-            stimulus: base64,
-            label: labels[i],
-            filename: filename
-        });
-        completed++;
-
-        // When all images are ready, start the experiment
-        if (completed === imageFiles.length) {
-            console.log("Images loaded!")
-        }
-    };
+    // Convert to base64
+    const base64 = canvas.toDataURL('image/png');
+    generated_stimuli.push({
+      stimulus: base64,
+      label: labels[i],
+      filename: filename
     });
+
+    // Add to zip
+    const imgData = base64.split(',')[1];
+    zip.file(labels[i] + ".png", imgData, { base64: true });
+
+    completed++;
+    document.getElementById("status").innerText = `Processed ${completed}/${imageFiles.length} images`;
+
+    if (completed === imageFiles.length) {
+      console.log("All images formatted and loaded!");
+      document.getElementById("downloadBtn").style.display = "inline-block";
+      document.getElementById("status").innerText = "All images ready!";
+    }
+  };
+});
+
+// Button → download zip
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  zip.generateAsync({ type: "blob" }).then(function(content) {
+    saveAs(content, "fictional-05.zip");
+  });
+});
   </script>
 </body>
 </html>

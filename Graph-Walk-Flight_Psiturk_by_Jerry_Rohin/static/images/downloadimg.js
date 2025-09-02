@@ -37,8 +37,10 @@ if (fictionalorreal=='real'){
 }
 
 let city_arr = [];
+let unshuff_arr = [];
 for (let i = 0;i<unshuffled_cityNameList.length;i++){
 city_arr.push(i)
+unshuff_arr.push(i)
 }
 let list_images = []
 let cityNameList = []
@@ -47,7 +49,7 @@ if (fictionalorreal!='real'){
 }
 for (let i = 0;i<unshuffled_cityNameList.length;i++){
 list_images.push('../static/images/' + unshuffled_imageList[city_arr[i]])
-cityNameList.push(unshuffled_cityNameList[city_arr[i]])
+cityNameList.push(unshuffled_cityNameList[unshuff_arr[i]])
 }
 let imageFiles = list_images
 let labels = cityNameList
