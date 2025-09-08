@@ -207,7 +207,7 @@ function continueButton() {
             detourDiv.style.zIndex = '9999';
             detourDiv.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.2)';
             detourDiv.style.textAlign = 'center';
-            const closedCityName = generated_stimuli[selected_middle_image_index-1]['label']; // or rightName
+            const closedCityName = phase3stim[selected_middle_image_index-1]['label']; // or rightName
             detourcity_name=closedCityName
             const warningText = document.createElement('p');
             
@@ -285,6 +285,12 @@ let rightName = ''
 let leftName = ''
 
 let goal_detor_deter
+
+phase3stim = imageFiles.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; 
+})
+
 function initiatep3(){
     if(detourLocationMap[goalIndex]){
         goal_detor_deter=true
@@ -304,9 +310,9 @@ function initiatep3(){
         // }
         container = document.getElementById('div1');
         document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
-        rightName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
+        rightName = phase3stim[room_goaldir_right[goalIndex]-1]['label']
         document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
-        leftName = generated_stimuli[room_goaldir_left[goalIndex]-1]['label']
+        leftName = phase3stim[room_goaldir_left[goalIndex]-1]['label']
         for (let i = 1; i <= 13; i++) {
             if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
                 images[i-1].style="display: none;" // Make them disappear in the top box
@@ -343,9 +349,9 @@ function initiatep3(){
         // }
         container = document.getElementById('div1');
         document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
-        rightName = generated_stimuli[room_goaldir_right[goalIndex]-1]['label']
+        rightName = phase3stim[room_goaldir_right[goalIndex]-1]['label']
         document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
-        leftName = generated_stimuli[room_goaldir_left[goalIndex]-1]['label']
+        leftName = phase3stim[room_goaldir_left[goalIndex]-1]['label']
         for (let i = 1; i <= 13; i++) {
             if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
                 images[i-1].style="display: none;" // Make them disappear in the top box

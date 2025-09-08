@@ -19,7 +19,10 @@ let semanticHTML =
 let semanticImagePositions = {};  // Global store
 let unknownImages = new Set();
 
-
+phase3stim = imageFiles.map(filename => {
+    let match = generated_stimuli.find(item => item.filename === filename);
+    return match ? match.stimulus : null; 
+})
 
 
 function initiatesemanticMap() {
@@ -61,8 +64,8 @@ function initiatesemanticMap() {
 
     let cityNames = [];
 
-    for (i=0;i<generated_stimuli.length;i++){
-        cityNames.push(generated_stimuli[i]['label'])
+    for (i=0;i<phase3stim.length;i++){
+        cityNames.push(phase3stim[i]['label'])
     }
     let droppedImages = new Set();
     let wrapper = document.getElementById('semanticWrapper');
@@ -143,7 +146,7 @@ function initiatesemanticMap() {
     
         const img = document.createElement('img');
         img.id = id;
-        img.src = generated_stimuli[i]['stimulus'];
+        img.src = phase3stim[i]['stimulus'];
         img.alt = city;
         img.draggable = true;
         img.style.width = '80px';
@@ -198,7 +201,7 @@ function initiatesemanticMap() {
             dot.style.borderRadius = '50%';
             dot.style.margin = '0 auto';
     
-            match = generated_stimuli.find(obj => obj.label === city);
+            match = phase3stim.find(obj => obj.label === city);
             const preview = document.createElement('img');
             preview.src = match.stimulus;
             preview.alt = city;
