@@ -1210,9 +1210,9 @@ function createPhase3(numberoftrial){
           }
           gdp_init(),
           phase3[i+1].stimulus = `<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans
-          <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><button id="nextButton" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">Submit</button><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${generated_stimuli[0]['stimulus']}' alt='${generated_stimuli[0]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${generated_stimuli[1]['stimulus']}' alt='${generated_stimuli[1]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='${generated_stimuli[2]['stimulus']}' alt='${generated_stimuli[2]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${generated_stimuli[3]['stimulus']}' alt='${generated_stimuli[3]['label']}' alt='Custer' width='100' height='120' draggable='true' ondragstart='drag(event)'>
-            <img id='drag05' src='${generated_stimuli[4]['stimulus']}' alt='${generated_stimuli[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]['stimulus']}' alt='${generated_stimuli[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]['stimulus']}' alt='${generated_stimuli[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]['stimulus']}' alt='${generated_stimuli[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]['stimulus']}' alt='${generated_stimuli[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${generated_stimuli[9]['stimulus']}' alt='${generated_stimuli[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]['stimulus']}' alt='${generated_stimuli[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]['stimulus']}' alt='${generated_stimuli[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
-             <img id='drag13' src='${generated_stimuli[12]['stimulus']}' alt='${generated_stimuli[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>`
+          <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><button id="nextButton" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">Submit</button><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${generated_stimuli[0]}' alt='${generated_stimuli[0]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${generated_stimuli[1]}' alt='${generated_stimuli[1]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='${generated_stimuli[2]}' alt='${generated_stimuli[2]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${generated_stimuli[3]}' alt='${generated_stimuli[3]['label']}' alt='Custer' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+            <img id='drag05' src='${generated_stimuli[4]}' alt='${generated_stimuli[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${generated_stimuli[5]}' alt='${generated_stimuli[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${generated_stimuli[6]}' alt='${generated_stimuli[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${generated_stimuli[7]}' alt='${generated_stimuli[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${generated_stimuli[8]}' alt='${generated_stimuli[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${generated_stimuli[9]}' alt='${generated_stimuli[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${generated_stimuli[10]}' alt='${generated_stimuli[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${generated_stimuli[11]}' alt='${generated_stimuli[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+             <img id='drag13' src='${generated_stimuli[12]}' alt='${generated_stimuli[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>`
           ,        
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
@@ -1510,10 +1510,15 @@ waitUntilBase64Ready().then(() => {
     return match ? match.stimulus : null; 
   });
 
-  phase3stim = imageFiles.map(filename => {
-    let match = generated_stimuli.find(item => item.filename === filename);
-    return match ? match.stimulus : null; 
-})
+  // ✅ keep phase3stim as [{label, stimulus}]
+  phase3stim = imageFiles.map((filename) => {
+    const match = generated_stimuli.find((item) => item.filename === filename);
+    return {
+      label: match?.label || filename.replace(/\.\w+$/, ""),
+      stimulus: match?.stimulus || "" // base64 data URL (or empty fallback)
+    };
+  });
+
 
   learnphaseone()
   //instruction section
@@ -1522,31 +1527,136 @@ waitUntilBase64Ready().then(() => {
 
   //timeline
   timeline.push(welcome,enterFullscreen)
-  timeline.push(intro_learn)
+  // timeline.push(intro_learn)
+  timeline.push(semantic_phase3)
   //timeline end
 
 
   directmemory_phase.stimulus = create_direct_trial(direct_base64_up,direct_base64_left,direct_base64_mid,direct_base64_right,curr_direct_trial)
 
   shortestpath_phase.stimulus=create_shortestpath_trial(shortest_base64_up,shortest_base64_left,shortest_base64_right,curr_shortest_trial)
-  phasethreeroom=[`<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans
-  <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><button id="nextButton" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">Submit</button><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${phase3stim[0]['stimulus']}' alt='${phase3stim[0]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${phase3stim[1]['stimulus']}' alt='${phase3stim[1]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='${phase3stim[2]['stimulus']}' alt='${phase3stim[2]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${phase3stim[3]['stimulus']}' alt='${phase3stim[3]['label']}' alt='Custer' width='100' height='120' draggable='true' ondragstart='drag(event)'>
-  <img id='drag05' src='${phase3stim[4]['stimulus']}' alt='${phase3stim[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${phase3stim[5]['stimulus']}' alt='${phase3stim[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${phase3stim[6]['stimulus']}' alt='${phase3stim[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${phase3stim[7]['stimulus']}' alt='${phase3stim[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${phase3stim[8]['stimulus']}' alt='${phase3stim[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${phase3stim[9]['stimulus']}' alt='${phase3stim[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${phase3stim[10]['stimulus']}' alt='${phase3stim[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${phase3stim[11]['stimulus']}' alt='${phase3stim[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
-  <img id='drag13' src='${phase3stim[12]['stimulus']}' alt='${phase3stim[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>`
-  ]
-  phase3[0].stimulus = `<div id='displayhelp' style='display:none'><p>Click and drag the locations to the gray box to make your flight plans
-  <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><button id="nextButton" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">Submit</button><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${phase3stim[0]['stimulus']}' alt='${phase3stim[0]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${phase3stim[1]['stimulus']}' alt='${phase3stim[1]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='${phase3stim[2]['stimulus']}' alt='${phase3stim[2]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${phase3stim[3]['stimulus']}' alt='${phase3stim[3]['label']}' alt='Custer' width='100' height='120' draggable='true' ondragstart='drag(event)'>
-    <img id='drag05' src='${phase3stim[4]['stimulus']}' alt='${phase3stim[4]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${phase3stim[5]['stimulus']}' alt='${phase3stim[5]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${phase3stim[6]['stimulus']}' alt='${phase3stim[6]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${phase3stim[7]['stimulus']}' alt='${phase3stim[7]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${phase3stim[8]['stimulus']}' alt='${phase3stim[8]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='${phase3stim[9]['stimulus']}' alt='${phase3stim[9]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${phase3stim[10]['stimulus']}' alt='${phase3stim[10]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${phase3stim[11]['stimulus']}' alt='${phase3stim[11]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
-     <img id='drag13' src='${phase3stim[12]['stimulus']}' alt='${phase3stim[12]['label']}' width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>`
+phasethreeroom = [`
+  <div id='displayhelp' style='display:none'>
+    <p>Click and drag the locations to the gray box to make your flight plans
+    <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p>
+  </div>
+  <button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;' onclick='initiatep3()'>Click to start</button>
+  <div id='spiderman' style='display: none;'>
+    <div id='Phase3Body'>
+      <button id="nextButton" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">Submit</button>
+      <br>
+      <div id='div2' style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>
+        <img id='drag01' src='${phase3stim[0].stimulus}'  alt='${phase3stim[0].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag02' src='${phase3stim[1].stimulus}'  alt='${phase3stim[1].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag03' src='${phase3stim[2].stimulus}'  alt='${phase3stim[2].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag04' src='${phase3stim[3].stimulus}'  alt='${phase3stim[3].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag05' src='${phase3stim[4].stimulus}'  alt='${phase3stim[4].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag06' src='${phase3stim[5].stimulus}'  alt='${phase3stim[5].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag07' src='${phase3stim[6].stimulus}'  alt='${phase3stim[6].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag08' src='${phase3stim[7].stimulus}'  alt='${phase3stim[7].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag09' src='${phase3stim[8].stimulus}'  alt='${phase3stim[8].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag10' src='${phase3stim[9].stimulus}'  alt='${phase3stim[9].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag11' src='${phase3stim[10].stimulus}' alt='${phase3stim[10].label}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag12' src='${phase3stim[11].stimulus}' alt='${phase3stim[11].label}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag13' src='${phase3stim[12].stimulus}' alt='${phase3stim[12].label}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+      </div>
+      <div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;' ondrop='drop(event)' ondragover='allowDrop(event)'>
+        <div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative;'></div>
+        <img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'>
+        <img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'>
+        <img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50' height='50'>
+      </div>
+    </div>
+  </div>
+`];
 
-  recon_phase3[0].stimulus=["<div id='displayhelp' style='display:none'><p>Click and drag the objects to the gray box"
-  +"<br /> You can connect the images by clicking the two images in order <br> You can remove an object by clicking on it and then clicking the return arrow on the bottom right of the gray box <br> once all the objects are in the grey box and have <b>at least one line connecting them</b>, press the 'submit' button that will appear</p><button id='nextButton' style='display:none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>"
-  +`</div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='recon_initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='${phase3stim[0]['stimulus']}' alt='Aliance' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag02' src='${phase3stim[1]['stimulus']}' alt='Boulder' width='100' height='100' draggable='true' ondragstart='drag(event)'>
-  <img id='drag03' src='${phase3stim[2]['stimulus']}' alt='Cornwall' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag04' src='${phase3stim[3]['stimulus']}' alt='Custer' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag05' src='${phase3stim[4]['stimulus']}' alt='DelawareCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag06' src='${phase3stim[5]['stimulus']}' alt='Medora' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag07' src='${phase3stim[6]['stimulus']}' alt='Newport' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag08' src='${phase3stim[7]['stimulus']}' alt='ParkCity' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag09' src='${phase3stim[8]['stimulus']}' alt='Racine' width='100' height='100' draggable='true' ondragstart='drag(event)'>
-  <img id='drag10' src='${phase3stim[9]['stimulus']}' alt='Sitka' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag11' src='${phase3stim[10]['stimulus']}' alt='WestPalmBeach' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag12' src='${phase3stim[11]['stimulus']}' alt='Yukon' width='100' height='100' draggable='true' ondragstart='drag(event)'><img id='drag13' src='${phase3stim[12]['stimulus']}' alt='img13' width='100' height='100' draggable='true' ondragstart='drag(event)'></div>`
-                      +"<div id='div1' style='width: 1200px; height: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='recon_drop(event)' ondragover='recon_allowDrop(event) '><div id='div3' style='width: 1200px; height: 700px; margin: 0 auto; position: relative; '></div><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>"]
-  //jspsych-html-button-response-button-0
-  
+phase3[0].stimulus = `
+  <div id='displayhelp' style='display:none'>
+    <p>Click and drag the locations to the gray box to make your flight plans
+    <br /> you can 'book' flights by clicking on the two cities in order <br> You can remove flights by clicking on a city and clicking the return arrow on the bottom right of the gray box <br> once you are finished, press the 'next client' button to book the next client</p>
+  </div>
+  <button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;' onclick='initiatep3()'>Click to start</button>
+  <div id='spiderman' style='display: none;'>
+    <div id='Phase3Body'>
+      <button id="nextButton" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">Submit</button>
+      <br>
+      <div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>
+        <img id='drag01' src='${phase3stim[0].stimulus}'  alt='${phase3stim[0].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag02' src='${phase3stim[1].stimulus}'  alt='${phase3stim[1].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag03' src='${phase3stim[2].stimulus}'  alt='${phase3stim[2].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag04' src='${phase3stim[3].stimulus}'  alt='${phase3stim[3].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag05' src='${phase3stim[4].stimulus}'  alt='${phase3stim[4].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag06' src='${phase3stim[5].stimulus}'  alt='${phase3stim[5].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag07' src='${phase3stim[6].stimulus}'  alt='${phase3stim[6].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag08' src='${phase3stim[7].stimulus}'  alt='${phase3stim[7].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag09' src='${phase3stim[8].stimulus}'  alt='${phase3stim[8].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag10' src='${phase3stim[9].stimulus}'  alt='${phase3stim[9].label}'  width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag11' src='${phase3stim[10].stimulus}' alt='${phase3stim[10].label}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag12' src='${phase3stim[11].stimulus}' alt='${phase3stim[11].label}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+        <img id='drag13' src='${phase3stim[12].stimulus}' alt='${phase3stim[12].label}' width='100' height='120' draggable='true' ondragstart='drag(event)'>
+      </div>
+      <div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;' ondrop='drop(event)' ondragover='allowDrop(event)'>
+        <div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative;'></div>
+        <img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'>
+        <img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'>
+        <img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50' height='50'>
+      </div>
+    </div>
+  </div>
+`;
+
+recon_phase3[0].stimulus = [
+  "<div id='displayhelp' style='display:none'><p>Click and drag the objects to the gray box" +
+  "<br /> You can connect the images by clicking the two images in order <br> You can remove an object by clicking on it and then clicking the return arrow on the bottom right of the gray box <br> once all the objects are in the grey box and have <b>at least one line connecting them</b>, press the 'submit' button that will appear</p>" +
+  "<button id='nextButton' style='display:none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>" +
+  `</div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;' onclick='recon_initiatep3()'>Click to start</button>` +
+  `<div id='spiderman' style='display: none;'><div id='Phase3Body'><br>` +
+  `<div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>` +
+  `<img id='drag01' src='${phase3stim[0].stimulus}'  alt='${phase3stim[0].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag02' src='${phase3stim[1].stimulus}'  alt='${phase3stim[1].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag03' src='${phase3stim[2].stimulus}'  alt='${phase3stim[2].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag04' src='${phase3stim[3].stimulus}'  alt='${phase3stim[3].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag05' src='${phase3stim[4].stimulus}'  alt='${phase3stim[4].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag06' src='${phase3stim[5].stimulus}'  alt='${phase3stim[5].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag07' src='${phase3stim[6].stimulus}'  alt='${phase3stim[6].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag08' src='${phase3stim[7].stimulus}'  alt='${phase3stim[7].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag09' src='${phase3stim[8].stimulus}'  alt='${phase3stim[8].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag10' src='${phase3stim[9].stimulus}'  alt='${phase3stim[9].label}'  width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag11' src='${phase3stim[10].stimulus}' alt='${phase3stim[10].label}' width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag12' src='${phase3stim[11].stimulus}' alt='${phase3stim[11].label}' width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `<img id='drag13' src='${phase3stim[12].stimulus}' alt='${phase3stim[12].label}' width='100' height='100' draggable='true' ondragstart='drag(event)'>` +
+  `</div>` +
+  `<div id='div1' style='width: 1200px; height: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;' ondrop='recon_drop(event)' ondragover='recon_allowDrop(event)'>` +
+  `<div id='div3' style='width: 1200px; height: 700px; margin: 0 auto; position: relative;'></div>` +
+  `<img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50' height='50'>` +
+  `</div></div></div>`
+];
+
+semantic_phase3.stimulus =
+  "<div id='semanticInstructions' style='display:none'><br><p>For each location, click and drag each city image onto a map. The image will convert to a point so you can precisely place the point onto the map provided. When you have placed all locations onto the map, you can finish the experiment. We strongly encourage you to make your best guess even if you are unsure of where the city is located, but there is a box at the bottom of the screen if you have no guess for any of the cities.</p>" +
+  "<div id='cityMapWrapper' style='display: none;'>" +
+  "<div id='semanticMain'><div id='cityList' style='width: 1300px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'>" +
+
+  `<img id='semantic01' src='${phase3stim[0].stimulus}'  alt='${phase3stim[0].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic02' src='${phase3stim[1].stimulus}'  alt='${phase3stim[1].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic03' src='${phase3stim[2].stimulus}'  alt='${phase3stim[2].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic04' src='${phase3stim[3].stimulus}'  alt='${phase3stim[3].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic05' src='${phase3stim[4].stimulus}'  alt='${phase3stim[4].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic06' src='${phase3stim[5].stimulus}'  alt='${phase3stim[5].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic07' src='${phase3stim[6].stimulus}'  alt='${phase3stim[6].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic08' src='${phase3stim[7].stimulus}'  alt='${phase3stim[7].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic09' src='${phase3stim[8].stimulus}'  alt='${phase3stim[8].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic10' src='${phase3stim[9].stimulus}'  alt='${phase3stim[9].label}'  width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic11' src='${phase3stim[10].stimulus}' alt='${phase3stim[10].label}' width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic12' src='${phase3stim[11].stimulus}' alt='${phase3stim[11].label}' width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+  `<img id='semantic13' src='${phase3stim[12].stimulus}' alt='${phase3stim[12].label}' width='100' height='100' draggable='true' ondragstart='event.dataTransfer.setData("text/plain", event.target.id)'>` +
+
+  "</div>" + // closes #cityList
+  "<div id='semanticZone' style='width: 1300px; height: 650px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background: url(\"../static/images/blankUSmap.png\") no-repeat center center; background-size: contain;' ondrop='dropSemanticEvent(event)' ondragover='allowSemanticDrop(event)'>" +
+  "<div id='cityOverlay' style='width: 1300px; height: 650px; margin: 0 auto; position: relative;'></div>" +
+  "</div></div></div>" +
+  "<button id='confirmsemantic' style='display: none;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;'>Submit</button>";
+
   jsPsych.init({
     timeline: timeline,
     preload_images: all_images,
