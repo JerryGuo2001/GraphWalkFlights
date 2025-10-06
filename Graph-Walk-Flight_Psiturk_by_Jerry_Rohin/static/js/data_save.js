@@ -1,4 +1,4 @@
-
+let save_final_deter
 var prompt_resubmit = function() {
 		document.body.innerHTML = error_message;
 		$("#resubmit").click(resubmit);
@@ -81,62 +81,82 @@ var resubmit = function() {
 	};
 
   var save_data = function(final) {
-    // exclude unwanted keys/columns
-    var exclude_keys = ['internal_node_id', 'trial_index'];
-    var clean_data = jsPsych.data.get().ignore(exclude_keys);
-    
-    var callback = function() {
-      // Only save data without completing the HIT during the task
-      psiturk.saveData({
-        success: function(){
-          console.log("Data saved during the task.");
-        },
-        error: prompt_resubmit
-      });
-      
-      // If final is true, we complete the HIT after task finishes
-      if (final) {
-        psiturk.completeHIT();  // Complete the HIT when task is done
-      }
-    };
-  
-    // Call the callback to save the data during the task
-    callback();
-  /* Save participant data file */
-
-  // Set participant data file name
-  if (debug_mode) {
-    var data_file_name = "dev_test.csv";
-
-  } else {
-    if (save_final_deter=='final'){
-      var data_file_name =  'final_S_' + useridtouse + '.csv';
-    }else{
-      randomidentifier = generateRandomIdentifier();
-      var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
-    }
-  }
-
-  // Save participant data file as a download in the web browser
-  // Note that unlike saving server-side, this doesn't remove quotation marks from the CSV file
-  if (data_save_method == 'csv_client') {
-    clean_data.localSave('csv', data_file_name);
-    // Save participant data file on a server side directory via PHP
-    // (Broken: only works with Apache + PHP and no psiTurk)
-  } else if(data_save_method == 'csv_server_php') {
-    saveData(data_file_name, clean_data.csv())
-    // Save participant data file on a server side directory via Python (only works with psiTurk)
-  }  else if(data_save_method == 'csv_server_py') {
-    $.ajax({
-      type: 'POST',
-      url: "../save_data_file",
-      dataType: 'json',
-      success: callback,
-      error: callback,
-      data: {
-        file_name: data_file_name,
-        file_data: clean_data.csv(),
+  // exclude unwanted keys/columns
+  var exclude_keys = ['internal_node_id', 'trial_index','rt','stimulus','time_elapsed','responses'];
+  var clean_data = jsPsych.data.get()
+    .ignore(exclude_keys)
+    .filter(trial => trial.ignore !== true)
+    .ignore(['ignore']);
+  var callback = function() {
+    // Only save data without completing the HIT during the task
+    psiturk.saveData({
+      success: function(){
+        console.log("Data saved during the task.");
       },
+      error: prompt_resubmit
     });
+    
+    // If final is true, we complete the HIT after task finishes
+    if (final) {
+      psiturk.completeHIT();  // Complete the HIT when task is done
+    }
+  };
+
+  // Call the callback to save the data during the task
+  callback();
+/* Save participant data file */
+
+// Set participant data file name
+if (debug_mode) {
+  var data_file_name = "dev_test.csv";
+
+} else {
+  if (save_final_deter=='final'){
+    var data_file_name =  'final_S_' + useridtouse + '.csv';
+  }else{
+    randomidentifier = generateRandomIdentifier();
+    var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
   }
 }
+
+// Save participant data file as a download in the web browser
+// Note that unlike saving server-side, this doesn't remove quotation marks from the CSV file
+if (data_save_method == 'csv_client') {
+  clean_data.localSave('csv', data_file_name);
+  // Save participant data file on a server side directory via PHP
+  // (Broken: only works with Apache + PHP and no psiTurk)
+} else if(data_save_method == 'csv_server_php') {
+  saveData(data_file_name, clean_data.csv())
+  // Save participant data file on a server side directory via Python (only works with psiTurk)
+}  else if(data_save_method == 'csv_server_py') {
+  var all_trials = jsPsych.data.get().ignore(exclude_keys).values();
+
+  // Filter out trials where ignore is true
+  var filtered_trials = all_trials.filter(trial => trial.ignore !== true);
+
+  // Convert manually to CSV
+  function arrayToCSV(data) {
+    if (data.length === 0) return '';
+    const keys = Object.keys(data[0]);
+    const csvRows = [
+      keys.join(','), // header row
+      ...data.map(row => keys.map(k => JSON.stringify(row[k] ?? '')).join(',')) // rows
+    ];
+    return csvRows.join('\n');
+  }
+
+  var clean_csv = arrayToCSV(filtered_trials);
+  $.ajax({
+    type: 'POST',
+    url: "../save_data_file",
+    dataType: 'json',
+    success: callback,
+    error: callback,
+    data: {
+      file_name: data_file_name,
+      file_data: clean_csv,
+    },
+  });
+}
+}
+

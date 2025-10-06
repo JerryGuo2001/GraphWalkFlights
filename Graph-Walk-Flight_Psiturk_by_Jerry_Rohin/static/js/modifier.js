@@ -4,7 +4,7 @@
 // }else{sequence = 'interleaved'}
 sequence = 'interleaved'
 //debug moode on/off
-debugmode= false
+debugmode= true
 if (debugmode==true){
   n_learning_trial=4 //This determine the number of learning trial you want in total
   n_direct_trial=3 //how many direct trial you want
@@ -123,64 +123,64 @@ function shuffle(array) {
   return array;
 }
 
+// <p>Have you visited any of the cities you learned about in this study?</p>
+// <p style='font-size: 16px'>If so, please indicate how many times you've visited each city:</p><br>
+
+// <label for="city1" style="margin-right: 100px;">${cityNameList[0]}</label>
+// <input type="number" id="${cityNameList[0]}" name="${cityNameList[0]}" min="0" value="0"><br><br>
+
+// <label for="city2" style="margin-right: 100px;">${cityNameList[1]}</label>
+// <input type="number" id="${cityNameList[1]}" name="${cityNameList[1]}" min="0" value="0"><br><br>
+
+// <label for="city3" style="margin-right: 100px;">${cityNameList[2]}</label>
+// <input type="number" id="${cityNameList[2]}" name="${cityNameList[2]}" min="0" value="0"><br><br>
+
+// <label for="city4" style="margin-right: 100px;">${cityNameList[3]}</label>
+// <input type="number" id="${cityNameList[3]}" name="${cityNameList[3]}" min="0" value="0"><br><br>
+
+// <label for="city5" style="margin-right: 100px;">${cityNameList[4]}</label>
+// <input type="number" id="${cityNameList[4]}" name="${cityNameList[4]}" min="0" value="0"><br><br>
+
+// <label for="city6" style="margin-right: 100px;">${cityNameList[5]}</label>
+// <input type="number" id="${cityNameList[5]}" name="${cityNameList[5]}" min="0" value="0"><br><br>
+
+// <label for="city7" style="margin-right: 100px;">${cityNameList[6]}</label>
+// <input type="number" id="${cityNameList[6]}" name="${cityNameList[6]}" min="0" value="0"><br><br>
+
+// <label for="city8" style="margin-right: 100px;">${cityNameList[7]}</label>
+// <input type="number" id="${cityNameList[7]}" name="${cityNameList[7]}" min="0" value="0"><br><br>
+
+// <label for="city9" style="margin-right: 100px;">${cityNameList[8]}</label>
+// <input type="number" id="${cityNameList[8]}" name="${cityNameList[8]}" min="0" value="0"><br><br>
+
+// <label for="city10" style="margin-right: 100px;">${cityNameList[9]}</label>
+// <input type="number" id="${cityNameList[9]}" name="${cityNameList[9]}" min="0" value="0"><br><br>
+
+// <label for="city11" style="margin-right: 100px;">${cityNameList[10]}</label>
+// <input type="number" id="${cityNameList[10]}" name="${cityNameList[10]}" min="0" value="0"><br><br>
+
+// <label for="city12" style="margin-right: 100px;">${cityNameList[11]}</label>
+// <input type="number" id="${cityNameList[11]}" name="${cityNameList[11]}" min="0" value="0"><br><br>
+
+// <label for="city13" style="margin-right: 100px;">${cityNameList[12]}</label>
+// <input type="number" id="${cityNameList[12]}" name="${cityNameList[12]}" min="0" value="0"><br><br>
+
+
+// <hr>
+
+// <p>Which state do you currently live in? How long have you lived in this state (years)?<span style="color: red;">*</span></p>
+// <textarea id="currentstate" name="currentstate" rows="3" style="width: 70%;" required></textarea>
+
+// <hr>
+
+// <p>What other states have you lived in, and how many years did you spend in each one?<span style="color: red;">*</span></p>
+// <textarea id="otherstate" name="otherstate" rows="3" style="width: 70%;" required></textarea>
+
+// <hr>
+
+
 let survey_questions = `
 <form id="survey">
-
-<p>Have you visited any of the cities you learned about in this study?</p>
-<p style='font-size: 16px'>If so, please indicate how many times you've visited each city:</p><br>
-
-<label for="city1" style="margin-right: 100px;">${cityNameList[0]}</label>
-<input type="number" id="${cityNameList[0]}" name="${cityNameList[0]}" min="0" value="0"><br><br>
-
-<label for="city2" style="margin-right: 100px;">${cityNameList[1]}</label>
-<input type="number" id="${cityNameList[1]}" name="${cityNameList[1]}" min="0" value="0"><br><br>
-
-<label for="city3" style="margin-right: 100px;">${cityNameList[2]}</label>
-<input type="number" id="${cityNameList[2]}" name="${cityNameList[2]}" min="0" value="0"><br><br>
-
-<label for="city4" style="margin-right: 100px;">${cityNameList[3]}</label>
-<input type="number" id="${cityNameList[3]}" name="${cityNameList[3]}" min="0" value="0"><br><br>
-
-<label for="city5" style="margin-right: 100px;">${cityNameList[4]}</label>
-<input type="number" id="${cityNameList[4]}" name="${cityNameList[4]}" min="0" value="0"><br><br>
-
-<label for="city6" style="margin-right: 100px;">${cityNameList[5]}</label>
-<input type="number" id="${cityNameList[5]}" name="${cityNameList[5]}" min="0" value="0"><br><br>
-
-<label for="city7" style="margin-right: 100px;">${cityNameList[6]}</label>
-<input type="number" id="${cityNameList[6]}" name="${cityNameList[6]}" min="0" value="0"><br><br>
-
-<label for="city8" style="margin-right: 100px;">${cityNameList[7]}</label>
-<input type="number" id="${cityNameList[7]}" name="${cityNameList[7]}" min="0" value="0"><br><br>
-
-<label for="city9" style="margin-right: 100px;">${cityNameList[8]}</label>
-<input type="number" id="${cityNameList[8]}" name="${cityNameList[8]}" min="0" value="0"><br><br>
-
-<label for="city10" style="margin-right: 100px;">${cityNameList[9]}</label>
-<input type="number" id="${cityNameList[9]}" name="${cityNameList[9]}" min="0" value="0"><br><br>
-
-<label for="city11" style="margin-right: 100px;">${cityNameList[10]}</label>
-<input type="number" id="${cityNameList[10]}" name="${cityNameList[10]}" min="0" value="0"><br><br>
-
-<label for="city12" style="margin-right: 100px;">${cityNameList[11]}</label>
-<input type="number" id="${cityNameList[11]}" name="${cityNameList[11]}" min="0" value="0"><br><br>
-
-<label for="city13" style="margin-right: 100px;">${cityNameList[12]}</label>
-<input type="number" id="${cityNameList[12]}" name="${cityNameList[12]}" min="0" value="0"><br><br>
-
-
-<hr>
-
-<p>Which state do you currently live in? How long have you lived in this state (years)?<span style="color: red;">*</span></p>
-<textarea id="currentstate" name="currentstate" rows="3" style="width: 70%;" required></textarea>
-
-<hr>
-
-<p>What other states have you lived in, and how many years did you spend in each one?<span style="color: red;">*</span></p>
-<textarea id="otherstate" name="otherstate" rows="3" style="width: 70%;" required></textarea>
-
-<hr>
-
 
 <p>Did the experiment go smoothly or were there problems? (Note: Your compensation will not depend on your answer below, so please be honest!!!) <span style="color: red;">*</span></p>
 <label><input type="radio" name="smooth" value="high" required> It went smoothly</label><br>
@@ -243,6 +243,55 @@ let survey_questions = `
 //   list_images.push(unshuffled_imageList[city_arr[i]])
 //   cityNameList.push(unshuffled_cityNameList[city_arr[i]])
 // }
+
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// === CONFIG ===
+generated_stimuli = []
+let unshuffled_imageList,unshuffled_cityNameList,prefix,num
+let unshuffled_image_names = []
+let fictionalorreal = 'fictional'
+if (Math.random() >= 0.5){
+  fictionalorreal='fictional'
+  if (Math.random() >= 0.5){
+    num = Math.floor(Math.random() * 4) + 2; // 2-5
+  }
+  prefix = `${fictionalorreal}-0${num}/`
+  noprefix_imageList=['Riverlyn.png', 'NorthArroya.png', 'Claywater.png', 'OrchardBend.png', 'JuniperCreek.png', 'HawthorneBluffs.png', 'Sunmere.png', 'Hollendale.png', 'Cedarwyn.png', 'NewVerdan.png', 'Baymarsh.png', 'DelaroPark.png', 'GrantonRidge.png']
+  unshuffled_cityNameList=['Riverlyn', 'North Arroya', 'Claywater', 'Orchard Bend', 'Juniper Creek', 'Hawthorne Bluffs', 'Sunmere', 'Hollendale', 'Cedarwyn', 'New Verdan', 'Baymarsh', 'Delaro Park', 'GrantonvRidge']
+  unshuffled_imageList = noprefix_imageList.map(filename => {return prefix + filename})
+}else{
+  fictionalorreal='real'
+  prefix = `${fictionalorreal}-01/`
+  noprefix_imageList=['WestPalmBeach.png','NewHope.png','Boulder.png','Peoria.png','Gatlinburg.png','Shreveport.png','HotSprings.png','Carmel.png','Huntsville.png','Racine.png','Leesburg.png','Cornwall.png','Hanover.png'] 
+  unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover'] 
+  unshuffled_imageList = noprefix_imageList.map(filename => {return prefix + filename})
+}
+console.log(fictionalorreal)
+
+let city_arr = [];
+let unshuff_arr = [];
+for (let i = 0;i<unshuffled_cityNameList.length;i++){
+city_arr.push(i)
+}
+let list_images = []
+let cityNameList = []
+let load_images = []
+shuffle(city_arr)
+for (let i = 0;i<unshuffled_cityNameList.length;i++){
+list_images.push(unshuffled_imageList[city_arr[i]])
+load_images.push('../static/images/'+ unshuffled_imageList[city_arr[i]])
+cityNameList.push(unshuffled_cityNameList[city_arr[i]])
+}
+let imageFiles = list_images
+
 
 var correctNode = []
 var correctDirectNodes = 0
@@ -398,6 +447,33 @@ class Graph {
     correctDirectNodes = correctNodeOption
     shortDirectNodes = shorterNode
     farDirectNodes = furtherNode
+  }
+
+  getDistanceBetween(node1, node2) {
+    if (!(node1 in this.adjacencyList) || !(node2 in this.adjacencyList)) {
+      return -1; // Return -1 if either node doesn't exist
+    }
+
+    if (node1 === node2) return 0; // Same node, distance is 0
+
+    const visited = new Set([node1]);
+    const queue = [[node1, 0]]; // [currentNode, distance]
+
+    while (queue.length > 0) {
+      const [currentNode, distance] = queue.shift();
+
+      for (const neighbor of this.adjacencyList[currentNode]) {
+        if (neighbor === node2) {
+          return distance + 1; // Found target
+        }
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push([neighbor, distance + 1]);
+        }
+      }
+    }
+
+    return -1; // No path found
   }
 
   // Helper function to perform BFS and find all nodes k edges apart from the starting node
@@ -584,20 +660,20 @@ fourth_list_block_right = []
 for (block = 0;block<4;block++){
   for (pair = 0;pair<4;pair++){
     if (block == 0){
-      first_list_block_left.push(imageList[blocked_groups[block][pair][0]-1]) // -1 is for zero indexing
-      first_list_block_right.push(imageList[blocked_groups[block][pair][1]-1])
+      first_list_block_left.push(blocked_groups[block][pair][0]-1) // -1 is for zero indexing
+      first_list_block_right.push(blocked_groups[block][pair][1]-1)
     }
     if (block == 1){
-      second_list_block_left.push(imageList[blocked_groups[block][pair][0]-1])
-      second_list_block_right.push(imageList[blocked_groups[block][pair][1]-1])
+      second_list_block_left.push(blocked_groups[block][pair][0]-1)
+      second_list_block_right.push(blocked_groups[block][pair][1]-1)
     }
     if (block == 2){
-      third_list_block_left.push(imageList[blocked_groups[block][pair][0]-1])
-      third_list_block_right.push(imageList[blocked_groups[block][pair][1]-1])
+      third_list_block_left.push(blocked_groups[block][pair][0]-1)
+      third_list_block_right.push(blocked_groups[block][pair][1]-1)
     }
     if (block == 3){
-      fourth_list_block_left.push(imageList[blocked_groups[block][pair][0]-1])
-      fourth_list_block_right.push(imageList[blocked_groups[block][pair][1]-1])
+      fourth_list_block_left.push(blocked_groups[block][pair][0]-1)
+      fourth_list_block_right.push(blocked_groups[block][pair][1]-1)
     }
   }
 }
@@ -671,8 +747,12 @@ for (i=0;i<compiled_left_list.length;i++){
 }
 inter_arr = shuffle(inter_arr)
 
-inter_left_list = []
-inter_right_list = []
+var inter_left_list = []
+var inter_right_list = []
+var inter_left_node = []
+var inter_right_node = []
+var learn_node_right = []
+var learn_node_left = []
 
 for(i=0;i<inter_arr.length;i++){
   inter_left_list.push(compiled_left_list[inter_arr[i]])
@@ -683,29 +763,39 @@ if (sequence == "blocked"){ // If blocked it takes inputs in the blocked order, 
   for (i=0;i < compiled_left_list.length;i++){
     switch_left_right = Math.random()
     if (switch_left_right < 0.5){
-      learn_left.push(compiled_left_list[i])
-      learn_right.push(compiled_right_list[i])
+      learn_left.push(imageList[compiled_left_list[i]])
+      learn_right.push(imageList[compiled_right_list[i]])
+
+      learn_node_left.push(compiled_left_list[i]+1) // One indexing
+      learn_node_right.push(compiled_right_list[i]+1) // One indexing
+
     } else {
-      learn_left.push(compiled_right_list[i])
-      learn_right.push(compiled_left_list[i])
+      learn_left.push(imageList[compiled_right_list[i]])
+      learn_right.push(imageList[compiled_left_list[i]])
+
+      learn_node_left.push(compiled_right_list[i]+1) // One indexing
+      learn_node_right.push(compiled_left_list[i]+1) // One indexing
     }
   }
-
 }
 else if (sequence == "interleaved") {
     for (i=0;i < inter_left_list.length;i++){
     switch_left_right = Math.random()
     if (switch_left_right < 0.5){
-      learn_left.push(inter_left_list[i])
-      learn_right.push(inter_right_list[i])
+      learn_left.push(imageList[inter_left_list[i]])
+      learn_right.push(imageList[inter_right_list[i]])
+
+      learn_node_left.push(inter_left_list[i]+1) // One indexing
+      learn_node_right.push(inter_right_list[i]+1) // One indexing
     } else {
-      learn_left.push(inter_right_list[i])
-      learn_right.push(inter_left_list[i])
+      learn_left.push(imageList[inter_right_list[i]])
+      learn_right.push(imageList[inter_left_list[i]])
+
+      learn_node_left.push(inter_right_list[i]+1) // One indexing
+      learn_node_right.push(inter_left_list[i]+1) // One indexing
     }
   }
 }
-
-
 
 //Direct Memory phase
 graph.initTriplet()
@@ -729,7 +819,6 @@ for(let i = 1;i<14;i++){
     directShort.push(shortDirectNodes)
     directFar.push(farDirectNodes)
   }
-  
 }
 
 // Generate directarr as before
@@ -796,6 +885,7 @@ function generateValidSequenceHybrid(directarr, directUp, directCorrect, maxTrie
 }
 var ordered_directarr = generateValidSequenceHybrid(directarr, directUp, directCorrect);
 console.log("Valid sequence:", ordered_directarr);
+
 // Now build room_direct arrays using ordered_directarr
 let room_direct_left = [];
 let room_direct_mid = [];
@@ -804,17 +894,39 @@ let room_direct_up = [];
 let room_direct_correct = [];
 let room_direct_far = [];
 let room_direct_short = [];
+let node_direct_up = [];
+let node_direct_left = [];
+let node_direct_right = [];
+let node_direct_mid = [];
+let node_direct_correct = [];
+let distance_direct_left = [];
+let distance_direct_mid = [];
+let distance_direct_right = [];
 
 for (let i = 0; i < ordered_directarr.length; i++) {
   let idx = ordered_directarr[i];
   room_direct_up.push(imageList[directUp[idx] - 1]);
+  node_direct_up.push(directUp[idx])
+
   room_direct_left.push(imageList[directLeft[idx] - 1]);
+  node_direct_left.push(directLeft[idx])
+
   room_direct_right.push(imageList[directRight[idx] - 1]);
+  node_direct_right.push(directRight[idx])
+
   room_direct_mid.push(imageList[directMid[idx] - 1]);
+  node_direct_mid.push(directMid[idx])
+
+  distance_direct_left.push(graph.getDistanceBetween(directUp[idx], directLeft[idx]))
+  distance_direct_mid.push(graph.getDistanceBetween(directUp[idx], directMid[idx]))
+  distance_direct_right.push(graph.getDistanceBetween(directUp[idx], directRight[idx]))
+
   room_direct_correct.push(imageList[directCorrect[idx] - 1]);
+  node_direct_correct.push(directCorrect[idx])
   room_direct_short.push(imageList[directShort[idx] - 1]);
   room_direct_far.push(imageList[directFar[idx] - 1]);
 }
+
 
 //Shoretst Path judge phase
 
@@ -1053,6 +1165,8 @@ let upList = [];
 let leftList = [];
 let rightList = [];
 let correctShortList = [];
+let distance_short_left = [];
+let distance_short_right = [];
 
 for (let i = 0; i < ordered_shortestarr.length; i++) {
   let trialIndex = ordered_shortestarr[i];
@@ -1060,6 +1174,9 @@ for (let i = 0; i < ordered_shortestarr.length; i++) {
   leftList.push(cumulativediff[trialIndex][0]);
   rightList.push(cumulativediff[trialIndex][2]);
   correctShortList.push(cumulativeCorrect[trialIndex]);
+
+  distance_short_left.push(graph.getDistanceBetween(cumulativediff[trialIndex][1],cumulativediff[trialIndex][0]))
+  distance_short_right.push(graph.getDistanceBetween(cumulativediff[trialIndex][1],cumulativediff[trialIndex][2]))
 }
 
 // Step 4: Convert to image paths
@@ -1067,6 +1184,11 @@ let room_shortest_up = upList.map(i => imageList[i - 1]);
 let room_shortest_left = leftList.map(i => imageList[i - 1]);
 let room_shortest_right = rightList.map(i => imageList[i - 1]);
 let room_shortest_correct = correctShortList.map(i => imageList[i - 1]);
+
+let shortest_node_up = upList
+let shortest_node_left = leftList
+let shortest_node_right = rightList
+let shortest_node_correct = correctShortList
 
 
 //Goal Directed Navigation:
@@ -1280,9 +1402,10 @@ function colorStop(colordetretime){
 
 
 //randomDelay for Direct Memory Test and Shortest Path Judgement
-var randomDelay = Math.floor(Math.random() * (1500 - 100 + 1)) + 100;
+var randomDelay = Math.floor(Math.random() * (2500 - 100 + 1)) + 100;
 
 
+//detour Map
 const detourLocationMap = {};
 
 goaldirIndex.forEach(index => {

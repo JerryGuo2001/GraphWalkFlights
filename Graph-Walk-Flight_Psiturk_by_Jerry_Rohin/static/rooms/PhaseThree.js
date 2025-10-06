@@ -1,8 +1,11 @@
 //<div id='displayhelp' style='display:none'>
-//<button id='bighelp' onclick='displayhelp()'>HELP</button>
-var phasethreeroom=["<div id='displayhelp' style='display:none'><p>Click and drag the images from the top that you wish to place in the gray container when creating your full path. Then, click on each of the two images to connect them."
-+"<br /> Click on each of the two images to connect them.<br> To remove a connection, simply click on the two images again and the line will disappear. To remove an image that you have already placed, click on the image and then the return button in the bottom right. <br> once you are finished, press the 'submit' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='../static/images/Aliance.png' alt='Aliance'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='../static/images/Boulder.png' alt='Boulder'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='../static/images/Cornwall.png' alt='Cornwall'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='../static/images/Custer.png' alt='Custer'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag05' src='../static/images/DelawareCity.png' alt='DelawareCity'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='../static/images/Medora.png' alt='Medora'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='../static/images/Newport.png' alt='Newport'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='../static/images/ParkCity.png' alt='ParkCity'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='../static/images/Racine.png' alt='Racine'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/Sitka.png' alt='Sitka'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/WestPalmBeach.png' alt='WestPalmBeach'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/Yukon.png' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'>"
-                    +"<img id='drag13' src='../static/images/Yukon.png' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'> <button id='nextButton' style='display: block; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button></div></div></div>"]
+var phasethreeroom=[`<div id='displayhelp' style='display:none'><p>Click and drag the images from the top that you wish to place in the gray container when creating your full path. Then, click on each of the two images to connect them.`
++`<br />Click on each of the two images to connect them.<br> To remove a connection, simply click on the two images again and the line will disappear. To remove an image that you have already placed, click on the image and then the return button in the bottom right. <br> once you are finished, press the 'submit' button to book the next client</p></div><button id='batman' style='display: block;margin: 0 auto;padding: 10px 20px;background-color: #4CAF50;color: black;border: none;border-radius: 8px;font-size: 16px;cursor: pointer;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);transition: background-color 0.3s ease;', onclick='initiatep3()'>Click to start</button><div id='spiderman' style='display: none;'><button id='nextButton' style='display: block; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button>`
++`<div id='Phase3Body'><br><div id='div2'  style='width: 700px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa;'><img id='drag01' src='../static/images/${imageList[0]}' alt='Aliance'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag02' src='../static/images/${imageList[1]}' alt='Boulder'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag03' src='../static/images/${imageList[2]}' alt='Cornwall'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag04' src='../static/images/${imageList[3]}' alt='Custer'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag05' src='../static/images/${imageList[4]}' alt='DelawareCity'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag06' src='../static/images/${imageList[5]}' alt='Medora'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag07' src='../static/images/${imageList[6]}' alt='Newport'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag08' src='../static/images/${imageList[7]}' alt='ParkCity'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag09' src='../static/images/${imageList[8]}' alt='Racine'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag10' src='../static/images/${imageList[9]}' alt='Sitka'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag11' src='../static/images/${imageList[10]}' alt='WestPalmBeach'width='100' height='120' draggable='true' ondragstart='drag(event)'><img id='drag12' src='../static/images/${imageList[11]}' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'>`
++`<img id='drag13' src='../static/images/${imageList[12]}' alt='Yukon'width='100' height='120' draggable='true' ondragstart='drag(event)'></div><div id='div1' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; bottom: 10%; border: 1px solid #aaaaaa; background-color: lightgray;'ondrop='drop(event)' ondragover='allowDrop(event)'><div id='div3' style='width: 1200px; height: 400px; margin: 0 auto; position: relative; '></div><img id='imgL' style='position:relative;right:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='imgR' style='position:relative;left:450px;bottom: 250px;border:2px solid blue' width='100' height='120'><img id='return' src='../static/images/return.png' style='position: relative;left: 450px;bottom: 100px ;border: 2px solid black' width='50'height='50'></div></div></div>`]
+
+const imageName = imageList.map(name => name.replace(prefix, '').replace('.png', ''));
+
 //jspsych-html-button-response-button-0
 //PART THAT NEED TO BE RUN UNDER BUTTON
 var images = []
@@ -43,6 +46,7 @@ function showWarning(messageText) {
     message.style.fontSize = '18px';
     message.style.zIndex = '1000';
     document.body.appendChild(message);
+
     setTimeout(() => {
         message.remove();
     }, 5000);
@@ -127,7 +131,7 @@ function continueButton() {
 
         // Step 2: If no path, or some images are not in it — show warning
         if (!route || route.length === 0) {
-            showWarning("No valid route found between the left and right cities.");
+            showWarning("No valid route found between the left and right images.");
             return;
         }
 
@@ -138,8 +142,6 @@ function continueButton() {
             showWarning("There is an unconnected image on the route. Either return it or connect it.");
             return;
         }
-
-
     
         const connectedIds = new Set();
         for (let key in specificline) {
@@ -163,6 +165,8 @@ function continueButton() {
         }
         if (goal_detor_deter === true) {
             chooseMiddleImageForMemory();
+            // Hide the Submit button
+            submitBtn.style.display = 'none';
             clearAllCanvases();
         
             const div1 = document.getElementById('div1');
@@ -198,7 +202,7 @@ function continueButton() {
             const detourDiv = document.createElement('div');
             detourDiv.id = 'detour-warning';
             detourDiv.style.position = 'fixed';
-            detourDiv.style.top = '300';
+            detourDiv.style.top = '0';
             detourDiv.style.left = '50%';
             detourDiv.style.transform = 'translateX(-50%)';
             detourDiv.style.backgroundColor = '#fff';
@@ -207,18 +211,11 @@ function continueButton() {
             detourDiv.style.zIndex = '9999';
             detourDiv.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.2)';
             detourDiv.style.textAlign = 'center';
-            const closedCityName = phase3stim[selected_middle_image_index-1]['label']; // or rightName
+            const closedCityName = imageName[selected_middle_image_index-1]; // or rightName
             detourcity_name=closedCityName
             const warningText = document.createElement('p');
             
-            const options = [
-            `The airport in ${closedCityName} is closed. Please suggest an alternate route.`,
-            `The client does not want to fly through ${closedCityName}. Please suggest an alternate route.`,
-            `Flights to ${closedCityName} are delayed due to weather. Please suggest an alternate route.`
-            ];
-
-            warningText.innerText = options[Math.floor(Math.random() * options.length)];
-
+            warningText.innerText = `${closedCityName} is not available at the moment. Can you create an alternate path?`;
         
             const placeholderImg = document.createElement('img');
             placeholderImg.src = images[selected_middle_image_index-1].src  //this is the hidden image, changes will only make to this one src
@@ -257,6 +254,7 @@ function continueButton() {
         
                 // Step 8: Allow next submission
                 goal_detor_deter = false;
+                continueButton()
             };
         
             detourDiv.appendChild(warningText);
@@ -285,16 +283,11 @@ let rightName = ''
 let leftName = ''
 
 let goal_detor_deter
-
-phase3stim = imageFiles.map(filename => {
-    let match = generated_stimuli.find(item => item.filename === filename);
-    return match ? match.stimulus : null; 
-})
-
 function initiatep3(){
     if(detourLocationMap[goalIndex]){
         goal_detor_deter=true
         makeVisible()
+        continueButton()
         $('#displayhelp').show()
         for (let i = 1; i <= 13; i++) {
             if (i<10){
@@ -310,9 +303,9 @@ function initiatep3(){
         // }
         container = document.getElementById('div1');
         document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
-        rightName = phase3stim[room_goaldir_right[goalIndex]-1]['label']
+        rightName = imageName[room_goaldir_right[goalIndex]-1]
         document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
-        leftName = phase3stim[room_goaldir_left[goalIndex]-1]['label']
+        leftName = imageName[room_goaldir_left[goalIndex]-1]
         for (let i = 1; i <= 13; i++) {
             if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
                 images[i-1].style="display: none;" // Make them disappear in the top box
@@ -334,6 +327,7 @@ function initiatep3(){
     }else{
         goal_detor_deter=false
         makeVisible()
+        continueButton()
         $('#displayhelp').show()
         for (let i = 1; i <= 13; i++) {
             if (i<10){
@@ -349,9 +343,9 @@ function initiatep3(){
         // }
         container = document.getElementById('div1');
         document.getElementById('imgL').src = images[room_goaldir_left[goalIndex]-1].src
-        rightName = phase3stim[room_goaldir_right[goalIndex]-1]['label']
+        rightName = imageName[room_goaldir_right[goalIndex]-1]
         document.getElementById('imgR').src = images[room_goaldir_right[goalIndex]-1].src
-        leftName = phase3stim[room_goaldir_left[goalIndex]-1]['label']
+        leftName = imageName[room_goaldir_left[goalIndex]-1]
         for (let i = 1; i <= 13; i++) {
             if (images[i-1].src == images[room_goaldir_left[goalIndex]-1].src || images[i-1].src == images[room_goaldir_right[goalIndex]-1].src){
                 images[i-1].style="display: none;" // Make them disappear in the top box
@@ -473,13 +467,11 @@ function drawLine(img1,img2) {
     specificlinenew=Object.assign({[linecounter]:{location: { x1: x1, y1: y1, x2: x2, y2: y2 },name:[img1.id+img2.id]}})  // change at some point to show div
     specificline=mergeObjects(specificline,specificlinenew)
     linecounter=linecounter+1
-    continueButton()
 }
 
 
 
 function dragLine(img1) {
-    continueButton()
     // Create a new canvas element
     for (i=0;i<=linecounter;i++){
         if (specificline[i]){
@@ -847,7 +839,6 @@ function returndrag(elmnt){
             }
         }
     }
-    continueButton()
 }
 function removeObjectByKey(obj, key) {
     if (obj.hasOwnProperty(key)) {

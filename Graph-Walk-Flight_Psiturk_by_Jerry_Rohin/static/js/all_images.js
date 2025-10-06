@@ -3,4 +3,4 @@ var instruction_images = ['short1.png','short2.png','short3.png','short4.png','s
     
     instruction_images = instruction_images.map(img => "../static/images/" + img);
 
-var all_images = imageList.concat(instruction_images)
+var all_images = load_images.concat(instruction_images)

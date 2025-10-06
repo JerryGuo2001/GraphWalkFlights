@@ -15,17 +15,17 @@ function create_learningcolor_trial(trial_num,color) {
 
 //learning phase
 function create_learning_trial(room_choiceStims_left,room_choiceStims_right,trial_num) {
-  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color:black;text-shadow:-2px -2px 0 #000, 0 -2px 0 #000, 2px -2px 0 #000,-2px 0 0 #000, 2px 0 0 #000,-2px 2px 0 #000, 0 2px 0 #000, 2px 2px 0 #000;'>\u002B</p><img style='position:absolute;top: 50%;right: 70%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 450px;' src='%s' height='350'> <img style='position:absolute;top: 50%;right: 30%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 450px;' src='%s' height='350'><br><style>body {background-color: #ffff;}</style>"
+  return parse("<p style='position:absolute;top: 50%;right: 50%;transform: translate(50%, -50%);font-size: 125px;color:black;text-shadow:-2px -2px 0 #000, 0 -2px 0 #000, 2px -2px 0 #000,-2px 0 0 #000, 2px 0 0 #000,-2px 2px 0 #000, 0 2px 0 #000, 2px 2px 0 #000;'>\u002B</p><img style='position:absolute;top: 50%;right: 70%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'> <img style='position:absolute;top: 50%;right: 30%;transform: translate(50%, -50%);z-score:0;width: 350px;height: 350px;' src='../static/images/%s' height='350'><br><style>body {background-color: #ffff;}</style>"
   ,room_choiceStims_left[trial_num],room_choiceStims_right[trial_num])
 }
 
 //Direct Memory phase
 function create_direct_trial(room_choice_up, room_choiceStims_left, room_choice_mid, room_choiceStims_right, trial_num) {
   return parse(
-    "<img class='bottom' style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>" +
-    "<img id='img1' class='bottom' style='position:absolute;top: 70%;right: 75%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>" +
-    "<img id='img2' class='bottom' style='position:absolute;top: 70%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>" +
-    "<img id='img3' class='bottom' style='position:absolute;top: 70%;right: 25%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>" +
+    "<img class='bottom' style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>" +
+    "<img id='img1' class='bottom' style='position:absolute;top: 70%;right: 75%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>" +
+    "<img id='img2' class='bottom' style='position:absolute;top: 70%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>" +
+    "<img id='img3' class='bottom' style='position:absolute;top: 70%;right: 25%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>" +
     "<div class='bottom' style='position:absolute;top: 90%;right: 75%;transform: translate(50%, -50%);z-score:0;width: 250px;text-align:center;font-size: 30px;'>1</div>" +
     "<div class='bottom' style='position:absolute;top: 90%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;text-align:center;font-size: 30px;'>2</div>" +
     "<div class='bottom' style='position:absolute;top: 90%;right: 25%;transform: translate(50%, -50%);z-score:0;width: 250px;text-align:center;font-size: 30px;'>3</div>" +
@@ -37,9 +37,9 @@ function create_direct_trial(room_choice_up, room_choiceStims_left, room_choice_
 //Shortest path judgement
 function create_shortestpath_trial(room_choice_up,room_choiceStims_left,room_choiceStims_right,trial_num) {
   return parse(
-    "<img class = 'bottomshortest' style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>"+
-    "<img id = 'img1' class = 'bottomshortest' style='position:absolute;top: 70%;right: 65%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>"+
-    "<img id = 'img2' class = 'bottomshortest' style='position:absolute;top: 70%;right: 35%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 300px;' src='%s' height='250'>"+
+    "<img class = 'bottomshortest' style='position:absolute;top: 20%;right: 50%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>"+
+    "<img id = 'img1' class = 'bottomshortest' style='position:absolute;top: 70%;right: 65%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>"+
+    "<img id = 'img2' class = 'bottomshortest' style='position:absolute;top: 70%;right: 35%;transform: translate(50%, -50%);z-score:0;width: 250px;height: 250px;' src='../static/images/%s' height='250'>"+
     "<div class='bottomshortest' style='position:absolute;top: 90%;right: 65%;transform: translate(50%, -50%);z-score:0;width: 250px;text-align:center;font-size: 30px;'>1</div>" +
     "<div class='bottomshortest' style='position:absolute;top: 90%;right: 35%;transform: translate(50%, -50%);z-score:0;width: 250px;text-align:center;font-size: 30px;'>2</div>" +
     "<br><style>body {background-color: #ffff;}</style>" 
