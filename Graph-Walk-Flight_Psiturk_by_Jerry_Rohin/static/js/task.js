@@ -1651,7 +1651,7 @@ var thank_you = {
     save_final_deter='final',
     jsPsych.data.get().filter({ignore: true}).ignore();
     save_data(),
-    markVersion2AsFinished()
+    markVersion1AsFinished()
     // Remove the listeners
     document.removeEventListener("keydown", blockRefresh);
     window.removeEventListener("beforeunload", blockUnload);
