@@ -4,13 +4,10 @@ if (debugmode==true){
   num_learn_trials = 5
   num_recognition_trials = 5
 }else{
-  num_learn_trials = 30
-  num_recognition_trials = 60
+  num_learn_trials = 25
+  num_recognition_trials = 50
 }
-n_learning_trial=3 //This determine the number of learning trial you want in total
-n_direct_trial=10 //how many direct trial you want
-n_shortest_trial=10 //how many shortest path you want
-n_goaldir_trial=10 //how many goal directed planning you want
+
 //warningpage
 warning=0 //this is to start the counter of total warning
 warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you see a blue cross flash and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>",
@@ -126,143 +123,142 @@ for (i=1;i<31;i++){
 shuffle(image_choose_index)
 
 let US_cities = [
-  "Huntsville",
-  "Sitka",
-  "Bisbee",
-  "Hot Springs",
-  "Healdsburg",
-  "Boulder",
-  "Cornwall",
-  "Delaware City",
-  "West Palm Beach",
+  "Montpelier",
+  "Annapolis",
+  "Carson City",
+  "Concord",
+  "Olympia",
+  "Topeka",
+  "Las Cruces",
+  "Dover",
+  "Frankfort",
+  "Salem",
+  "New Haven",
+  "Hagerstown",
   "Athens",
-  "Hilo",
-  "Coeur d'Alene",
+  "Burlington",
+  "Marquette",
+  "Altoona",
+  "Pueblo",
+  "Dothan",
+  "Dubuque",
+  "Fargo",
+  "Fort Collins",
+  "Boulder",
+  "Cambridge",
+  "Palo Alto",
+  "Berkeley",
+  "Pasadena",
+  "Santa Monica",
+  "Scottsdale",
+  "Tallahassee",
+  "Gainesville",
+  "Syracuse",
+  "Champaign",
+  "Decatur",
   "Peoria",
-  "Carmel",
-  "Okoboji",
+  "Muncie",
+  "Terre Haute",
+  "Fort Wayne",
+  "Youngstown",
+  "Toledo",
+  "Ann Arbor",
+  "Ithaca",
+  "Bellingham",
+  "Yakima",
+  "Boise",
+  "Reno",
+  "Newport News",
+  "Norfolk",
+  "Stamford",
+  "McKinney",
   "Abilene",
-  "Bowling Green",
-  "Shreveport",
-  "Bar Harbor",
-  "Assateague Island",
-  "Gloucester",
-  "Manistee",
-  "Orr",
-  "Natchez",
-  "Lake of the Ozarks",
-  "Livingston",
-  "Alliance",
-  "Gardnerville",
-  "Hanover",
-  "Cape May",
-  "Albuquerque",
-  "Watkins Glen",
-  "Duck",
-  "Medora",
-  "Cleveland",
-  "Yukon",
-  "Sisters",
-  "New Hope",
-  "Newport",
-  "Folly Beach",
-  "Custer",
-  "Gatlinburg",
-  "San Antonio",
-  "Park City",
-  "Barnard",
-  "Leesburg",
-  "Sammamish",
-  "Berkeley Springs",
-  "Racine",
-  "Cody"
-]
+  "Helena",
+  "Bozeman",
+  "Cheyenne",
+  "Rock Springs"
+];
 
-let fictional_cities = [
-  "Ashford Hills",
-  "Brookmere",
-  "Crestwood",
-  "Fairhaven",
-  "Northbridge",
-  "Silverpine",
-  "Oakridge",
-  "Millstone",
-  "Westridge",
-  "Lakehaven",
-  "Ravenport",
-  "Elmsbury",
-  "Pine Hollow",
-  "West Talora",
-  "Granton Ridge",
-  "Maplehurst",
-  "Claywater",
-  "Linden Trace",
-  "Briarfield",
-  "East Ladera",
-  "Hawthorne Bluffs",
-  "Summershade",
-  "Juniper Creek",
-  "Coralridge",
-  "New Verdan",
-  "Redgrove",
-  "Montelake",
-  "Sierra Hollow",
-  "Baymarsh",
-  "Willowford",
-  "Maravilla Springs",
-  "Stonebrook",
-  "Delaro Park",
-  "Hollendale",
-  "Ironwood Heights",
-  "Solara Glen",
-  "Bayshore Haven",
-  "Tamarisk Hills",
-  "Cedarwyn",
-  "Orchard Bend",
-  "Rosehollow",
-  "Clearbrook",
-  "Meadowspire",
-  "Falconridge",
-  "North Arroya",
-  "Sunmere",
-  "Riverlyn",
-  "Driftwood Bay",
-  "Highvale",
-  "Golden Trace"
-]
+// let fictional_cities = [
+//   "Ashford Hills",
+//   "Brookmere",
+//   "Crestwood",
+//   "Fairhaven",
+//   "Northbridge",
+//   "Silverpine",
+//   "Oakridge",
+//   "Millstone",
+//   "Westridge",
+//   "Lakehaven",
+//   "Ravenport",
+//   "Elmsbury",
+//   "Pine Hollow",
+//   "West Talora",
+//   "Granton Ridge",
+//   "Maplehurst",
+//   "Claywater",
+//   "Linden Trace",
+//   "Briarfield",
+//   "East Ladera",
+//   "Hawthorne Bluffs",
+//   "Summershade",
+//   "Juniper Creek",
+//   "Coralridge",
+//   "New Verdan",
+//   "Redgrove",
+//   "Montelake",
+//   "Sierra Hollow",
+//   "Baymarsh",
+//   "Willowford",
+//   "Maravilla Springs",
+//   "Stonebrook",
+//   "Delaro Park",
+//   "Hollendale",
+//   "Ironwood Heights",
+//   "Solara Glen",
+//   "Bayshore Haven",
+//   "Tamarisk Hills",
+//   "Cedarwyn",
+//   "Orchard Bend",
+//   "Rosehollow",
+//   "Clearbrook",
+//   "Meadowspire",
+//   "Falconridge",
+//   "North Arroya",
+//   "Sunmere",
+//   "Riverlyn",
+//   "Driftwood Bay",
+//   "Highvale",
+//   "Golden Trace"
+// ]
 
 
 let fictional_arr = []
 let US_arr = []
 
 for (let i = 0; i < US_cities.length;i++){
-  fictional_arr.push(i)
+  // fictional_arr.push(i)
   US_arr.push(i)
 }
 
-shuffle(fictional_arr);
+// shuffle(fictional_arr);
 shuffle(US_arr);
 
 let US_list_shuff = []
 let nat_list_shuff = []
 let unshuffled_img_type_learn = []
 
-for (let i = 0; i < 30;i++){
+for (let i = 0; i < 50;i++){
   US_list_shuff.push(US_cities[US_arr[i]])
   shuffled_img_type_US.push("US")
-  nat_list_shuff.push(fictional_cities[fictional_arr[i]])
-  shuffled_img_type_fictional.push("Fictional")
+  // nat_list_shuff.push(fictional_cities[fictional_arr[i]])
+  // shuffled_img_type_fictional.push("Fictional")
 }
 
 
-shuffled_img_typeTotal = shuffled_img_type_US.concat(shuffled_img_type_fictional)
+first_phase_unshuffled = US_list_shuff.slice(0,25)
 
-first_phase_unshuffled = US_list_shuff.slice(0,15).concat(nat_list_shuff.slice(0,15))
-unshuffled_img_type_learn = shuffled_img_typeTotal.slice(0,15).concat(shuffled_img_typeTotal.slice(30,45))
-
-new_img_unshuffled = US_list_shuff.slice(15).concat(nat_list_shuff.slice(15))
-unshuffled_img_type = unshuffled_img_type_learn.concat(shuffled_img_typeTotal.slice(15,30),shuffled_img_typeTotal.slice(45))
-
+new_img_unshuffled = US_list_shuff.slice(25)
 
 var recognition_unshuffled = first_phase_unshuffled.concat(new_img_unshuffled);
 let slice_recognition_list = []
@@ -278,7 +274,7 @@ let shuffled_img_type = []
 
 for (let i = 0; i < recognition_unshuffled.length; i++) {
   recog_arr.push(i);
-  if (i < 30){
+  if (i < 25){
     new_old_unshuff.push("OLD")
   }else {
     new_old_unshuff.push("NEW")
@@ -288,7 +284,6 @@ shuffle(recog_arr)
 for (let i = 0; i < recognition_unshuffled.length;i++){
   recognition_list.push(recognition_unshuffled[recog_arr[i]])
   new_old.push(new_old_unshuff[recog_arr[i]])
-  shuffled_img_type.push(unshuffled_img_type[recog_arr[i]])
 }
 
 let learn_unshuffled = first_phase_unshuffled
@@ -303,7 +298,6 @@ for (let i = 0; i < learn_unshuffled.length; i++) {
 shuffle(learn_arr)
 for (let i = 0; i < learn_unshuffled.length;i++){
   learn_img.push(learn_unshuffled[learn_arr[i]])
-  shuffled_learn_img_type.push(unshuffled_img_type_learn[learn_arr[i]])
 }
 
 let foil_img = [];

@@ -74,7 +74,7 @@ var welcome = {
     window.useridtouse = useridtouse.split('"')[3];
     subject_id=useridtouse
     save_data()
-    localStorage.setItem('RefreshCheck', '1')
+    // localStorage.setItem('RefreshCheck', '1')
   }
 }
 //welcome page end
@@ -175,10 +175,10 @@ let introbreak= {
 intro_learn=createfulintro(instruct,instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 
-let RefreshCheck = localStorage.getItem('RefreshCheck');
-if(RefreshCheck=='1'){
-  timeline.end()
-}
+// let RefreshCheck = localStorage.getItem('RefreshCheck');
+// if(RefreshCheck=='1'){
+//   timeline.end()
+// }
 timeline.push(welcome,enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 timeline.push(get_ready,introbreak)
@@ -272,15 +272,15 @@ function start_probe(img,trial) {
         data.stimulus = "probe_rating"
         data.trial_type = 'probe_rating';
         data.probe = data.key_press - 48
-        console.log(data.probe)
-        console.log(prob_list[prob_index])
+        // console.log(data.probe)
+        // console.log(prob_list[prob_index])
         if (prob_list[prob_index] == data.key_press - 48) {
           data.probe_accuracy = 1
         } else{
           data.probe_accuracy = 0
           warning +=1
           if (warning < 4){
-            console.log("Wrong")
+            // console.log("Wrong")
             // jsPsych.finishTrial()
             // jsPsych.endExperiment()
             // timeline.splice(length[prob_index]+1,0,warning_page)
@@ -299,7 +299,7 @@ function start_probe(img,trial) {
           
         }
         prob_index++
-        console.log(prob_list[prob_index])
+        // console.log(prob_list[prob_index])
       } 
     
   }
@@ -321,24 +321,6 @@ TaskFailed = {
 
 for (i=0;i<num_learn_trials;i++) {
   get_probe_trial()
-  // var learn_phase = {
-  //   type: 'html-keyboard-responsefl',
-  //   choices: jsPsych.NO_KEYS,
-  //   response_ends_trial: false,
-  //   stimulus:create_image_learn(learn_img,trial_num),
-  //   stimulus_duration:3000,
-  //   trial_duration:3000,
-  //   on_finish: function(data) {
-  //     get_learn_trial()
-  //     console.log(learn_img[learntrial])
-  //     data.trial_type = 'learn_phase';
-  //     data.stimulus= learn_img[learntrial]
-  //     data.city_type = shuffled_learn_img_type[learntrial]
-  //     sfa=1
-  //   }
-  // }
-  // gen_break(learn_phase.stimulus)
-  // timeline.push(learn_phase,trialbreak)
   var familiar = {
     type: 'html-keyboard-response',
     choices: ['1','2','3','4','5'],
@@ -367,10 +349,10 @@ for (i=0;i<num_learn_trials;i++) {
     response_ends_trial: true,
     on_finish: function(data) {
       get_learn_trial()
-      console.log(learntrial)
+      // console.log(learntrial)
       data.stimulus = learn_img[learntrial]
       data.name_trial= learn_img[learntrial]
-      data.city_type = shuffled_learn_img_type[learntrial]
+      // data.city_type = shuffled_learn_img_type[learntrial]
       data.trial_type = 'familiar_rating';
       data.rating = data.key_press - 48
     } 
@@ -525,10 +507,10 @@ for (i=0;i<num_recognition_trials;i++){
     response_ends_trial: true,
     on_finish: function(data) {
       get_recog_trial()
-      console.log(recognition_list[recogtrial])
+      // console.log(recognition_list[recogtrial])
       data.stimulus = recognition_list[recogtrial]
       data.name_trial= recognition_list[recogtrial]
-      data.city_type = shuffled_img_type[recogtrial]
+      // data.city_type = shuffled_img_type[recogtrial]
       data.trial_type = 'realistic_rating';
       data.rating = data.key_press - 48
     } 
@@ -724,17 +706,16 @@ var end_questions = {
   on_finish: function(data) {
     data.trial_type = "survey"
     data.stimulus = "survey-questions"
-    data.problems = problems
+    data.problems = (problems || []).join('; ');
     data.smooth = smooth
-    data.distraction = distraction
-    data.strategies = strategies
-    data.familiar = familiar
-    data.memorable = memorable
-    data.unique = unique
-    data.realistic = realistic
-    data.similar = similar
-    data.comments = comments
-    console.log(problems,smooth,distraction,strategies,familiar,memorable,unique,realistic,similar,comments)
+    data.distraction = (distraction  || "").replace(/,/g, ';');
+    data.strategies = (strategies  || "").replace(/,/g, ';');
+    data.familiar = (familiar  || "").replace(/,/g, ';');
+    data.memorable = (memorable  || "").replace(/,/g, ';');
+    data.unique = (unique  || "").replace(/,/g, ';');
+    data.realistic = (realistic  || "").replace(/,/g, ';');
+    data.similar = (similar  || "").replace(/,/g, ';');
+    data.comments = (comments  || "").replace(/,/g, ';');
     save_data()
   }
 };
