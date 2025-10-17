@@ -1,4 +1,4 @@
-for f in *.csv; do
+for f in new_batch/*.csv; do
   if ! grep -q "survey" "$f"; then
     echo "❌ $f does NOT contain 'survey'"
   else
