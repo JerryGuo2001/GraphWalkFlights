@@ -1098,8 +1098,6 @@ function createPhase3(numberoftrial){
           }, jsPsych.resumeExperiment)
           specificline_saved={};
           detourcity_name=[];
-          //debug, remember to deleter the below
-          save_data()
         }
       }
     }else{

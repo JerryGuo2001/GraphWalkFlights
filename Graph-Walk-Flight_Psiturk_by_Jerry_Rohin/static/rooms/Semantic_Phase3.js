@@ -4,6 +4,19 @@ let semanticImagePositions = {};
 let unknownImages = new Set();
 let unknowncity = [];
 
+// ----- logging (semantic phase) -----
+let p3SemStartMs = null;            // absolute ms when semantic task starts
+let action_semantic = [];           // per-trial action log (relative times)
+window.action_semantic = action_semantic;
+
+function logSemantic(type, details) {
+  try {
+    const now = Date.now();
+    const t = (p3SemStartMs == null) ? 0 : (now - p3SemStartMs);
+    action_semantic.push(Object.assign({ t, t_abs: now, type }, details || {}));
+  } catch (e) {}
+}
+
 // Make phase3stim an array of { label, stimulus } objects.
 // Assumes generated_stimuli items look like: { filename, label, stimulus }
 phase3stim = imageFiles.map((filename) => {
@@ -22,6 +35,15 @@ phase3stim = imageFiles.map((filename) => {
 });
 
 function initiatesemanticMap() {
+  // init per-trial timer + log
+  p3SemStartMs = Date.now();
+  action_semantic = [];
+  window.action_semantic = action_semantic;
+  semanticImagePositions = {};
+  unknownImages = new Set();
+  unknowncity = [];
+  logSemantic('semantic_init');
+
   semanticHTML =
     "<button id='confirmsemantic' style='display: none; margin: 30px auto; padding: 10px 20px; background-color: #4CAF50; color: black; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;'>Submit</button>" +
     "<div id='semanticWrapper'>" +
@@ -81,6 +103,8 @@ function initiatesemanticMap() {
     droppedImages.add(id);
     if (city) unknownImages.add(city);
 
+    logSemantic('drop_to_unknown', { id, city: city || null });
+
     if (droppedImages.size === 13) {
       activateSemanticSubmitButton();
     }
@@ -111,7 +135,12 @@ function initiatesemanticMap() {
     img.addEventListener("dragstart", function (ev) {
       ev.dataTransfer.setData("text/plain", id);
       ev.dataTransfer.setData("text/city", city);
+      logSemantic('thumb_drag_start', { id, city });
     });
+
+    // When the thumbnail is dropped *somewhere* (map or unknown), we’ll log in those handlers.
+    // If you also want a pure drag_end for thumbs (mouse up anywhere), you could bind on document mouseup,
+    // but that risks noise. We keep it minimal here.
 
     cityListContainer.appendChild(img);
   });
@@ -127,85 +156,104 @@ function initiatesemanticMap() {
     let city = ev.dataTransfer.getData("text/city");
     const original = document.getElementById(id);
     const dropZone = document.getElementById("semanticZone");
+    if (!dropZone) return;
 
     if (!city && original) {
       city = original.dataset.city;
     }
-    if (original && dropZone) {
+    if (original) {
       // Remove original node (thumbnail or previous dot)
       original.remove();
+    }
 
-      // Create a draggable dot-wrapper (keeps the SAME id so saving positions works)
-      const dotWrapper = document.createElement("div");
-      dotWrapper.dataset.city = city;
-      dotWrapper.id = id;
-      dotWrapper.style.width = "80px";
-      dotWrapper.style.height = "80px";
-      dotWrapper.style.position = "absolute";
-      dotWrapper.style.cursor = "grab";
+    // Create / re-create a draggable dot-wrapper (reuse SAME id to keep continuity)
+    const dotWrapper = document.createElement("div");
+    dotWrapper.dataset.city = city;
+    dotWrapper.id = id;
+    dotWrapper.style.width = "80px";
+    dotWrapper.style.height = "80px";
+    dotWrapper.style.position = "absolute";
+    dotWrapper.style.cursor = "grab";
 
-      const label = document.createElement("div");
-      label.textContent = city;
-      label.style.textAlign = "center";
-      label.style.fontWeight = "bold";
-      label.style.fontSize = "12px";
+    const label = document.createElement("div");
+    label.textContent = city;
+    label.style.textAlign = "center";
+    label.style.fontWeight = "bold";
+    label.style.fontSize = "12px";
 
-      const dot = document.createElement("div");
-      dot.style.width = "20px";
-      dot.style.height = "20px";
-      dot.style.backgroundColor = "black";
-      dot.style.borderRadius = "50%";
-      dot.style.margin = "0 auto";
+    const dot = document.createElement("div");
+    dot.style.width = "20px";
+    dot.style.height = "20px";
+    dot.style.backgroundColor = "black";
+    dot.style.borderRadius = "50%";
+    dot.style.margin = "0 auto";
 
-      // Find matching stimulus for preview
-      const matchObj = phase3stim.find((o) => o.label === city);
-      const preview = document.createElement("img");
-      preview.src = matchObj?.stimulus || "";
-      preview.alt = city;
-      preview.style.position = "absolute";
-      preview.style.width = "80px";
-      preview.style.height = "100px";
-      preview.style.left = "110%";
-      preview.style.top = "50%";
-      preview.style.transform = "translateY(-50%)";
-      preview.style.display = "none";
-      preview.style.border = "1px solid #333";
-      preview.style.background = "#fff";
-      preview.style.zIndex = "10";
+    // Find matching stimulus for preview
+    const matchObj = phase3stim.find((o) => o.label === city);
+    const preview = document.createElement("img");
+    preview.src = matchObj?.stimulus || "";
+    preview.alt = city;
+    preview.style.position = "absolute";
+    preview.style.width = "80px";
+    preview.style.height = "100px";
+    preview.style.left = "110%";
+    preview.style.top = "50%";
+    preview.style.transform = "translateY(-50%)";
+    preview.style.display = "none";
+    preview.style.border = "1px solid #333";
+    preview.style.background = "#fff";
+    preview.style.zIndex = "10";
 
-      dotWrapper.appendChild(label);
-      dotWrapper.appendChild(dot);
-      dotWrapper.appendChild(preview);
+    dotWrapper.appendChild(label);
+    dotWrapper.appendChild(dot);
+    dotWrapper.appendChild(preview);
 
-      // hover preview
-      dotWrapper.addEventListener("mouseenter", () => (preview.style.display = "block"));
-      dotWrapper.addEventListener("mouseleave", () => (preview.style.display = "none"));
+    // hover preview
+    dotWrapper.addEventListener("mouseenter", () => (preview.style.display = "block"));
+    dotWrapper.addEventListener("mouseleave", () => (preview.style.display = "none"));
 
-      // make dot draggable again
-      dotWrapper.draggable = true;
-      dotWrapper.addEventListener("dragstart", function (ev) {
-        ev.dataTransfer.setData("text/plain", dotWrapper.id);
-        ev.dataTransfer.setData("text/city", dotWrapper.dataset.city);
-      });
+    // make the dot draggable again (for re-placement)
+    dotWrapper.draggable = true;
 
-      // position where dropped (clamped)
-      const dropRect = dropZone.getBoundingClientRect();
-      const dotW = 80, dotH = 80;
-      let x = ev.clientX - dropRect.left - dotW / 2;
-      let y = ev.clientY - dropRect.top - dotH / 2;
-      x = Math.max(0, Math.min(x, dropRect.width - dotW));
-      y = Math.max(0, Math.min(y, dropRect.height - dotH));
-      dotWrapper.style.left = `${x}px`;
-      dotWrapper.style.top  = `${y}px`;
+    // Only log compact drag start/end for dots — no continuous moves
+    let dragStartPos = null;
+    dotWrapper.addEventListener("dragstart", function (ev2) {
+      ev2.dataTransfer.setData("text/plain", dotWrapper.id);
+      ev2.dataTransfer.setData("text/city", dotWrapper.dataset.city);
+      // remember starting (x,y) where it currently sits
+      const sx = parseFloat(dotWrapper.style.left) || 0;
+      const sy = parseFloat(dotWrapper.style.top) || 0;
+      dragStartPos = { x: sx, y: sy };
+      logSemantic('dot_drag_start', { id: dotWrapper.id, city: dotWrapper.dataset.city, x: sx, y: sy });
+    });
+    // We don’t attach a global dragend here because *where* it ends is determined by the next drop;
+    // we’ll log `dot_drag_end` in the destination drop handler with final (x,y).
 
-      dropZone.appendChild(dotWrapper);
-      droppedImages.add(id);
+    // position where dropped (clamped)
+    const dropRect = dropZone.getBoundingClientRect();
+    const dotW = 80, dotH = 80;
+    let x = ev.clientX - dropRect.left - dotW / 2;
+    let y = ev.clientY - dropRect.top - dotH / 2;
+    x = Math.max(0, Math.min(x, dropRect.width - dotW));
+    y = Math.max(0, Math.min(y, dropRect.height - dotH));
+    dotWrapper.style.left = `${x}px`;
+    dotWrapper.style.top  = `${y}px`;
 
-      if (droppedImages.size === 13) {
-        activateSemanticSubmitButton();
-      }
+    dropZone.appendChild(dotWrapper);
+
+    // Count toward completion (placed on map)
+    droppedImages.add(id);
+
+    // Log the placement & drag end (final position)
+    logSemantic('drop_to_map', { id, city, x, y });
+    logSemantic('dot_drag_end', { id, city, x, y });
+
+    if (droppedImages.size === 13) {
+      activateSemanticSubmitButton();
     }
   };
+
+  logSemantic('semantic_ui_ready');
 }
 
 function activateSemanticSubmitButton() {
@@ -225,9 +273,9 @@ function activateSemanticSubmitButton() {
       const imgID = i < 10 ? `semantic0${i}` : `semantic${i}`;
       const node = document.getElementById(imgID); // will be dot-wrapper div if placed
       if (node && node.parentElement && node.parentElement.id === "semanticZone") {
-        const left = parseFloat(node.style.left) || 0;
-        const top  = parseFloat(node.style.top)  || 0;
-        semanticImagePositions[imgID] = { x: left, y: top, city: node.dataset.city || null };
+        const x = parseFloat(node.style.left) || 0;
+        const y = parseFloat(node.style.top)  || 0;
+        semanticImagePositions[imgID] = { x, y, city: node.dataset.city || null };
       }
     }
 
@@ -235,6 +283,11 @@ function activateSemanticSubmitButton() {
     if (semanticWrapper) semanticWrapper.remove();
 
     unknowncity = Array.from(unknownImages);
+
+    logSemantic('semantic_submit', {
+      positions: semanticImagePositions,
+      unknown: unknowncity.slice()
+    });
 
     jsPsych.finishTrial();
   });
