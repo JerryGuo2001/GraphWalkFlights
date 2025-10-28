@@ -101,6 +101,8 @@ var welcome = {
     data.stimulus = "text"
     data.edge_condition = NaN
     data.specific_pairs = NaN
+    data.GDP_response= NaN
+    data.GDP_response_detor =NaN
     data.too_quick = too_quick_num
     data.problems = NaN
     data.smooth = NaN
@@ -407,7 +409,7 @@ function _serializeLine(lineObj) {
  * - Adds {cities:...} and {ids:...} when present (new schema).
  * - Preserves numeric-key order (0,1,2,...).
  *
- * @param {string} existing - existing string (e.g., data.linedressed_detor)
+ * @param {string} existing - existing string (e.g., data.GDP_response_detor)
  * @param {object} linesObj - e.g., specificline
  * @returns {string} updated string
  */
@@ -1088,16 +1090,16 @@ function createPhase3(numberoftrial){
           if (detourLocationMap[i]) {
             // Safely check and log for specificline_saved
             if (specificline_saved && Object.keys(specificline_saved).length > 0) {
-              data.linedressed = data.linedressed || "";
-              data.linedressed = appendSpecificLines(data.linedressed, specificline);
+              data.GDP_response = data.GDP_response || "";
+              data.GDP_response = appendSpecificLines(data.GDP_response, specificline);
             } else {
               console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
           
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              data.linedressed_detor = data.linedressed_detor || "";
-              data.linedressed_detor = appendSpecificLines(data.linedressed_detor, specificline);
+              data.GDP_response_detor = data.GDP_response_detor || "";
+              data.GDP_response_detor = appendSpecificLines(data.GDP_response_detor, specificline);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
@@ -1107,8 +1109,8 @@ function createPhase3(numberoftrial){
           } else {
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              data.linedressed = data.linedressed || "";
-              data.linedressed = appendSpecificLines(data.linedressed, specificline);
+              data.GDP_response = data.GDP_response || "";
+              data.GDP_response = appendSpecificLines(data.GDP_response, specificline);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
@@ -1191,16 +1193,16 @@ function createPhase3(numberoftrial){
           if (detourLocationMap[i]) {
             // Safely check and log for specificline_saved
             if (specificline_saved && Object.keys(specificline_saved).length > 0) {
-              data.linedressed_detor = data.linedressed_detor || "";
-              data.linedressed_detor = appendSpecificLines(data.linedressed_detor, specificline_detour);
+              data.GDP_response_detor = data.GDP_response_detor || "";
+              data.GDP_response_detor = appendSpecificLines(data.GDP_response_detor, specificline_detour);
             } else {
               console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
           
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              data.linedressed = data.linedressed || "";
-              data.linedressed = appendSpecificLines(data.linedressed, specificline_saved);
+              data.GDP_response = data.GDP_response || "";
+              data.GDP_response = appendSpecificLines(data.GDP_response, specificline_saved);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
@@ -1210,8 +1212,8 @@ function createPhase3(numberoftrial){
           } else {
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              data.linedressed = data.linedressed || "";
-              data.linedressed = appendSpecificLines(data.linedressed, specificline);
+              data.GDP_response = data.GDP_response || "";
+              data.GDP_response = appendSpecificLines(data.GDP_response, specificline);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
@@ -1312,8 +1314,8 @@ function recon_createPhase3(numberoftrial){
           data.too_quick = too_quick_num
           data.detectfocus = detectfocus;
           data.linedress=''
-          data.linedressed = data.linedressed || "";
-          data.linedressed = appendSpecificLines(data.linedressed, specificline);
+          data.GDP_response = data.GDP_response || "";
+          data.GDP_response = appendSpecificLines(data.GDP_response, specificline);
           // if (goaldirIndex[numberoftrial] < threeEdgePair.length){
           //   data.condition = 'Three Edge Diff'
           // } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length && goaldirIndex[numberoftrial] < threeEdgePair.length + fourEdgePair.length){
@@ -1381,8 +1383,8 @@ function recon_createPhase3(numberoftrial){
           data.too_quick = too_quick_num
           data.detectfocus = detectfocus;
           data.linedress=''
-          data.linedressed = data.linedressed || "";
-          data.linedressed = appendSpecificLines(data.linedressed, specificline);
+          data.GDP_response = data.GDP_response || "";
+          data.GDP_response = appendSpecificLines(data.GDP_response, specificline);
           recon_init(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [recon_phase3[i+1]],
