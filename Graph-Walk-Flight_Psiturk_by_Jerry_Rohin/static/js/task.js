@@ -372,6 +372,54 @@ function create_instruct(instruct,instructnames,instruction_number,prac_attentio
   return intro_learn
 }
 
+//Specific line recorder
+// ---------- paste these helpers once ----------
+function _fmtNum(v) {
+  return (typeof v === "number") ? Number(v.toFixed(2)) : v;
+}
+function _fmtLoc(loc) {
+  if (!loc) return "";
+  const { x1, y1, x2, y2 } = loc;
+  return ` [x1:${_fmtNum(x1)} y1:${_fmtNum(y1)} x2:${_fmtNum(x2)} y2:${_fmtNum(y2)}]`;
+}
+function _asStrName(name) {
+  // Old: string. New: array like ['imgLdrag09']
+  if (Array.isArray(name)) return name.join("|");
+  return name == null ? "" : String(name);
+}
+function _joinArr(label, arr) {
+  // Only show when array exists and is non-empty
+  if (!Array.isArray(arr) || arr.length === 0) return "";
+  return ` {${label}:${arr.join("->")}}`;
+}
+function _serializeLine(lineObj) {
+  // Works for both old and new shapes
+  const name = _asStrName(lineObj.name);
+  const cities = _joinArr("cities", lineObj.cities);
+  const ids = _joinArr("ids", lineObj.ids);
+  const loc = _fmtLoc(lineObj.location);
+  return `${name}${cities}${ids}${loc}`;
+}
+
+/**
+ * Append serialized specific lines to an existing string.
+ * - Keeps old behavior if only {name, location} exist.
+ * - Adds {cities:...} and {ids:...} when present (new schema).
+ * - Preserves numeric-key order (0,1,2,...).
+ *
+ * @param {string} existing - existing string (e.g., data.linedressed_detor)
+ * @param {object} linesObj - e.g., specificline
+ * @returns {string} updated string
+ */
+function appendSpecificLines(existing, linesObj) {
+  if (!linesObj || Object.keys(linesObj).length === 0) return existing || "";
+  const parts = [];
+  const keys = Object.keys(linesObj).sort((a, b) => Number(a) - Number(b));
+  for (const k of keys) parts.push(_serializeLine(linesObj[k]));
+  return (existing ? existing + " ; " : "") + parts.join(" ; ");
+}
+//specific line recorder end
+
 
   //practice attention check
 var ac_colorprepare=colorStart()
@@ -1040,43 +1088,27 @@ function createPhase3(numberoftrial){
           if (detourLocationMap[i]) {
             // Safely check and log for specificline_saved
             if (specificline_saved && Object.keys(specificline_saved).length > 0) {
-              for (const key in specificline_saved) {
-                data.linedressed += specificline_saved[key].name + 
-                  ':[x1:' + specificline_saved[key].location.x1 + 
-                  ' x2:' + specificline_saved[key].location.x2 + 
-                  ' y1:' + specificline_saved[key].location.y1 + 
-                  ' y2:' + specificline_saved[key].location.y2 + ']';
-              }
+              data.linedressed = data.linedressed || "";
+              data.linedressed = appendSpecificLines(data.linedressed, specificline);
             } else {
               console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
           
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              for (const key in specificline) {
-                data.linedressed_detor += specificline[key].name + 
-                  ':[x1:' + specificline[key].location.x1 + 
-                  ' x2:' + specificline[key].location.x2 + 
-                  ' y1:' + specificline[key].location.y1 + 
-                  ' y2:' + specificline[key].location.y2 + ']';
-              }
+              data.linedressed_detor = data.linedressed_detor || "";
+              data.linedressed_detor = appendSpecificLines(data.linedressed_detor, specificline);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
-          
             data.detour_trial = true;
             console.log(`Trial ${i} is a detour trial`);
             
           } else {
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              for (const key in specificline) {
-                data.linedressed += specificline[key].name + 
-                  ':[x1:' + specificline[key].location.x1 + 
-                  ' x2:' + specificline[key].location.x2 + 
-                  ' y1:' + specificline[key].location.y1 + 
-                  ' y2:' + specificline[key].location.y2 + ']';
-              }
+              data.linedressed = data.linedressed || "";
+              data.linedressed = appendSpecificLines(data.linedressed, specificline);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
@@ -1159,43 +1191,27 @@ function createPhase3(numberoftrial){
           if (detourLocationMap[i]) {
             // Safely check and log for specificline_saved
             if (specificline_saved && Object.keys(specificline_saved).length > 0) {
-              for (const key in specificline_saved) {
-                data.linedressed += specificline_saved[key].name + 
-                  ':[x1:' + specificline_saved[key].location.x1 + 
-                  ' x2:' + specificline_saved[key].location.x2 + 
-                  ' y1:' + specificline_saved[key].location.y1 + 
-                  ' y2:' + specificline_saved[key].location.y2 + ']';
-              }
+              data.linedressed_detor = data.linedressed_detor || "";
+              data.linedressed_detor = appendSpecificLines(data.linedressed_detor, specificline_detour);
             } else {
               console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
           
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              for (const key in specificline) {
-                data.linedressed_detor += specificline[key].name + 
-                  ':[x1:' + specificline[key].location.x1 + 
-                  ' x2:' + specificline[key].location.x2 + 
-                  ' y1:' + specificline[key].location.y1 + 
-                  ' y2:' + specificline[key].location.y2 + ']';
-              }
+              data.linedressed = data.linedressed || "";
+              data.linedressed = appendSpecificLines(data.linedressed, specificline_saved);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
           
             data.detour_trial = true;
             console.log(`Trial ${i} is a detour trial`);
-            
           } else {
             // Safely check and log for specificline
             if (specificline && Object.keys(specificline).length > 0) {
-              for (const key in specificline) {
-                data.linedressed += specificline[key].name + 
-                  ':[x1:' + specificline[key].location.x1 + 
-                  ' x2:' + specificline[key].location.x2 + 
-                  ' y1:' + specificline[key].location.y1 + 
-                  ' y2:' + specificline[key].location.y2 + ']';
-              }
+              data.linedressed = data.linedressed || "";
+              data.linedressed = appendSpecificLines(data.linedressed, specificline);
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
@@ -1296,9 +1312,8 @@ function recon_createPhase3(numberoftrial){
           data.too_quick = too_quick_num
           data.detectfocus = detectfocus;
           data.linedress=''
-          for (const key in specificline) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
-          }
+          data.linedressed = data.linedressed || "";
+          data.linedressed = appendSpecificLines(data.linedressed, specificline);
           // if (goaldirIndex[numberoftrial] < threeEdgePair.length){
           //   data.condition = 'Three Edge Diff'
           // } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length && goaldirIndex[numberoftrial] < threeEdgePair.length + fourEdgePair.length){
@@ -1366,9 +1381,8 @@ function recon_createPhase3(numberoftrial){
           data.too_quick = too_quick_num
           data.detectfocus = detectfocus;
           data.linedress=''
-          for (const key in specificline) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
-          }
+          data.linedressed = data.linedressed || "";
+          data.linedressed = appendSpecificLines(data.linedressed, specificline);
           recon_init(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [recon_phase3[i+1]],
