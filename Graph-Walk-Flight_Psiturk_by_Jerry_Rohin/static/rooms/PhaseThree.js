@@ -470,7 +470,7 @@ function initiatep3() {
     logAction('start_trial');
   }
 
-  if (detourLocationMap[goalIndex]) {
+  if (detourLocationMap[goalIndex-1]) {
     goal_detor_deter = true;
   } else {
     goal_detor_deter = false;
