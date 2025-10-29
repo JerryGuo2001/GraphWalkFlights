@@ -106,7 +106,7 @@ var welcome = {
     data.GDP_action= NaN
     data.GDP_action_detour = NaN
     data.detour_type = NaN
-    data.blocked_city= NaN
+    data.blocked_img= NaN
     data.Recon_response= NaN
     data.Recon_action= NaN
     data.too_quick = too_quick_num
@@ -1156,7 +1156,7 @@ function createPhase3(numberoftrial){
               console.log(`action detour is empty or undefined in trial ${i}`);
             }
             data.detour_type= detour_info.type
-            data.blocked_city= detour_info.hiddenCity
+            data.blocked_img= detour_info.hiddenCity
             data.detour_trial = true;
             console.log(`Trial ${i} is a detour trial`);
             
@@ -1280,7 +1280,7 @@ function createPhase3(numberoftrial){
             }
 
             data.detour_type= detour_info.type
-            data.blocked_city= detour_info.hiddenCity
+            data.blocked_img= detour_info.hiddenCity
             data.detour_trial = true;
             console.log(`Trial ${i} is a detour trial`);
           } else {
