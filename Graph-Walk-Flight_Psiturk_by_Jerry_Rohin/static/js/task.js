@@ -447,7 +447,7 @@ function _serializeLine(lineObj) {
  * - Adds {cities:...} and {ids:...} when present (new schema).
  * - Preserves numeric-key order (0,1,2,...).
  *
- * @param {string} existing - existing string (e.g., data.GDP_response_detor)
+ * @param {string} existing - existing string (e.g., data.GDP_response_detour)
  * @param {object} linesObj - e.g., specificline
  * @returns {string} updated string
  */
@@ -1144,9 +1144,9 @@ function createPhase3(numberoftrial){
 
             // Safely check and log for specificline
             if (specificline_detour && Object.keys(specificline_detour).length > 0) {
-              data.GDP_response_detor = data.GDP_response_detor || "";
-              data.GDP_response_detor = (appendSpecificLines(data.GDP_response_detor, specificline_detour)|| "").replace(/,/g, ';');
-              console.log(data.GDP_response_detor)
+              data.GDP_response_detour = data.GDP_response_detour || "";
+              data.GDP_response_detour = (appendSpecificLines(data.GDP_response_detour, specificline_detour)|| "").replace(/,/g, ';');
+              console.log(data.GDP_response_detour)
             } else {
               console.log(`specificline_detour is empty or undefined in trial ${i}`);
             }
@@ -1255,8 +1255,8 @@ function createPhase3(numberoftrial){
           if (detourLocationMap[i]) {
             // Safely check and log for specificline_saved
             if (specificline_detour && Object.keys(specificline_detour).length > 0) {
-              data.GDP_response_detor = data.GDP_response_detor || "";
-              data.GDP_response_detor = (appendSpecificLines(data.GDP_response_detor, specificline_detour)|| "").replace(/,/g, ';');
+              data.GDP_response_detour = data.GDP_response_detour || "";
+              data.GDP_response_detour = (appendSpecificLines(data.GDP_response_detour, specificline_detour)|| "").replace(/,/g, ';');
             } else {
               console.log(`specificline_detour is empty or undefined in trial ${i}`);
             }
