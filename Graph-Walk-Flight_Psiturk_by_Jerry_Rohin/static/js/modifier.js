@@ -260,9 +260,7 @@ let unshuffled_image_names = []
 let fictionalorreal = 'fictional'
 if (Math.random() >= 0.5){
   fictionalorreal='fictional'
-  if (Math.random() >= 0.5){
-    num = Math.floor(Math.random() * 4) + 2; // 2-5
-  }
+  num = Math.floor(Math.random() * 4) + 2; // 2-5
   prefix = `${fictionalorreal}-0${num}/`
   noprefix_imageList=['Riverlyn.png', 'NorthArroya.png', 'Claywater.png', 'OrchardBend.png', 'JuniperCreek.png', 'HawthorneBluffs.png', 'Sunmere.png', 'Hollendale.png', 'Cedarwyn.png', 'NewVerdan.png', 'Baymarsh.png', 'DelaroPark.png', 'GrantonRidge.png']
   unshuffled_cityNameList=['Riverlyn', 'North Arroya', 'Claywater', 'Orchard Bend', 'Juniper Creek', 'Hawthorne Bluffs', 'Sunmere', 'Hollendale', 'Cedarwyn', 'New Verdan', 'Baymarsh', 'Delaro Park', 'GrantonvRidge']
