@@ -1132,14 +1132,12 @@ function createPhase3(numberoftrial){
             if (specificline_saved && Object.keys(specificline_saved).length > 0) {
               data.GDP_response = data.GDP_response || "";
               data.GDP_response = (appendSpecificLines(data.GDP_response, specificline_saved)|| "").replace(/,/g, ';');
-              console.log(data.GDP_response)
             } else {
               console.log(`specificline_saved is empty or undefined in trial ${i}`);
             }
 
             if (action_phase3 && Object.keys(action_phase3).length > 0) {
               data.GDP_action = (appendActionsJSON(data.GDP_action || "", action_phase3)|| "").replace(/,/g, ';');
-              console.log(data.GDP_action);
             } else {
               console.log(`action_phase3 is empty or undefined in trial ${i}`);
             }
@@ -1148,14 +1146,12 @@ function createPhase3(numberoftrial){
             if (specificline_detour && Object.keys(specificline_detour).length > 0) {
               data.GDP_response_detour = data.GDP_response_detour || "";
               data.GDP_response_detour = (appendSpecificLines(data.GDP_response_detour, specificline_detour)|| "").replace(/,/g, ';');
-              console.log(data.GDP_response_detour)
             } else {
               console.log(`specificline_detour is empty or undefined in trial ${i}`);
             }
 
             if (action_phase3_detour && Object.keys(action_phase3_detour).length > 0) {
               data.GDP_action_detour = (appendActionsJSON(data.GDP_action_detour || "", action_phase3_detour)|| "").replace(/,/g, ';');
-              console.log(data.GDP_action_detour);
             } else {
               console.log(`action detour is empty or undefined in trial ${i}`);
             }
@@ -1169,14 +1165,12 @@ function createPhase3(numberoftrial){
             if (specificline && Object.keys(specificline).length > 0) {
               data.GDP_response = data.GDP_response || "";
               data.GDP_response = (appendSpecificLines(data.GDP_response, specificline)|| "").replace(/,/g, ';');
-              console.log(data.GDP_response)
             } else {
               console.log(`specificline is empty or undefined in trial ${i}`);
             }
 
             if (action_phase3 && Object.keys(action_phase3).length > 0) {
               data.GDP_action = (appendActionsJSON(data.GDP_action || "", action_phase3)|| "").replace(/,/g, ';');
-              console.log(data.GDP_action);
             } else {
               console.log(`action_phase3 is empty or undefined in trial ${i}`);
             }
@@ -1267,7 +1261,6 @@ function createPhase3(numberoftrial){
 
             if (action_phase3 && Object.keys(action_phase3).length > 0) {
               data.GDP_action = (appendActionsJSON(data.GDP_action || "", action_phase3)|| "").replace(/,/g, ';');
-              console.log(data.GDP_action);
             } else {
               console.log(`action_phase3 is empty or undefined in trial ${i}`);
             }
@@ -1282,7 +1275,6 @@ function createPhase3(numberoftrial){
 
             if (action_phase3_detour && Object.keys(action_phase3_detour).length > 0) {
               data.GDP_action_detour = (appendActionsJSON(data.GDP_action_detour || "", action_phase3_detour)|| "").replace(/,/g, ';');
-              console.log(data.GDP_action_detour);
             } else {
               console.log(`action detour is empty or undefined in trial ${i}`);
             }
@@ -1302,7 +1294,6 @@ function createPhase3(numberoftrial){
 
             if (action_phase3 && Object.keys(action_phase3).length > 0) {
               data.GDP_action = (appendActionsJSON(data.GDP_action || "", action_phase3)|| "").replace(/,/g, ';');
-              console.log(data.GDP_action);
             } else {
               console.log(`action_phase3 is empty or undefined in trial ${i}`);
             }

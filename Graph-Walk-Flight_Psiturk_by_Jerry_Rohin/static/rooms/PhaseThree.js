@@ -470,7 +470,8 @@ function initiatep3() {
     logAction('start_trial');
   }
 
-  if (detourLocationMap[goalIndex-1]) {
+  if (detourLocationMap[goalIndex]) {
+    console.log('detour trial!')
     goal_detor_deter = true;
   } else {
     goal_detor_deter = false;
@@ -507,7 +508,6 @@ function initiatep3() {
   sideElement(document.getElementById('imgR'));
   goalIndex++;
 }
-window.initiatep3 = initiatep3;
 
 // ---------------------------------------------
 // City-name resolver (readable edges)
