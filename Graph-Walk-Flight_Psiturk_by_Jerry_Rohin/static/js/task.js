@@ -32,24 +32,40 @@ function blockUnload(event) {
 document.addEventListener("keydown", blockRefresh);
 window.addEventListener("beforeunload", blockUnload);
 
-//this is to test if the user leave the webpage
-var detectfocus=0
-var isinfocus=1
-document.addEventListener('mouseleave', e=>{
-  detectfocus=detectfocus+1
-  isinfocus=0
-  //this is to see if user are focus or not
-})
-document.addEventListener('visibilitychange', e=>{
-   if (document.visibilityState === 'visible') {
- //report that user is in focus
- isinfocus=1
+var detectfocus = 0;
+var isinfocus = true;
+
+// Helper function to handle loss of focus
+function handleBlur() {
+  if (isinfocus) {       // Only increment if user was previously in focus
+    detectfocus += 1;
+    isinfocus = false;
+    console.log("User left page and is in console. Will check for suspicious data");
+    console.log("Return the task or you will be rejected");
+  }
+}
+
+// Helper function to handle regaining focus
+function handleFocus() {
+  if (!isinfocus) {
+    isinfocus = true;
+  }
+}
+
+// Tab visibility changes
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    handleBlur();
   } else {
-  detectfocus=detectfocus+1
-  isinfocus=0
-  //this is to see if user are focus or not
-  }  
-})
+    handleFocus();
+  }
+});
+
+// Mouse leaves window
+document.addEventListener('mouseleave', handleBlur);
+
+// Optional: mouse re-enters window
+document.addEventListener('mouseenter', handleFocus);
 
 // Randomly generate an 8-character alphanumeric subject ID via jsPsych
 var subject_id = jsPsych.randomization.randomID(8);
@@ -212,6 +228,14 @@ var directmemory_phase = {
     data.stimulus = "text"
     data.edge_condition = NaN
     data.specific_pairs = NaN
+    data.GDP_response= NaN
+    data.GDP_response_detour =NaN
+    data.GDP_action= NaN
+    data.GDP_action_detour = NaN
+    data.detour_type = NaN
+    data.blocked_img= NaN
+    data.Recon_response= NaN
+    data.Recon_action= NaN
     data.too_quick = too_quick_num
     data.problems = NaN
     data.smooth = NaN
@@ -908,7 +932,7 @@ var thecrossant_break={
     data.dist_2 = NaN // For direct memory
     data.dist_3 = NaN // For direct memory
     data.img_l = learn_left[curr_learning_trial]
-    data.img_c = room_direct_up[curr_direct_trial]
+    data.img_c = NaN
     data.img_r = learn_right[curr_learning_trial]
     data.img_1 = NaN // For direct memory
     data.img_2 = NaN // For direct memory
@@ -924,6 +948,14 @@ var thecrossant_break={
     data.stimulus = 'text'
     data.edge_condition = NaN
     data.specific_pairs = NaN
+    data.GDP_response= NaN
+    data.GDP_response_detour =NaN
+    data.GDP_action= NaN
+    data.GDP_action_detour = NaN
+    data.detour_type = NaN
+    data.blocked_img= NaN
+    data.Recon_response= NaN
+    data.Recon_action= NaN
     data.too_quick = too_quick_num
     data.problems = NaN
     data.smooth = NaN
@@ -948,7 +980,6 @@ var thecrossant_break={
     thecrossant_black.stimulus=create_memory_ten('black')
     thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
     attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,intro_dir,thecrossant,thecrossant_black,thecrossant_break)
-    
   }
 }
 
@@ -1025,7 +1056,6 @@ learn_phase_break = {
   },
   on_finish: function(data) {
     data.stimulus='text'
-    data.trial_type = 'Replication';
   }
 }
 
@@ -1128,6 +1158,7 @@ function createPhase3(numberoftrial){
           data.imgR_ID = rightName
           data.linedress=''
           if (detourLocationMap[i]==0 || detourLocationMap[i]) {
+            console.log('detour trial')
             // Safely check and log for specificline_saved
             if (specificline_saved && Object.keys(specificline_saved).length > 0) {
               data.GDP_response = data.GDP_response || "";
@@ -1170,20 +1201,21 @@ function createPhase3(numberoftrial){
             }
 
             if (action_phase3 && Object.keys(action_phase3).length > 0) {
-              data.GDP_action = (appendActionsJSON(data.GDP_action || "", action_phase3)|| "").replace(/,/g, ';');
             } else {
               console.log(`action_phase3 is empty or undefined in trial ${i}`);
             }
 
             data.detour_trial = false;
           }
-          if (goaldirIndex[numberoftrial] < twoEdgePair.length){
+          if (goaldirIndex[i] < twoEdgePair.length) {
+            data.edge_condition = 'Two Edge Diff'
+          } else if (goaldirIndex[i] < twoEdgePair.length + threeEdgePair.length) {
             data.edge_condition = 'Three Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
+          } else if (goaldirIndex[i] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length) {
             data.edge_condition = 'Four Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >=twoEdgePair.length + threeEdgePair.length &&  goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length){
+          } else if (goaldirIndex[i] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length) {
             data.edge_condition = 'Five Edge Diff'
-          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+twoEdgePair.length){
+          } else {
             data.edge_condition = 'Six Edge Diff'
           }
           gdp_init(),
@@ -1251,6 +1283,7 @@ function createPhase3(numberoftrial){
           data.linedress=''
           data.detectfocus = detectfocus;
           if (detourLocationMap[i]==0 || detourLocationMap[i]) {
+            console.log('detour trial')
             // Safely check and log for specificline_saved
             if (specificline_detour && Object.keys(specificline_detour).length > 0) {
               data.GDP_response_detour = data.GDP_response_detour || "";
@@ -1301,16 +1334,18 @@ function createPhase3(numberoftrial){
             data.detour_trial = false;
           }
           
-          if (goaldirIndex[numberoftrial] < twoEdgePair.length){
+          if (goaldirIndex[i] < twoEdgePair.length) {
+            data.edge_condition = 'Two Edge Diff'
+          } else if (goaldirIndex[i] < twoEdgePair.length + threeEdgePair.length) {
             data.edge_condition = 'Three Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= twoEdgePair.length && goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length){
+          } else if (goaldirIndex[i] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length) {
             data.edge_condition = 'Four Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >=twoEdgePair.length + threeEdgePair.length &&  goaldirIndex[numberoftrial] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length){
+          } else if (goaldirIndex[i] < twoEdgePair.length + threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length) {
             data.edge_condition = 'Five Edge Diff'
-          }else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length+twoEdgePair.length){
+          } else {
             data.edge_condition = 'Six Edge Diff'
           }
-          gdp_init(),  
+          gdp_init(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [phase3[i+1]],
           }, jsPsych.resumeExperiment)
@@ -1379,6 +1414,14 @@ function recon_createPhase3(numberoftrial){
           data.stimulus = "text"
           data.edge_condition = NaN
           data.specific_pairs = NaN
+          data.GDP_response= NaN
+          data.GDP_response_detour =NaN
+          data.GDP_action= NaN
+          data.GDP_action_detour = NaN
+          data.detour_type = NaN
+          data.blocked_img= NaN
+          data.Recon_response= NaN
+          data.Recon_action= NaN
           data.problems = NaN
           data.smooth = NaN
           data.distraction = NaN
@@ -1451,6 +1494,14 @@ function recon_createPhase3(numberoftrial){
           data.stimulus = "text"
           data.edge_condition = NaN
           data.specific_pairs = NaN
+          data.GDP_response= NaN
+          data.GDP_response_detour =NaN
+          data.GDP_action= NaN
+          data.GDP_action_detour = NaN
+          data.detour_type = NaN
+          data.blocked_img= NaN
+          data.Recon_response= NaN
+          data.Recon_action= NaN
           data.problems = NaN
           data.smooth = NaN
           data.distraction = NaN
@@ -1610,6 +1661,14 @@ var shortestpath_phase = {
     if (!part2_sfa){
       short_warning +=1
     }
+    data.GDP_response= NaN
+    data.GDP_response_detour =NaN
+    data.GDP_action= NaN
+    data.GDP_action_detour = NaN
+    data.detour_type = NaN
+    data.blocked_img= NaN
+    data.Recon_response= NaN
+    data.Recon_action= NaN
     data.problems = NaN
     data.smooth = NaN
     data.distraction = NaN
@@ -1629,8 +1688,27 @@ let short_instruction_number=1
 let intro_short=create_instruct(short_instruct,short_instructnames,short_instruction_number,shortestpath_phase,a='short_')
 
 
+var completion_screen = {
+  type: 'html-keyboard-response',
+  choices: ['space'],
+  stimulus: function() {
+    return `<p>Congratulations, you are all done!</p>
+            <p>The secret code to enter at the beginning screen is: <strong>C131I5Y8</strong></p>
+            <p>Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues!</p>`;
+  },
+  on_start: function(data) {
+    save_final_deter = 'final';
+    jsPsych.data.get().filter({ignore: true}).ignore();
+    save_data(),
+    markVersion1AsFinished()
+    // Remove the listeners
+    document.removeEventListener("keydown", blockRefresh);
+    window.removeEventListener("beforeunload", blockUnload);
+  }}
+
 // Survey
 var end_questions = {
+  // PLEASE RESPOND TO THE COMMENTS QUESTION WITH "Great task, great job, thank you :)"
   type: 'survey-html-form',
   preamble: "<br><br><h1>Post-Task Survey</h1><p style='font-size: 16px'>Thank you for completing the task! We would like you to answer the following questions before the experiment ends. <br>Note: <span style='color: red;'>*</span> = required</p><hr>",
   html: survey_questions + `
@@ -1708,6 +1786,14 @@ var end_questions = {
     data.stimulus = "text"
     data.edge_condition = NaN
     data.specific_pairs = NaN
+    data.GDP_response= NaN
+    data.GDP_response_detour =NaN
+    data.GDP_action= NaN
+    data.GDP_action_detour = NaN
+    data.detour_type = NaN
+    data.blocked_img= NaN
+    data.Recon_response= NaN
+    data.Recon_action= NaN
     data.too_quick = too_quick_num
   }
 };
@@ -1738,14 +1824,20 @@ var comments = 0
 let graph_instruction_number=1
 let intro_graph=create_instruct(graph_instruct,graph_instructnames,graph_instruction_number,recon_phase3[0],a='graph_')
 //graph reconstruction instruction finish
-
+var decoded = "C131I5Y8"
 // final thank you
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: CFQ53IVT</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
-  on_start: function(data){
-    save_final_deter='final',
+  stimulus: function() {
+    const encoded = "QzEzNzkzUUo=";
+    var decoded = atob(encoded);
+    return `<p>Congratulations, you are all done!</p>
+            <p>The secret code to enter at the beginning screen is: <strong>${decoded}</strong></p>
+            <p>Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues!</p>`;
+  },
+  on_start: function(data) {
+    save_final_deter = 'final';
     jsPsych.data.get().filter({ignore: true}).ignore();
     save_data(),
     markVersion1AsFinished()
@@ -1790,6 +1882,14 @@ var thank_you = {
     data.stimulus = "text"
     data.edge_condition = NaN
     data.specific_pairs = NaN
+    data.GDP_response= NaN
+    data.GDP_response_detour =NaN
+    data.GDP_action= NaN
+    data.GDP_action_detour = NaN
+    data.detour_type = NaN
+    data.blocked_img= NaN
+    data.Recon_response= NaN
+    data.Recon_action= NaN
     data.too_quick = too_quick_num
     data.problems = NaN
     data.smooth = NaN
