@@ -268,11 +268,18 @@ if (Math.random() >= 0.5){
 }else{
   fictionalorreal='real'
   prefix = `${fictionalorreal}-01/`
-  noprefix_imageList=['WestPalmBeach.png','NewHope.png','Boulder.png','Peoria.png','Gatlinburg.png','Shreveport.png','HotSprings.png','Carmel.png','Huntsville.png','Racine.png','Leesburg.png','Cornwall.png','Hanover.png'] 
-  unshuffled_cityNameList=['West Palm Beach','New Hope','Boulder','Peoria','Gatlinburg','Shreveport','Hot Springs','Carmel','Huntsville','Racine','Leesburg','Cornwall','Hanover'] 
+  noprefix_imageList=['buffalo.png', 'cactus.png', 'canoe.png', 'ferriswheel.png', 'fish.png', 'football.png', 'leaf.png', 'pool.png', 'potato.png', 'ship.png', 'skiis.png', 'train.png', 'tree.png']
+  unshuffled_cityNameList=['Fargo','Scottsdale','Hanover','Santa Monica','Olympia','Ann Arbor','Syracuse','Hot Springs','Boise','Norfolk','Boulder','Decatur','West Palm Beach'] 
   unshuffled_imageList = noprefix_imageList.map(filename => {return prefix + filename})
 }
-console.log(fictionalorreal)
+
+// Forcing real
+fictionalorreal='real'
+prefix = `${fictionalorreal}-01/`
+noprefix_imageList=['buffalo.png', 'cactus.png', 'canoe.png', 'ferriswheel.png', 'fish.png', 'football.png', 'leaf.png', 'pool.png', 'potato.png', 'ship.png', 'skiis.png', 'train.png', 'tree.png']
+unshuffled_cityNameList=['Fargo','Scottsdale','Hanover','Santa Monica','Olympia','Ann Arbor','Syracuse','Hot Springs','Boise','Norfolk','Boulder','Decatur','West Palm Beach'] 
+unshuffled_imageList = noprefix_imageList.map(filename => {return prefix + filename})
+
 
 let city_arr = [];
 let unshuff_arr = [];
@@ -288,8 +295,9 @@ list_images.push(unshuffled_imageList[city_arr[i]])
 load_images.push('../static/images/'+ unshuffled_imageList[city_arr[i]])
 cityNameList.push(unshuffled_cityNameList[city_arr[i]])
 }
-let imageFiles = list_images
-
+// let imageFiles = list_images
+list_images = unshuffled_imageList
+cityNameList = unshuffled_cityNameList
 
 var correctNode = []
 var correctDirectNodes = 0

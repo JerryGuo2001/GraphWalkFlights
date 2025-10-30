@@ -393,9 +393,11 @@ function continueButton() {
       detourDiv.style.textAlign = 'center';
 
       detourcity_name = closedCityName;
+      const index = imageName.indexOf(detourcity_name);
+      var city_name = cityNameList[index]
       let afterSlash = closedCityName.split("/")[1];
       const warningText = document.createElement('p');
-      warningText.innerText = `${afterSlash} is not available at the moment. Can you create an alternate path?`;
+      warningText.innerText = `${city_name} is not available at the moment. Can you create an alternate path?`;
       
       const placeholderImg = document.createElement('img');
       placeholderImg.src = images[closedCityIndex - 1].src;
