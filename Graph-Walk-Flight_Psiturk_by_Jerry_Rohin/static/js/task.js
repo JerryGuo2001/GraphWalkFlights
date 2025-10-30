@@ -1830,7 +1830,7 @@ var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
   stimulus: function() {
-    const encoded = "QzEzNzkzUUo=";
+    const encoded = "QzQzREkwRTY=";
     var decoded = atob(encoded);
     return `<p>Congratulations, you are all done!</p>
             <p>The secret code to enter at the beginning screen is: <strong>${decoded}</strong></p>
