@@ -4,7 +4,7 @@
 // }else{sequence = 'interleaved'}
 sequence = 'interleaved'
 //debug moode on/off
-debugmode= true
+debugmode= false
 if (debugmode==true){
   n_learning_trial=4 //This determine the number of learning trial you want in total
   n_direct_trial=3 //how many direct trial you want
